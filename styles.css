@@ -86,3 +86,22 @@ h3{font-size:1.35rem;letter-spacing:-.04em}
   font-weight:800;
   line-height:1.2;
 }
+.youtube-btn {
+  border-color: #ff0000;
+  color: #ff0000;
+}
+
+.youtube-btn:hover {
+  background: #ff0000;
+  color: white;
+}
+
+.instagram-btn {
+  border-color: #d62976;
+  color: #d62976;
+}
+
+.instagram-btn:hover {
+  background: #d62976;
+  color: white;
+}
