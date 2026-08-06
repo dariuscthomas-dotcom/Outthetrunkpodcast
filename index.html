@@ -21,9 +21,9 @@
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">Menu</button>
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-      <a href="#movies">Movies</a>
       <a href="#woom">WOOM</a>
       <a href="#sports">Sports</a>
+      <a href="#movies">Movie Reviews</a>
       <a href="#classic-segments">Classic Segments</a>
       <a href="#hosts">Meet The Hosts</a>
       <a class="listen-link" href="#listen">Listen</a>
@@ -54,79 +54,24 @@
       </div>
     </section>
 
-    <section id="movies" class="section-pad dark-band">
-      <div class="section-heading">
-        <p class="eyebrow">The movie archive</p>
-        <h2>More than reviews.</h2>
-        <p>Movies are the entry point. The real conversations are about taste, memory, relationships, creativity, music, friendship, and the stories people carry with them.</p>
-      </div>
-      <div class="topic-grid">
-        <div class="topic-pill">Friendship</div>
-        <div class="topic-pill">Nostalgia</div>
-        <div class="topic-pill">Relationships</div>
-        <div class="topic-pill">Storytelling</div>
-        <div class="topic-pill">Aging</div>
-        <div class="topic-pill">Creativity</div>
-      </div>
-    </section>
-
-    <section id="woom" class="section-pad">
-      <div class="section-heading">
-        <p class="eyebrow">What's On Our Mind</p>
-        <h2>The show's worldview lives here.</h2>
-      </div>
-      <div class="feature-list">
-        <article>
-          <h3>Friendship & Success</h3>
-          <p>What happens to friendship when success arrives? One of the most recurring questions in the show.</p>
-        </article>
-        <article>
-          <h3>Community</h3>
-          <p>Why is it harder to make friends as adults? What institutions still create community? What happens when convenience replaces connection?</p>
-        </article>
-        <article>
-          <h3>Technology</h3>
-          <p>AI, social media, smartphones, and modern life. How much convenience is too much? What are we gaining and what are we losing?</p>
-        </article>
-      </div>
-    </section>
-
-    <section id="sports" class="section-pad orange-band">
-      <div class="section-heading narrow">
-        <h2 style="font-size: 3.5rem; margin-bottom: 0.5rem;">Sports</h2>
-        <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9;">Listen To Us Talk Ball.</p>
-      </div>
-      
-      <div class="sports-buttons-container" style="max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.5rem;">
+    <!-- Consolidated 3 Big Boxes Section -->
+    <section class="section-pad" style="background-color: #faf8f5;">
+      <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem;">
         
-        <!-- Big Top Button: 3rd and 12 -->
-        <a href="#" class="mini-card light" style="display: block; text-decoration: none; color: inherit; padding: 2.25rem; text-align: center; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-          <h3 style="font-size: 2.25rem; margin-bottom: 0.75rem;">3<sup>rd</sup> and 12</h3>
-          <p style="font-size: 1.15rem; color: #333;">The Out the Trunk QB Litmus Test. Is the down still alive?</p>
+        <!-- WOOM Box -->
+        <a id="woom" href="#" class="mini-card light" style="display: block; text-decoration: none; color: inherit; padding: 3rem 2rem; text-align: center; background: #ffffff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.015)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.06)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+          <h2 style="font-size: 2.5rem; font-weight: 800; margin: 0;">WOOM (What's On Our Mind)</h2>
         </a>
 
-        <!-- Bottom 2 Buttons Side-by-Side -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-          
-          <!-- NFL Predictions -->
-          <a href="#" class="mini-card light" style="display: block; text-decoration: none; color: inherit; padding: 1.75rem; text-align: center; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">2026–2027 NFL Predictions</h3>
-            <p style="font-size: 0.95rem; color: #444;">
-              Division Winners, MVP, OPOY, DPOY.<br>
-              <span style="display: inline-block; margin-top: 0.35rem;">Click to see how wrong we are.</span>
-            </p>
-          </a>
+        <!-- Sports Box -->
+        <a id="sports" href="#" class="mini-card light" style="display: block; text-decoration: none; color: inherit; padding: 3rem 2rem; text-align: center; background: #ffffff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.015)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.06)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+          <h2 style="font-size: 2.5rem; font-weight: 800; margin: 0;">Sports</h2>
+        </a>
 
-          <!-- NBA Predictions -->
-          <a href="#" class="mini-card light" style="display: block; text-decoration: none; color: inherit; padding: 1.75rem; text-align: center; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">2026–2027 NBA Predictions</h3>
-            <p style="font-size: 0.95rem; color: #444;">
-              MVP, ROY, DPOY, All NBA 1<sup>st</sup> Team.<br>
-              <span style="display: inline-block; margin-top: 0.35rem;">Click to see how wrong we are.</span>
-            </p>
-          </a>
-
-        </div>
+        <!-- Movie Reviews Box -->
+        <a id="movies" href="#" class="mini-card light" style="display: block; text-decoration: none; color: inherit; padding: 3rem 2rem; text-align: center; background: #ffffff; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='scale(1.015)'; this.style.boxShadow='0 8px 24px rgba(0,0,0,0.06)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+          <h2 style="font-size: 2.5rem; font-weight: 800; margin: 0;">Movie Reviews</h2>
+        </a>
 
       </div>
     </section>
