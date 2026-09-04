@@ -2,9 +2,13 @@ import os
 import re
 import pandas as pd
 
+# Paths
 EXCEL_PATH = "Movie Archive Inputs.xlsx"
 OUTPUT_DIR = "movies"
 ARCHIVE_PATH = "movies-archive.html"
+
+# Panthers Color Theme Accent
+ACCENT_COLOR = "#0085CA"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -50,10 +54,28 @@ def format_rating(val):
     except ValueError:
         return "N/A"
 
+def format_transcript(raw_text):
+    """Formats transcript text, bolding and highlighting Jordan: and Darius:."""
+    if not raw_text or str(raw_text).strip().lower() in ["nan", ""]:
+        return "<p style='color: #666;'>Transcript coming soon.</p>"
+    
+    paragraphs = [p.strip() for p in str(raw_text).split("\n") if p.strip()]
+    formatted_p = []
+    
+    for p in paragraphs:
+        # Bold and highlight "Jordan:" and "Darius:" at start of line
+        p_highlighted = re.sub(
+            r'^(Jordan|Darius):', 
+            f'<strong style="color: {ACCENT_COLOR}; font-weight: bold;">\\1:</strong>', 
+            p
+        )
+        formatted_p.append(f"<p style='margin-bottom: 1rem; line-height: 1.6;'>{p_highlighted}</p>")
+        
+    return "".join(formatted_p)
+
 # Load Master Data & Transcripts Sheet
 xls = pd.ExcelFile(EXCEL_PATH)
 
-# Determine sheet names
 sheet_ratings = "Movie Ratings" if "Movie Ratings" in xls.sheet_names else xls.sheet_names[0]
 df_main = pd.read_excel(xls, sheet_name=sheet_ratings)
 
@@ -70,7 +92,6 @@ else:
     df = df_main
     df['transcript'] = ""
 
-# Prepare for Alphabetical Processing
 movie_list = []
 
 for idx, row in df.iterrows():
@@ -82,7 +103,6 @@ for idx, row in df.iterrows():
     slug = clean_slug(raw_title)
     sort_key = get_sort_key(raw_title)
     
-    # Determine First Letter Group (# for numbers, A-Z for letters)
     first_char = sort_key[0] if sort_key else "A"
     letter_group = first_char if first_char.isalpha() else "#"
 
@@ -99,12 +119,7 @@ for idx, row in df.iterrows():
     best_question = str(row.get("best_question", "")).strip() if pd.notna(row.get("best_question")) else ""
     major_themes = str(row.get("major_themes", "")).strip() if pd.notna(row.get("major_themes")) else ""
 
-    # Transcript formatting
-    raw_transcript = str(row.get("transcript", "")).strip() if pd.notna(row.get("transcript")) else ""
-    if raw_transcript and raw_transcript.lower() != "nan":
-        formatted_transcript = "".join([f"<p style='margin-bottom: 1rem;'>{p.strip()}</p>" for p in raw_transcript.split("\n") if p.strip()])
-    else:
-        formatted_transcript = "<p style='color: #666;'>Transcript coming soon.</p>"
+    formatted_transcript = format_transcript(row.get("transcript"))
 
     # YouTube embed handling
     yt_id = get_youtube_id(row.get("youtube_link"))
@@ -130,7 +145,7 @@ for idx, row in df.iterrows():
     if not show_notes_content:
         show_notes_content = "<p>Show notes available in full podcast audio.</p>"
 
-    # 1. WRITE INDIVIDUAL MOVIE PAGE
+    # 1. WRITE INDIVIDUAL MOVIE HTML PAGE
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,7 +157,7 @@ for idx, row in df.iterrows():
 <body>
     <main class="container" style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem;">
         <header style="text-align: center; margin-bottom: 2rem;">
-            <p style="color: #00c853; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">MOVIE REVIEW & SHOW NOTES</p>
+            <p style="color: {ACCENT_COLOR}; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;">MOVIE REVIEW & SHOW NOTES</p>
             <h1 style="font-size: 2.2rem; margin-top: 0.5rem;">{display_title}</h1>
         </header>
 
@@ -182,24 +197,23 @@ for idx, row in df.iterrows():
         f.write(html_content)
 
     movie_list.append({
-        'display_title': display_title,
+        'clean_title': clean_title,
         'slug': slug,
         'sort_key': sort_key,
         'letter_group': letter_group
     })
 
-# Sort movie list alphabetically by sort_key
+# Sort movie list alphabetically
 movie_list.sort(key=lambda x: x['sort_key'])
 
-# 2. BUILD ALPHABETICAL ARCHIVE PAGE WITH A-Z BUTTON NAV
+# 2. BUILD ALPHABETICAL ARCHIVE PAGE
 all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
 active_groups = set(m['letter_group'] for m in movie_list)
 
-# Generate Navigation Bar Buttons
 nav_buttons = []
 for g in all_groups:
     if g in active_groups:
-        nav_buttons.append(f'<a href="#group-{g}" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #00c853; border-radius: 4px; color: #00c853; text-decoration: none; font-weight: bold;">{g}</a>')
+        nav_buttons.append(f'<a href="#group-{g}" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid {ACCENT_COLOR}; border-radius: 4px; color: {ACCENT_COLOR}; text-decoration: none; font-weight: bold;">{g}</a>')
     else:
         nav_buttons.append(f'<span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">{g}</span>')
 
@@ -207,7 +221,6 @@ nav_bar_html = f'''<nav class="az-navigation" style="text-align: center; margin-
     {"".join(nav_buttons)}
 </nav>'''
 
-# Generate Letter Group Sections
 sections_html = ""
 grouped_movies = {}
 for m in movie_list:
@@ -219,20 +232,19 @@ for g in all_groups:
         cards = ""
         for item in grouped_movies[g]:
             cards += f'''
-            <a href="movies/{item['slug']}.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
-                <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">{item['display_title']}</h3>
-                <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+            <a href="movies/{item['slug']}.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
+                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">{item['clean_title']}</h3>
             </a>'''
             
         sections_html += f'''
         <section id="group-{g}" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #00c853; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">{g}</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+            <h2 style="font-size: 2rem; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">{g}</h2>
+            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 {cards}
             </div>
         </section>'''
 
-# 3. WRITE THE COMPLETE MOVIES-ARCHIVE.HTML PAGE
+# 3. WRITE MOVIES-ARCHIVE.HTML PAGE
 archive_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -262,4 +274,4 @@ archive_html = f"""<!DOCTYPE html>
 with open(ARCHIVE_PATH, "w", encoding="utf-8") as f:
     f.write(archive_html)
 
-print("Master build complete! All movie pages and alphabetical archive generated.")
+print("Updated build complete! Applied Panthers color theme, title-only cards, and transcript highlighting.")
