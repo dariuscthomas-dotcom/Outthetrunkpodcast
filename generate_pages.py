@@ -2,18 +2,12 @@ import os
 import re
 import pandas as pd
 
-# File paths
 EXCEL_PATH = "Movie Archive Inputs.xlsx"
 OUTPUT_DIR = "movies"
 
-# Create output folder if it doesn't exist
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def normalize_title(title):
-    """
-    Converts trailing articles like 'Dark Knight, The' or 'Godfather, A' 
-    to leading articles like 'The Dark Knight' or 'A Godfather'.
-    """
     title = str(title).strip()
     match = re.match(r"^(.*?),\s*(The|A|An)$", title, re.IGNORECASE)
     if match:
@@ -21,22 +15,19 @@ def normalize_title(title):
     return title
 
 def get_youtube_id(url):
-    """Extracts YouTube ID from URL."""
     if not isinstance(url, str):
         return None
     url = url.strip()
-    if not url or "youtube.com" not in url and "youtu.be" not in url:
+    if not url or ("youtube.com" not in url and "youtu.be" not in url):
         return None
     match = re.search(r"(?:v=|\/embed\/|\/1\/|\/v\/|https:\/\/youtu\.be\/|\/e\/|watch\?v=|^)([a-zA-Z0-9_-]{11})", url)
     return match.group(1) if match else None
 
 def clean_filename(title):
-    """Generates a clean URL slug like 'the-dark-knight.html'."""
     normalized = normalize_title(title)
     filename = re.sub(r"[^\w\s-]", "", normalized).strip().lower()
     return re.sub(r"[-\s]+", "-", filename) + ".html"
 
-# Load data
 df = pd.read_excel(EXCEL_PATH)
 
 for idx, row in df.iterrows():
@@ -44,10 +35,8 @@ for idx, row in df.iterrows():
     if not raw_title or raw_title == "nan":
         continue
 
-    # Normalize title (e.g., "Dark Knight, The" -> "The Dark Knight")
     clean_title = normalize_title(raw_title)
 
-    # Format Year & Title Header
     year_val = row.get("movie_year")
     if pd.notna(year_val) and str(year_val).strip() and str(year_val).strip() != "nan":
         year_str = str(int(float(year_val)))
@@ -55,37 +44,25 @@ for idx, row in df.iterrows():
     else:
         display_title = clean_title
 
-    # Ratings formatting
-    jordan_rating = f"{row.get('jordan_rating', 'N/A')} / 5" if pd.notna(row.get('jordan_rating')) and str(row.get('jordan_rating')) != "nan" else "N/A"
-    darius_rating = f"{row.get('darius_rating', 'N/A')} / 5" if pd.notna(row.get('darius_rating')) and str(row.get('darius_rating')) != "nan" else "N/A"
+    jordan_rating = f"{int(row.get('jordan_rating')) if float(row.get('jordan_rating')).is_integer() else row.get('jordan_rating')} / 5" if pd.notna(row.get('jordan_rating')) and str(row.get('jordan_rating')) != "nan" else "N/A"
+    darius_rating = f"{int(row.get('darius_rating')) if float(row.get('darius_rating')).is_integer() else row.get('darius_rating')} / 5" if pd.notna(row.get('darius_rating')) and str(row.get('darius_rating')) != "nan" else "N/A"
 
-    # Show Notes fields
     best_question = str(row.get("best_question", "")).strip() if pd.notna(row.get("best_question")) else ""
     major_themes = str(row.get("major_themes", "")).strip() if pd.notna(row.get("major_themes")) else ""
 
-    # YouTube embed handling
     yt_id = get_youtube_id(row.get("youtube_link"))
-    if yt_id:
-        embed_html = f'''
-        <div class="video-container" style="margin-bottom: 2rem;">
-            <iframe width="100%" height="400" src="https://www.youtube.com/embed/{yt_id}" 
-                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen style="border-radius: 8px;"></iframe>
-        </div>'''
-    else:
-        embed_html = ""
+    embed_html = f'''<div class="video-container" style="margin-bottom: 2rem;">
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/{yt_id}" frameborder="0" allowfullscreen style="border-radius: 8px;"></iframe>
+    </div>''' if yt_id else ""
 
-    # Build Show Notes block
     show_notes_content = ""
     if best_question and best_question != "nan":
-        show_notes_content += f"<p><strong>Best Question:</strong> {best_question}</p>\n"
+        show_notes_content += f"<p><strong>Best Question:</strong> {best_question}</p>"
     if major_themes and major_themes != "nan":
-        show_notes_content += f"<p><strong>Major Themes:</strong> {major_themes}</p>\n"
-    
+        show_notes_content += f"<p><strong>Major Themes:</strong> {major_themes}</p>"
     if not show_notes_content:
         show_notes_content = "<p>Show notes available in full podcast audio.</p>"
 
-    # HTML Template
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,13 +104,11 @@ for idx, row in df.iterrows():
         </section>
     </main>
 </body>
-</html>
-"""
+</html>"""
 
     file_name = clean_filename(raw_title)
     file_path = os.path.join(OUTPUT_DIR, file_name)
-    
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-print("Finished generating all movie pages successfully!")
+print("Generated all static HTML pages without JS dependency.")
