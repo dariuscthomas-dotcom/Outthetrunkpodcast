@@ -3,7 +3,7 @@ import re
 import pandas as pd
 
 # Paths
-EXCEL_PATH = "Movie Archive Inputs.xlsx"
+EXCEL_PATH = "Movie Archive Inputs_3.xlsx" if os.path.exists("Movie Archive Inputs_3.xlsx") else "Movie Archive Inputs.xlsx"
 OUTPUT_DIR = "movies"
 ARCHIVE_PATH = "movies-archive.html"
 
@@ -63,7 +63,6 @@ def format_transcript(raw_text):
     formatted_p = []
     
     for p in paragraphs:
-        # Bold, underline, and highlight "Jordan:" and "Darius:" at start of line
         p_highlighted = re.sub(
             r'^(Jordan|Darius):', 
             f'<u style="color: {ACCENT_COLOR}; font-weight: bold;">\\1:</u>', 
@@ -94,6 +93,9 @@ else:
 
 movie_list = []
 
+# Get Column E name dynamically (index 4)
+col_e_name = df.columns[4]
+
 for idx, row in df.iterrows():
     raw_title = str(row.get("movie_title", "")).strip()
     if not raw_title or raw_title == "nan":
@@ -116,8 +118,10 @@ for idx, row in df.iterrows():
     jordan_rating = format_rating(row.get('jordan_rating'))
     darius_rating = format_rating(row.get('darius_rating'))
 
-    best_question = str(row.get("best_question", "")).strip() if pd.notna(row.get("best_question")) else ""
-    major_themes = str(row.get("major_themes", "")).strip() if pd.notna(row.get("major_themes")) else ""
+    # Retrieve Column E content directly
+    show_notes_html = str(row.get(col_e_name, "")).strip() if pd.notna(row.get(col_e_name)) else ""
+    if not show_notes_html or show_notes_html == "nan":
+        show_notes_html = "<p>Show notes available in full podcast audio.</p>"
 
     formatted_transcript = format_transcript(row.get("transcript"))
 
@@ -136,15 +140,6 @@ for idx, row in df.iterrows():
     else:
         embed_html = ""
 
-    # Show Notes block
-    show_notes_content = ""
-    if best_question and best_question != "nan":
-        show_notes_content += f"<p><strong>Best Question:</strong> {best_question}</p>\n"
-    if major_themes and major_themes != "nan":
-        show_notes_content += f"<p><strong>Major Themes:</strong> {major_themes}</p>\n"
-    if not show_notes_content:
-        show_notes_content = "<p>Show notes available in full podcast audio.</p>"
-
     # 1. WRITE INDIVIDUAL MOVIE HTML PAGE
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -153,6 +148,35 @@ for idx, row in df.iterrows():
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{display_title} - Out The Trunk</title>
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        .show-notes-card {{
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            background: #ffffff;
+            line-height: 1.6;
+        }}
+        .show-notes-card h2 {{
+            font-size: 1.4rem;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }}
+        .show-notes-card h3 {{
+            font-size: 1.1rem;
+            color: {ACCENT_COLOR};
+            margin-top: 1.2rem;
+            margin-bottom: 0.5rem;
+        }}
+        .show-notes-card ul {{
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }}
+        .show-notes-card li {{
+            margin-bottom: 0.3rem;
+        }}
+    </style>
 </head>
 <body>
     <main class="container" style="max-width: 800px; margin: 0 auto; padding: 2rem 1rem;">
@@ -174,11 +198,8 @@ for idx, row in df.iterrows():
             </div>
         </section>
 
-        <section class="card" style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem;">
-            <h2 style="font-size: 1.4rem; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Show Notes & Highlights</h2>
-            <div style="margin-top: 1rem; line-height: 1.6;">
-                {show_notes_content}
-            </div>
+        <section class="show-notes-card">
+            {show_notes_html}
         </section>
 
         <section class="card" style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
@@ -203,7 +224,6 @@ for idx, row in df.iterrows():
         'letter_group': letter_group
     })
 
-# Sort movie list alphabetically
 movie_list.sort(key=lambda x: x['sort_key'])
 
 # 2. BUILD ALPHABETICAL ARCHIVE PAGE
@@ -244,7 +264,7 @@ for g in all_groups:
             </div>
         </section>'''
 
-# 3. WRITE MOVIES-ARCHIVE.HTML PAGE WITH EMBEDDED STYLES
+# 3. WRITE MOVIES-ARCHIVE.HTML PAGE
 archive_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -331,4 +351,4 @@ archive_html = f"""<!DOCTYPE html>
 with open(ARCHIVE_PATH, "w", encoding="utf-8") as f:
     f.write(archive_html)
 
-print("Master script complete! Archive cards styled with hover effects and underlined transcript names.")
+print("Script execution complete! Replaced show notes card with Column E content.")
