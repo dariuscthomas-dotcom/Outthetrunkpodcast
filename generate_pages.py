@@ -2,12 +2,15 @@ import os
 import re
 import pandas as pd
 
+# Paths
 EXCEL_PATH = "Movie Archive Inputs.xlsx"
 OUTPUT_DIR = "movies"
+ARCHIVE_PATH = "movies-archive.html"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def normalize_title(title):
+    """Converts 'Best Man, The' to 'The Best Man'."""
     title = str(title).strip()
     match = re.match(r"^(.*?),\s*(The|A|An)$", title, re.IGNORECASE)
     if match:
@@ -15,6 +18,7 @@ def normalize_title(title):
     return title
 
 def get_youtube_id(url):
+    """Extracts YouTube ID from link."""
     if not isinstance(url, str):
         return None
     url = url.strip()
@@ -23,12 +27,14 @@ def get_youtube_id(url):
     match = re.search(r"(?:v=|\/embed\/|\/1\/|\/v\/|https:\/\/youtu\.be\/|\/e\/|watch\?v=|^)([a-zA-Z0-9_-]{11})", url)
     return match.group(1) if match else None
 
-def clean_filename(title):
+def clean_slug(title):
+    """Generates URL slug like 'the-best-man'."""
     normalized = normalize_title(title)
     filename = re.sub(r"[^\w\s-]", "", normalized).strip().lower()
-    return re.sub(r"[-\s]+", "-", filename) + ".html"
+    return re.sub(r"[-\s]+", "-", filename)
 
 def format_rating(val):
+    """Formats ratings cleanly without trailing decimals."""
     if pd.isna(val) or str(val).strip().lower() in ["nan", "n/a", ""]:
         return "N/A"
     try:
@@ -37,7 +43,10 @@ def format_rating(val):
     except ValueError:
         return "N/A"
 
+# Read master data
 df = pd.read_excel(EXCEL_PATH)
+
+archive_cards = []
 
 for idx, row in df.iterrows():
     raw_title = str(row.get("movie_title", "")).strip()
@@ -45,6 +54,7 @@ for idx, row in df.iterrows():
         continue
 
     clean_title = normalize_title(raw_title)
+    slug = clean_slug(raw_title)
 
     year_val = row.get("movie_year")
     if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""]:
@@ -59,6 +69,7 @@ for idx, row in df.iterrows():
     best_question = str(row.get("best_question", "")).strip() if pd.notna(row.get("best_question")) else ""
     major_themes = str(row.get("major_themes", "")).strip() if pd.notna(row.get("major_themes")) else ""
 
+    # YouTube embed handling
     yt_id = get_youtube_id(row.get("youtube_link"))
     if yt_id:
         embed_html = f'''
@@ -73,6 +84,7 @@ for idx, row in df.iterrows():
     else:
         embed_html = ""
 
+    # Build Show Notes block
     show_notes_content = ""
     if best_question and best_question != "nan":
         show_notes_content += f"<p><strong>Best Question:</strong> {best_question}</p>\n"
@@ -81,6 +93,7 @@ for idx, row in df.iterrows():
     if not show_notes_content:
         show_notes_content = "<p>Show notes available in full podcast audio.</p>"
 
+    # 1. WRITE INDIVIDUAL MOVIE HTML PAGE
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -125,10 +138,42 @@ for idx, row in df.iterrows():
 </html>
 """
 
-    file_name = clean_filename(raw_title)
-    file_path = os.path.join(OUTPUT_DIR, file_name)
-    
+    file_path = os.path.join(OUTPUT_DIR, f"{slug}.html")
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-print("HTML generation complete.")
+    # 2. SAVE CARD DATA FOR ARCHIVE PAGE
+    archive_cards.append(f'''
+        <a href="movies/{slug}.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">{display_title}</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>''')
+
+# 3. WRITE THE COMPLETE MOVIES-ARCHIVE.HTML PAGE
+archive_html = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Archive - Out The Trunk</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
+        <header style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Movie Archive</h1>
+            <p style="color: #666;">Browse all movie reviews and show notes</p>
+        </header>
+
+        <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+            {"".join(archive_cards)}
+        </div>
+    </main>
+</body>
+</html>
+"""
+
+with open(ARCHIVE_PATH, "w", encoding="utf-8") as f:
+    f.write(archive_html)
+
+print("ALL movie pages and movies-archive.html generated successfully in one shot!")

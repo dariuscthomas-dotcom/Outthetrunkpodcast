@@ -1,323 +1,165 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Movie Review Archive | Out The Trunk</title>
-  <meta name="description" content="Complete alphabetical archive of all movie reviews, show notes, ratings, and transcripts from Out The Trunk podcast." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-  <style>
-    .alphabet-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      justify-content: center;
-      margin: 1.5rem 0 2.5rem 0;
-    }
-    .alphabet-nav a {
-      color: #1D1160;
-      background: #FFFFFF;
-      border: 1px solid #CBD5E0;
-      padding: 0.35rem 0.65rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-    .alphabet-nav a:hover {
-      background: #00788C;
-      color: #FFFFFF;
-      border-color: #00788C;
-    }
-    .archive-group {
-      margin-bottom: 2.5rem;
-      border-bottom: 1px solid #E2E8F0;
-      padding-bottom: 1.5rem;
-    }
-    .archive-letter {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #00788C;
-      margin-bottom: 1rem;
-    }
-    .archive-list {
-      list-style: none;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 0.75rem 1.5rem;
-    }
-    .archive-list a {
-      color: #1D1160;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1.05rem;
-      transition: color 0.2s ease;
-    }
-    .archive-list a:hover {
-      color: #00788C;
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Archive - Out The Trunk</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body style="background-color: #F8FAFC; color: #1D1160; font-family: 'Inter', sans-serif;">
+<body>
+    <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
+        <header style="text-align: center; margin-bottom: 2rem;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Movie Archive</h1>
+            <p style="color: #666;">Browse all movie reviews and show notes</p>
+        </header>
 
-  <!-- HEADER -->
-  <header class="site-header" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 1rem 1.5rem;">
-    <a class="brand" href="index.html" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.5rem;">
-      <span class="brand-text">Out The Trunk</span>
-    </a>
-    <nav class="site-nav">
-      <a href="index.html#woom" style="color: #FFFFFF;">WOOM</a>
-      <a href="index.html#movies" style="color: #FFFFFF;">Movies</a>
-      <a href="movies-archive.html" style="color: #00788C; font-weight: 700;">Movie Archive</a>
-      <a href="index.html#hosts" style="color: #FFFFFF;">Meet The Hosts</a>
-    </nav>
-  </header>
-
-  <main style="width: 100%; max-width: 1000px; margin: 0 auto; padding: 3rem 1.25rem;">
-    
-    <div style="text-align: center; margin-bottom: 2rem;">
-      <p style="color: #00788C; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem;">The Complete Collection</p>
-      <h1 style="font-size: clamp(2rem, 5vw, 3rem); color: #1D1160;">Movie Review Archive</h1>
-      <p style="color: #4A5568; margin-top: 0.5rem;">Browse all our reviews, ratings, show notes, and transcripts alphabetically.</p>
-    </div>
-
-    <!-- ALPHABET JUMP LINKS -->
-    <nav class="alphabet-nav" aria-label="Alphabetical navigation">
-      <a href="#letter-123">#</a>
-      <a href="#letter-A">A</a>
-      <a href="#letter-B">B</a>
-      <a href="#letter-C">C</a>
-      <a href="#letter-D">D</a>
-      <a href="#letter-E">E</a>
-      <a href="#letter-F">F</a>
-      <a href="#letter-G">G</a>
-      <a href="#letter-H">H</a>
-      <a href="#letter-I">I</a>
-      <a href="#letter-J">J</a>
-      <a href="#letter-L">L</a>
-      <a href="#letter-M">M</a>
-      <a href="#letter-N">N</a>
-      <a href="#letter-O">O</a>
-      <a href="#letter-P">P</a>
-      <a href="#letter-R">R</a>
-      <a href="#letter-S">S</a>
-      <a href="#letter-T">T</a>
-      <a href="#letter-U">U</a>
-      <a href="#letter-W">W</a>
-      <a href="#letter-Y">Y</a>
-    </nav>
-
-    <!-- ARCHIVE LISTINGS -->
-    <div class="archive-container">
-
-      <!-- NUMERIC -->
-      <section id="letter-123" class="archive-group">
-        <h2 class="archive-letter">#</h2>
-        <ul class="archive-list">
-          <li><a href="movies/12-angry-men.html">12 Angry Men</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION A -->
-      <section id="letter-A" class="archive-group">
-        <h2 class="archive-letter">A</h2>
-        <ul class="archive-list">
-          <li><a href="movies/american-beauty.html">American Beauty</a></li>
-          <li><a href="movies/arrival.html">Arrival</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION B -->
-      <section id="letter-B" class="archive-group">
-        <h2 class="archive-letter">B</h2>
-        <ul class="archive-list">
-          <li><a href="movies/baby-driver.html">Baby Driver</a></li>
-          <li><a href="movies/backrooms.html">Backrooms</a></li>
-          <li><a href="movies/baps.html">B.A.P.S.</a></li>
-          <li><a href="movies/best-man.html">The Best Man</a></li>
-          <li><a href="movies/boomerang.html">Boomerang</a></li>
-          <li><a href="movies/brown-sugar.html">Brown Sugar</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION C -->
-      <section id="letter-C" class="archive-group">
-        <h2 class="archive-letter">C</h2>
-        <ul class="archive-list">
-          <li><a href="movies/children-of-men.html">Children of Men</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION D -->
-      <section id="letter-D" class="archive-group">
-        <h2 class="archive-letter">D</h2>
-        <ul class="archive-list">
-          <li><a href="movies/dark-knight.html">The Dark Knight</a></li>
-          <li><a href="movies/do-the-right-thing.html">Do The Right Thing</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION E -->
-      <section id="letter-E" class="archive-group">
-        <h2 class="archive-letter">E</h2>
-        <ul class="archive-list">
-          <li><a href="movies/eternal-sunshine.html">Eternal Sunshine of the Spotless Mind</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION F -->
-      <section id="letter-F" class="archive-group">
-        <h2 class="archive-letter">F</h2>
-        <ul class="archive-list">
-          <li><a href="movies/friday.html">Friday</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION G -->
-      <section id="letter-G" class="archive-group">
-        <h2 class="archive-letter">G</h2>
-        <ul class="archive-list">
-          <li><a href="movies/game-night.html">Game Night</a></li>
-          <li><a href="movies/good-boys.html">Good Boys</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION H -->
-      <section id="letter-H" class="archive-group">
-        <h2 class="archive-letter">H</h2>
-        <ul class="archive-list">
-          <li><a href="movies/hustlers.html">Hustlers</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION I -->
-      <section id="letter-I" class="archive-group">
-        <h2 class="archive-letter">I</h2>
-        <ul class="archive-list">
-          <li><a href="movies/inside-llewyn-davis.html">Inside Llewyn Davis</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION J -->
-      <section id="letter-J" class="archive-group">
-        <h2 class="archive-letter">J</h2>
-        <ul class="archive-list">
-          <li><a href="movies/judge.html">The Judge</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION L -->
-      <section id="letter-L" class="archive-group">
-        <h2 class="archive-letter">L</h2>
-        <ul class="archive-list">
-          <li><a href="movies/love-and-basketball.html">Love &amp; Basketball</a></li>
-          <li><a href="movies/love-jones.html">Love Jones</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION M -->
-      <section id="letter-M" class="archive-group">
-        <h2 class="archive-letter">M</h2>
-        <ul class="archive-list">
-          <li><a href="movies/mrs-doubtfire.html">Mrs. Doubtfire</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION N -->
-      <section id="letter-N" class="archive-group">
-        <h2 class="archive-letter">N</h2>
-        <ul class="archive-list">
-          <li><a href="movies/nick-and-norah.html">Nick &amp; Norah's Infinite Playlist</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION O -->
-      <section id="letter-O" class="archive-group">
-        <h2 class="archive-letter">O</h2>
-        <ul class="archive-list">
-          <li><a href="movies/obsession.html">Obsession</a></li>
-          <li><a href="movies/odyssey.html">The Odyssey</a></li>
-          <li><a href="movies/oscar-preview.html">Oscar Preview Special</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION P -->
-      <section id="letter-P" class="archive-group">
-        <h2 class="archive-letter">P</h2>
-        <ul class="archive-list">
-          <li><a href="movies/photograph.html">The Photograph</a></li>
-          <li><a href="movies/prestige.html">The Prestige</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION R -->
-      <section id="letter-R" class="archive-group">
-        <h2 class="archive-letter">R</h2>
-        <ul class="archive-list">
-          <li><a href="movies/reservoir-dogs.html">Reservoir Dogs</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION S -->
-      <section id="letter-S" class="archive-group">
-        <h2 class="archive-letter">S</h2>
-        <ul class="archive-list">
-          <li><a href="movies/sandlot.html">The Sandlot</a></li>
-          <li><a href="movies/sleepy-hollow.html">Sleepy Hollow</a></li>
-          <li><a href="movies/state-property.html">State Property</a></li>
-          <li><a href="movies/still-alice.html">Still Alice</a></li>
-          <li><a href="movies/stranger-than-fiction.html">Stranger Than Fiction</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION T -->
-      <section id="letter-T" class="archive-group">
-        <h2 class="archive-letter">T</h2>
-        <ul class="archive-list">
-          <li><a href="movies/take-me-home-tonight.html">Take Me Home Tonight</a></li>
-          <li><a href="movies/tales-from-the-hood.html">Tales from the Hood</a></li>
-          <li><a href="movies/that-awkward-moment.html">That Awkward Moment</a></li>
-          <li><a href="movies/this-christmas.html">This Christmas</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION U -->
-      <section id="letter-U" class="archive-group">
-        <h2 class="archive-letter">U</h2>
-        <ul class="archive-list">
-          <li><a href="movies/undercover-brother.html">Undercover Brother</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION W -->
-      <section id="letter-W" class="archive-group">
-        <h2 class="archive-letter">W</h2>
-        <ul class="archive-list">
-          <li><a href="movies/weapons.html">Weapons</a></li>
-          <li><a href="movies/whiplash.html">Whiplash</a></li>
-          <li><a href="movies/white-men-cant-jump.html">White Men Can't Jump</a></li>
-        </ul>
-      </section>
-
-      <!-- SECTION Y -->
-      <section id="letter-Y" class="archive-group">
-        <h2 class="archive-letter">Y</h2>
-        <ul class="archive-list">
-          <li><a href="movies/youre-next.html">You're Next</a></li>
-        </ul>
-      </section>
-
-    </div>
-  </main>
-
-  <footer style="background-color: #1D1160; color: #FFFFFF; padding: 2rem 1.25rem; text-align: center; border-top: 4px solid #00788C;">
-    <p style="font-weight: 700; margin-bottom: 0.25rem;">Out The Trunk with Jordan and Darius</p>
-    <p style="color: #A1A8AC; font-size: 0.85rem;">Movies. Culture.</p>
-  </footer>
-
+        <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+            
+        <a href="movies/12-angry-men.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">12 Angry Men (1957)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/american-beauty.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">American Beauty (1999)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/arrival.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Arrival (2016)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/baby-driver.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Baby Driver (2017)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/backrooms.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Backrooms (2026)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/baps.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">B.A.P.S. (1997)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-best-man.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Best Man (1999)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/boomerang.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Boomerang (1992)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/brown-sugar.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Brown Sugar (2002)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/children-of-men.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Children of Men (2006)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-dark-knight.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Dark Knight (2008)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/friday.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Friday (1995)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/game-night.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Game Night (2018)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/good-boys.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Good Boys (2019)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-judge.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Judge (2014)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/juror-no-2.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Juror No. 2 (2024)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/love-basketball.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Love & Basketball (2000)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/love-jones.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Love Jones (1997)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/mrs-doubtfire.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Mrs. Doubtfire (1993)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/nick-norahs-infinite-playlist.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Nick & Norah's Infinite Playlist (2008)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/obsession.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Obsession (2026)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-odyssey.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Odyssey (2026)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-prestige.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Prestige (2006)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/reservoir-dogs.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Reservoir Dogs (1992)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-sandlot.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Sandlot (1993)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/sleepy-hollow.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Sleepy Hollow (1999)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/state-property.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">State Property (2002)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/still-alice.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Still Alice (2014)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/stranger-than-fiction.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Stranger Than Fiction (2006)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/take-me-home-tonight.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Take Me Home Tonight (2011)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-drama.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Drama (2026)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/the-photograph.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">The Photograph (2020)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/this-christmas.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">This Christmas (2007)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/weapons.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">Weapons (2025)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/white-men-cant-jump.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">White Men Can't Jump (1992)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        <a href="movies/youre-next.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">You're Next (2011)</h3>
+            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+        </a>
+        </div>
+    </main>
 </body>
 </html>
