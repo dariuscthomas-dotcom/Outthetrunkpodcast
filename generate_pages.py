@@ -2,7 +2,6 @@ import os
 import re
 import pandas as pd
 
-# Paths
 EXCEL_PATH = "Movie Archive Inputs.xlsx"
 OUTPUT_DIR = "movies"
 ARCHIVE_PATH = "movies-archive.html"
@@ -16,6 +15,14 @@ def normalize_title(title):
     if match:
         return f"{match.group(2)} {match.group(1)}"
     return title
+
+def get_sort_key(title):
+    """Strips leading 'The ', 'A ', 'An ' for clean alphabetical sorting."""
+    normalized = normalize_title(title).upper()
+    for prefix in ["THE ", "A ", "AN "]:
+        if normalized.startswith(prefix):
+            return normalized[len(prefix):]
+    return normalized
 
 def get_youtube_id(url):
     """Extracts YouTube ID from link."""
@@ -43,10 +50,28 @@ def format_rating(val):
     except ValueError:
         return "N/A"
 
-# Read master data
-df = pd.read_excel(EXCEL_PATH)
+# Load Master Data & Transcripts Sheet
+xls = pd.ExcelFile(EXCEL_PATH)
 
-archive_cards = []
+# Determine sheet names
+sheet_ratings = "Movie Ratings" if "Movie Ratings" in xls.sheet_names else xls.sheet_names[0]
+df_main = pd.read_excel(xls, sheet_name=sheet_ratings)
+
+if "Transcripts" in xls.sheet_names or "transcripts" in xls.sheet_names:
+    trans_sheet = "Transcripts" if "Transcripts" in xls.sheet_names else "transcripts"
+    df_transcripts = pd.read_excel(xls, sheet_name=trans_sheet)
+    df_transcripts.columns = [str(c).strip().lower() for c in df_transcripts.columns]
+    if "movie_title" in df_transcripts.columns and "transcript" in df_transcripts.columns:
+        df = pd.merge(df_main, df_transcripts[['movie_title', 'transcript']], on="movie_title", how="left")
+    else:
+        df = df_main
+        df['transcript'] = ""
+else:
+    df = df_main
+    df['transcript'] = ""
+
+# Prepare for Alphabetical Processing
+movie_list = []
 
 for idx, row in df.iterrows():
     raw_title = str(row.get("movie_title", "")).strip()
@@ -55,6 +80,11 @@ for idx, row in df.iterrows():
 
     clean_title = normalize_title(raw_title)
     slug = clean_slug(raw_title)
+    sort_key = get_sort_key(raw_title)
+    
+    # Determine First Letter Group (# for numbers, A-Z for letters)
+    first_char = sort_key[0] if sort_key else "A"
+    letter_group = first_char if first_char.isalpha() else "#"
 
     year_val = row.get("movie_year")
     if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""]:
@@ -68,6 +98,13 @@ for idx, row in df.iterrows():
 
     best_question = str(row.get("best_question", "")).strip() if pd.notna(row.get("best_question")) else ""
     major_themes = str(row.get("major_themes", "")).strip() if pd.notna(row.get("major_themes")) else ""
+
+    # Transcript formatting
+    raw_transcript = str(row.get("transcript", "")).strip() if pd.notna(row.get("transcript")) else ""
+    if raw_transcript and raw_transcript.lower() != "nan":
+        formatted_transcript = "".join([f"<p style='margin-bottom: 1rem;'>{p.strip()}</p>" for p in raw_transcript.split("\n") if p.strip()])
+    else:
+        formatted_transcript = "<p style='color: #666;'>Transcript coming soon.</p>"
 
     # YouTube embed handling
     yt_id = get_youtube_id(row.get("youtube_link"))
@@ -84,7 +121,7 @@ for idx, row in df.iterrows():
     else:
         embed_html = ""
 
-    # Build Show Notes block
+    # Show Notes block
     show_notes_content = ""
     if best_question and best_question != "nan":
         show_notes_content += f"<p><strong>Best Question:</strong> {best_question}</p>\n"
@@ -93,7 +130,7 @@ for idx, row in df.iterrows():
     if not show_notes_content:
         show_notes_content = "<p>Show notes available in full podcast audio.</p>"
 
-    # 1. WRITE INDIVIDUAL MOVIE HTML PAGE
+    # 1. WRITE INDIVIDUAL MOVIE PAGE
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -131,7 +168,9 @@ for idx, row in df.iterrows():
 
         <section class="card" style="border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.5rem;">
             <h2 style="font-size: 1.4rem; margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
-            <p style="color: #666; margin-top: 1rem; line-height: 1.6;"></p>
+            <div style="margin-top: 1rem; line-height: 1.6;">
+                {formatted_transcript}
+            </div>
         </section>
     </main>
 </body>
@@ -142,12 +181,56 @@ for idx, row in df.iterrows():
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    # 2. SAVE CARD DATA FOR ARCHIVE PAGE
-    archive_cards.append(f'''
-        <a href="movies/{slug}.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
-            <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">{display_title}</h3>
-            <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
-        </a>''')
+    movie_list.append({
+        'display_title': display_title,
+        'slug': slug,
+        'sort_key': sort_key,
+        'letter_group': letter_group
+    })
+
+# Sort movie list alphabetically by sort_key
+movie_list.sort(key=lambda x: x['sort_key'])
+
+# 2. BUILD ALPHABETICAL ARCHIVE PAGE WITH A-Z BUTTON NAV
+all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
+active_groups = set(m['letter_group'] for m in movie_list)
+
+# Generate Navigation Bar Buttons
+nav_buttons = []
+for g in all_groups:
+    if g in active_groups:
+        nav_buttons.append(f'<a href="#group-{g}" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #00c853; border-radius: 4px; color: #00c853; text-decoration: none; font-weight: bold;">{g}</a>')
+    else:
+        nav_buttons.append(f'<span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">{g}</span>')
+
+nav_bar_html = f'''<nav class="az-navigation" style="text-align: center; margin-bottom: 2.5rem; line-height: 2;">
+    {"".join(nav_buttons)}
+</nav>'''
+
+# Generate Letter Group Sections
+sections_html = ""
+grouped_movies = {}
+for m in movie_list:
+    g = m['letter_group']
+    grouped_movies.setdefault(g, []).append(m)
+
+for g in all_groups:
+    if g in grouped_movies:
+        cards = ""
+        for item in grouped_movies[g]:
+            cards += f'''
+            <a href="movies/{item['slug']}.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff;">
+                <h3 style="margin: 0 0 0.5rem 0; font-size: 1.2rem; color: #111;">{item['display_title']}</h3>
+                <p style="margin: 0; color: #00c853; font-weight: bold; font-size: 0.9rem;">View Review & Show Notes &rarr;</p>
+            </a>'''
+            
+        sections_html += f'''
+        <section id="group-{g}" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
+            <h2 style="font-size: 2rem; border-bottom: 2px solid #00c853; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">{g}</h2>
+            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                {cards}
+            </div>
+        </section>'''
 
 # 3. WRITE THE COMPLETE MOVIES-ARCHIVE.HTML PAGE
 archive_html = f"""<!DOCTYPE html>
@@ -157,17 +240,20 @@ archive_html = f"""<!DOCTYPE html>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Archive - Out The Trunk</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        html {{ scroll-behavior: smooth; }}
+    </style>
 </head>
 <body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <header style="text-align: center; margin-bottom: 2rem;">
+        <header style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Movie Archive</h1>
             <p style="color: #666;">Browse all movie reviews and show notes</p>
         </header>
 
-        <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
-            {"".join(archive_cards)}
-        </div>
+        {nav_bar_html}
+
+        {sections_html}
     </main>
 </body>
 </html>
@@ -176,4 +262,4 @@ archive_html = f"""<!DOCTYPE html>
 with open(ARCHIVE_PATH, "w", encoding="utf-8") as f:
     f.write(archive_html)
 
-print("ALL movie pages and movies-archive.html generated successfully in one shot!")
+print("Master build complete! All movie pages and alphabetical archive generated.")
