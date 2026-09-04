@@ -2,18 +2,12 @@ import os
 import re
 import pandas as pd
 
-# File paths
 EXCEL_PATH = "Movie Archive Inputs.xlsx"
 OUTPUT_DIR = "movies"
 
-# Create output folder if it doesn't exist
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def normalize_title(title):
-    """
-    Converts trailing articles like 'Dark Knight, The' or 'Godfather, A' 
-    to leading articles like 'The Dark Knight' or 'A Godfather'.
-    """
     title = str(title).strip()
     match = re.match(r"^(.*?),\s*(The|A|An)$", title, re.IGNORECASE)
     if match:
@@ -21,7 +15,6 @@ def normalize_title(title):
     return title
 
 def get_youtube_id(url):
-    """Extracts YouTube ID from URL."""
     if not isinstance(url, str):
         return None
     url = url.strip()
@@ -31,24 +24,19 @@ def get_youtube_id(url):
     return match.group(1) if match else None
 
 def clean_filename(title):
-    """Generates a clean URL slug like 'the-dark-knight.html'."""
     normalized = normalize_title(title)
     filename = re.sub(r"[^\w\s-]", "", normalized).strip().lower()
     return re.sub(r"[-\s]+", "-", filename) + ".html"
 
 def format_rating(val):
-    """Formats rating value to clean integer/float string."""
     if pd.isna(val) or str(val).strip().lower() in ["nan", "n/a", ""]:
         return "N/A"
     try:
         num = float(val)
-        if num.is_integer():
-            return f"{int(num)} / 5"
-        return f"{num} / 5"
+        return f"{int(num)} / 5" if num.is_integer() else f"{num} / 5"
     except ValueError:
         return "N/A"
 
-# Load master data
 df = pd.read_excel(EXCEL_PATH)
 
 for idx, row in df.iterrows():
@@ -56,54 +44,43 @@ for idx, row in df.iterrows():
     if not raw_title or raw_title == "nan":
         continue
 
-    # Normalize title (e.g., "Best Man, The" -> "The Best Man")
     clean_title = normalize_title(raw_title)
 
-    # Format Year & Title Header cleanly without empty ()
     year_val = row.get("movie_year")
-    if pd.notna(year_val) and str(year_val).strip() and str(year_val).strip() != "nan":
+    if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""]:
         year_str = str(int(float(year_val)))
         display_title = f"{clean_title} ({year_str})"
     else:
         display_title = clean_title
 
-    # Ratings formatting
     jordan_rating = format_rating(row.get('jordan_rating'))
     darius_rating = format_rating(row.get('darius_rating'))
 
-    # Show Notes fields
     best_question = str(row.get("best_question", "")).strip() if pd.notna(row.get("best_question")) else ""
     major_themes = str(row.get("major_themes", "")).strip() if pd.notna(row.get("major_themes")) else ""
 
-    # YouTube embed with Error 153 fix and responsive wrapper
     yt_id = get_youtube_id(row.get("youtube_link"))
     if yt_id:
         embed_html = f'''
         <div class="video-container" style="margin-bottom: 2rem; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
-            <iframe 
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
                 src="https://www.youtube-nocookie.com/embed/{yt_id}" 
-                title="{display_title}"
-                frameborder="0" 
+                title="{display_title}" frameborder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen>
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
             </iframe>
         </div>'''
     else:
         embed_html = ""
 
-    # Build Show Notes block
     show_notes_content = ""
     if best_question and best_question != "nan":
         show_notes_content += f"<p><strong>Best Question:</strong> {best_question}</p>\n"
     if major_themes and major_themes != "nan":
         show_notes_content += f"<p><strong>Major Themes:</strong> {major_themes}</p>\n"
-    
     if not show_notes_content:
         show_notes_content = "<p>Show notes available in full podcast audio.</p>"
 
-    # Pure Static HTML Template
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,4 +131,4 @@ for idx, row in df.iterrows():
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-print("Finished generating all movie pages successfully!")
+print("HTML generation complete.")
