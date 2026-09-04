@@ -9,21 +9,31 @@ OUTPUT_DIR = "movies"
 # Create output folder if it doesn't exist
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Helper function to extract YouTube video ID from standard or short links
+def normalize_title(title):
+    """
+    Converts trailing articles like 'Dark Knight, The' or 'Godfather, A' 
+    to leading articles like 'The Dark Knight' or 'A Godfather'.
+    """
+    title = str(title).strip()
+    match = re.match(r"^(.*?),\s*(The|A|An)$", title, re.IGNORECASE)
+    if match:
+        return f"{match.group(2)} {match.group(1)}"
+    return title
+
 def get_youtube_id(url):
+    """Extracts YouTube ID from URL."""
     if not isinstance(url, str):
         return None
     url = url.strip()
     if not url or "youtube.com" not in url and "youtu.be" not in url:
         return None
-    
-    # Extract ID from embed, watch?v=, or shortlink format
     match = re.search(r"(?:v=|\/embed\/|\/1\/|\/v\/|https:\/\/youtu\.be\/|\/e\/|watch\?v=|^)([a-zA-Z0-9_-]{11})", url)
     return match.group(1) if match else None
 
-# Helper function to sanitize movie titles for clean HTML filenames
 def clean_filename(title):
-    filename = re.sub(r"[^\w\s-]", "", str(title)).strip().lower()
+    """Generates a clean URL slug like 'the-dark-knight.html'."""
+    normalized = normalize_title(title)
+    filename = re.sub(r"[^\w\s-]", "", normalized).strip().lower()
     return re.sub(r"[-\s]+", "-", filename) + ".html"
 
 # Load data
@@ -34,17 +44,20 @@ for idx, row in df.iterrows():
     if not raw_title or raw_title == "nan":
         continue
 
-    # Format Year & Title Header cleanly without ()
+    # Normalize title (e.g., "Dark Knight, The" -> "The Dark Knight")
+    clean_title = normalize_title(raw_title)
+
+    # Format Year & Title Header
     year_val = row.get("movie_year")
     if pd.notna(year_val) and str(year_val).strip() and str(year_val).strip() != "nan":
         year_str = str(int(float(year_val)))
-        display_title = f"{raw_title} ({year_str})"
+        display_title = f"{clean_title} ({year_str})"
     else:
-        display_title = raw_title
+        display_title = clean_title
 
     # Ratings formatting
-    jordan_rating = f"{row.get('jordan_rating', 'N/A')} / 5" if pd.notna(row.get('jordan_rating')) else "N/A"
-    darius_rating = f"{row.get('darius_rating', 'N/A')} / 5" if pd.notna(row.get('darius_rating')) else "N/A"
+    jordan_rating = f"{row.get('jordan_rating', 'N/A')} / 5" if pd.notna(row.get('jordan_rating')) and str(row.get('jordan_rating')) != "nan" else "N/A"
+    darius_rating = f"{row.get('darius_rating', 'N/A')} / 5" if pd.notna(row.get('darius_rating')) and str(row.get('darius_rating')) != "nan" else "N/A"
 
     # Show Notes fields
     best_question = str(row.get("best_question", "")).strip() if pd.notna(row.get("best_question")) else ""
@@ -72,7 +85,7 @@ for idx, row in df.iterrows():
     if not show_notes_content:
         show_notes_content = "<p>Show notes available in full podcast audio.</p>"
 
-    # Complete HTML Template
+    # HTML Template
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
