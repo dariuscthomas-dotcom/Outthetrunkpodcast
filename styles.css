@@ -1,0 +1,95 @@
+/* Base Resets */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+img, iframe {
+  max-width: 100%;
+}
+
+/* Navigation Layout */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.site-nav a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  padding: 0.4rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Mobile Responsive Breakpoints */
+@media (max-width: 768px) {
+  /* Header & Navigation */
+  .site-header {
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .site-nav {
+    display: none; /* Can be toggled with script.js */
+    width: 100%;
+    flex-direction: column;
+    padding-top: 1rem;
+    gap: 0.85rem;
+  }
+
+  .site-nav[aria-expanded="true"] {
+    display: flex;
+  }
+
+  /* Stack Grids into 1 Column on Mobile */
+  .hero-grid,
+  .hof-grid,
+  .hosts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Adjust Spacing and Containers */
+  .section-pad {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .hero-card {
+    padding: 1.25rem !important;
+  }
+
+  /* Prevent Overflow Text */
+  h1, h2, h3, p, span {
+    white-space: normal !important;
+    word-break: break-word;
+  }
+}
