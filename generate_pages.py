@@ -55,7 +55,7 @@ def format_rating(val):
         return "N/A"
 
 def format_transcript(raw_text):
-    """Formats transcript text, bolding and highlighting Jordan: and Darius:."""
+    """Formats transcript text, bolding, underlining, and highlighting Jordan: and Darius:."""
     if not raw_text or str(raw_text).strip().lower() in ["nan", ""]:
         return "<p style='color: #666;'>Transcript coming soon.</p>"
     
@@ -63,10 +63,10 @@ def format_transcript(raw_text):
     formatted_p = []
     
     for p in paragraphs:
-        # Bold and highlight "Jordan:" and "Darius:" at start of line
+        # Bold, underline, and highlight "Jordan:" and "Darius:" at start of line
         p_highlighted = re.sub(
             r'^(Jordan|Darius):', 
-            f'<strong style="color: {ACCENT_COLOR}; font-weight: bold;">\\1:</strong>', 
+            f'<u style="color: {ACCENT_COLOR}; font-weight: bold;">\\1:</u>', 
             p
         )
         formatted_p.append(f"<p style='margin-bottom: 1rem; line-height: 1.6;'>{p_highlighted}</p>")
@@ -213,9 +213,9 @@ active_groups = set(m['letter_group'] for m in movie_list)
 nav_buttons = []
 for g in all_groups:
     if g in active_groups:
-        nav_buttons.append(f'<a href="#group-{g}" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid {ACCENT_COLOR}; border-radius: 4px; color: {ACCENT_COLOR}; text-decoration: none; font-weight: bold;">{g}</a>')
+        nav_buttons.append(f'<a href="#group-{g}" class="nav-btn active-btn">{g}</a>')
     else:
-        nav_buttons.append(f'<span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">{g}</span>')
+        nav_buttons.append(f'<span class="nav-btn disabled-btn">{g}</span>')
 
 nav_bar_html = f'''<nav class="az-navigation" style="text-align: center; margin-bottom: 2.5rem; line-height: 2;">
     {"".join(nav_buttons)}
@@ -232,8 +232,8 @@ for g in all_groups:
         cards = ""
         for item in grouped_movies[g]:
             cards += f'''
-            <a href="movies/{item['slug']}.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">{item['clean_title']}</h3>
+            <a href="movies/{item['slug']}.html" class="movie-card-styled">
+                <h3>{item['clean_title']}</h3>
             </a>'''
             
         sections_html += f'''
@@ -244,7 +244,7 @@ for g in all_groups:
             </div>
         </section>'''
 
-# 3. WRITE MOVIES-ARCHIVE.HTML PAGE
+# 3. WRITE MOVIES-ARCHIVE.HTML PAGE WITH EMBEDDED STYLES
 archive_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -254,11 +254,68 @@ archive_html = f"""<!DOCTYPE html>
     <link rel="stylesheet" href="styles.css">
     <style>
         html {{ scroll-behavior: smooth; }}
+        
+        .nav-btn {{
+            display: inline-block;
+            padding: 8px 14px;
+            margin: 3px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.2s ease-in-out;
+        }}
+        
+        .active-btn {{
+            background-color: {ACCENT_COLOR};
+            color: #fff !important;
+            border: 1px solid {ACCENT_COLOR};
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0, 133, 202, 0.2);
+        }}
+        
+        .active-btn:hover {{
+            background-color: #006dae;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 133, 202, 0.3);
+        }}
+        
+        .disabled-btn {{
+            border: 1px solid #e5e5e5;
+            color: #ccc;
+            background-color: #fafafa;
+        }}
+        
+        .movie-card-styled {{
+            text-decoration: none;
+            color: #111;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid {ACCENT_COLOR};
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            display: block;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s ease-in-out;
+        }}
+        
+        .movie-card-styled:hover {{
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 133, 202, 0.15);
+            border-color: {ACCENT_COLOR};
+            background-color: #f8fcff;
+        }}
+        
+        .movie-card-styled h3 {{
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }}
     </style>
 </head>
 <body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <header style="text-align: center; margin-bottom: 1.5rem;">
+        <header style="text-align: center; margin-bottom: 2rem;">
             <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Movie Archive</h1>
             <p style="color: #666;">Browse all movie reviews and show notes</p>
         </header>
@@ -274,4 +331,4 @@ archive_html = f"""<!DOCTYPE html>
 with open(ARCHIVE_PATH, "w", encoding="utf-8") as f:
     f.write(archive_html)
 
-print("Updated build complete! Applied Panthers color theme, title-only cards, and transcript highlighting.")
+print("Master script complete! Archive cards styled with hover effects and underlined transcript names.")

@@ -7,17 +7,74 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         html { scroll-behavior: smooth; }
+        
+        .nav-btn {
+            display: inline-block;
+            padding: 8px 14px;
+            margin: 3px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .active-btn {
+            background-color: #0085CA;
+            color: #fff !important;
+            border: 1px solid #0085CA;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0, 133, 202, 0.2);
+        }
+        
+        .active-btn:hover {
+            background-color: #006dae;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 133, 202, 0.3);
+        }
+        
+        .disabled-btn {
+            border: 1px solid #e5e5e5;
+            color: #ccc;
+            background-color: #fafafa;
+        }
+        
+        .movie-card-styled {
+            text-decoration: none;
+            color: #111;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid #0085CA;
+            border-radius: 8px;
+            padding: 1.25rem 1rem;
+            display: block;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s ease-in-out;
+        }
+        
+        .movie-card-styled:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 133, 202, 0.15);
+            border-color: #0085CA;
+            background-color: #f8fcff;
+        }
+        
+        .movie-card-styled h3 {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <header style="text-align: center; margin-bottom: 1.5rem;">
+        <header style="text-align: center; margin-bottom: 2rem;">
             <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Movie Archive</h1>
             <p style="color: #666;">Browse all movie reviews and show notes</p>
         </header>
 
         <nav class="az-navigation" style="text-align: center; margin-bottom: 2.5rem; line-height: 2;">
-    <a href="#group-#" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">#</a><a href="#group-A" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">A</a><a href="#group-B" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">B</a><a href="#group-C" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">C</a><a href="#group-D" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">D</a><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">E</span><a href="#group-F" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">F</a><a href="#group-G" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">G</a><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">H</span><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">I</span><a href="#group-J" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">J</a><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">K</span><a href="#group-L" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">L</a><a href="#group-M" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">M</a><a href="#group-N" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">N</a><a href="#group-O" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">O</a><a href="#group-P" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">P</a><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">Q</span><a href="#group-R" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">R</a><a href="#group-S" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">S</a><a href="#group-T" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">T</a><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">U</span><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">V</span><a href="#group-W" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">W</a><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">X</span><a href="#group-Y" style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #0085CA; border-radius: 4px; color: #0085CA; text-decoration: none; font-weight: bold;">Y</a><span style="display: inline-block; padding: 6px 12px; margin: 3px; border: 1px solid #eee; border-radius: 4px; color: #ccc;">Z</span>
+    <a href="#group-#" class="nav-btn active-btn">#</a><a href="#group-A" class="nav-btn active-btn">A</a><a href="#group-B" class="nav-btn active-btn">B</a><a href="#group-C" class="nav-btn active-btn">C</a><a href="#group-D" class="nav-btn active-btn">D</a><span class="nav-btn disabled-btn">E</span><a href="#group-F" class="nav-btn active-btn">F</a><a href="#group-G" class="nav-btn active-btn">G</a><span class="nav-btn disabled-btn">H</span><span class="nav-btn disabled-btn">I</span><a href="#group-J" class="nav-btn active-btn">J</a><span class="nav-btn disabled-btn">K</span><a href="#group-L" class="nav-btn active-btn">L</a><a href="#group-M" class="nav-btn active-btn">M</a><a href="#group-N" class="nav-btn active-btn">N</a><a href="#group-O" class="nav-btn active-btn">O</a><a href="#group-P" class="nav-btn active-btn">P</a><span class="nav-btn disabled-btn">Q</span><a href="#group-R" class="nav-btn active-btn">R</a><a href="#group-S" class="nav-btn active-btn">S</a><a href="#group-T" class="nav-btn active-btn">T</a><span class="nav-btn disabled-btn">U</span><span class="nav-btn disabled-btn">V</span><a href="#group-W" class="nav-btn active-btn">W</a><span class="nav-btn disabled-btn">X</span><a href="#group-Y" class="nav-btn active-btn">Y</a><span class="nav-btn disabled-btn">Z</span>
 </nav>
 
         
@@ -25,8 +82,8 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">#</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/12-angry-men.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">12 Angry Men</h3>
+            <a href="movies/12-angry-men.html" class="movie-card-styled">
+                <h3>12 Angry Men</h3>
             </a>
             </div>
         </section>
@@ -34,11 +91,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">A</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/american-beauty.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">American Beauty</h3>
+            <a href="movies/american-beauty.html" class="movie-card-styled">
+                <h3>American Beauty</h3>
             </a>
-            <a href="movies/arrival.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Arrival</h3>
+            <a href="movies/arrival.html" class="movie-card-styled">
+                <h3>Arrival</h3>
             </a>
             </div>
         </section>
@@ -46,23 +103,23 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">B</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/baps.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">B.A.P.S.</h3>
+            <a href="movies/baps.html" class="movie-card-styled">
+                <h3>B.A.P.S.</h3>
             </a>
-            <a href="movies/baby-driver.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Baby Driver</h3>
+            <a href="movies/baby-driver.html" class="movie-card-styled">
+                <h3>Baby Driver</h3>
             </a>
-            <a href="movies/backrooms.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Backrooms</h3>
+            <a href="movies/backrooms.html" class="movie-card-styled">
+                <h3>Backrooms</h3>
             </a>
-            <a href="movies/the-best-man.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Best Man</h3>
+            <a href="movies/the-best-man.html" class="movie-card-styled">
+                <h3>The Best Man</h3>
             </a>
-            <a href="movies/boomerang.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Boomerang</h3>
+            <a href="movies/boomerang.html" class="movie-card-styled">
+                <h3>Boomerang</h3>
             </a>
-            <a href="movies/brown-sugar.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Brown Sugar</h3>
+            <a href="movies/brown-sugar.html" class="movie-card-styled">
+                <h3>Brown Sugar</h3>
             </a>
             </div>
         </section>
@@ -70,8 +127,8 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">C</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/children-of-men.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Children of Men</h3>
+            <a href="movies/children-of-men.html" class="movie-card-styled">
+                <h3>Children of Men</h3>
             </a>
             </div>
         </section>
@@ -79,11 +136,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">D</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/the-dark-knight.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Dark Knight</h3>
+            <a href="movies/the-dark-knight.html" class="movie-card-styled">
+                <h3>The Dark Knight</h3>
             </a>
-            <a href="movies/the-drama.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Drama</h3>
+            <a href="movies/the-drama.html" class="movie-card-styled">
+                <h3>The Drama</h3>
             </a>
             </div>
         </section>
@@ -91,8 +148,8 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">F</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/friday.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Friday</h3>
+            <a href="movies/friday.html" class="movie-card-styled">
+                <h3>Friday</h3>
             </a>
             </div>
         </section>
@@ -100,11 +157,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">G</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/game-night.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Game Night</h3>
+            <a href="movies/game-night.html" class="movie-card-styled">
+                <h3>Game Night</h3>
             </a>
-            <a href="movies/good-boys.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Good Boys</h3>
+            <a href="movies/good-boys.html" class="movie-card-styled">
+                <h3>Good Boys</h3>
             </a>
             </div>
         </section>
@@ -112,11 +169,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">J</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/the-judge.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Judge</h3>
+            <a href="movies/the-judge.html" class="movie-card-styled">
+                <h3>The Judge</h3>
             </a>
-            <a href="movies/juror-no-2.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Juror No. 2</h3>
+            <a href="movies/juror-no-2.html" class="movie-card-styled">
+                <h3>Juror No. 2</h3>
             </a>
             </div>
         </section>
@@ -124,11 +181,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">L</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/love-basketball.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Love & Basketball</h3>
+            <a href="movies/love-basketball.html" class="movie-card-styled">
+                <h3>Love & Basketball</h3>
             </a>
-            <a href="movies/love-jones.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Love Jones</h3>
+            <a href="movies/love-jones.html" class="movie-card-styled">
+                <h3>Love Jones</h3>
             </a>
             </div>
         </section>
@@ -136,8 +193,8 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">M</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/mrs-doubtfire.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Mrs. Doubtfire</h3>
+            <a href="movies/mrs-doubtfire.html" class="movie-card-styled">
+                <h3>Mrs. Doubtfire</h3>
             </a>
             </div>
         </section>
@@ -145,8 +202,8 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">N</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/nick-norahs-infinite-playlist.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Nick & Norah's Infinite Playlist</h3>
+            <a href="movies/nick-norahs-infinite-playlist.html" class="movie-card-styled">
+                <h3>Nick & Norah's Infinite Playlist</h3>
             </a>
             </div>
         </section>
@@ -154,11 +211,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">O</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/obsession.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Obsession</h3>
+            <a href="movies/obsession.html" class="movie-card-styled">
+                <h3>Obsession</h3>
             </a>
-            <a href="movies/the-odyssey.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Odyssey</h3>
+            <a href="movies/the-odyssey.html" class="movie-card-styled">
+                <h3>The Odyssey</h3>
             </a>
             </div>
         </section>
@@ -166,11 +223,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">P</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/the-photograph.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Photograph</h3>
+            <a href="movies/the-photograph.html" class="movie-card-styled">
+                <h3>The Photograph</h3>
             </a>
-            <a href="movies/the-prestige.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Prestige</h3>
+            <a href="movies/the-prestige.html" class="movie-card-styled">
+                <h3>The Prestige</h3>
             </a>
             </div>
         </section>
@@ -178,8 +235,8 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">R</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/reservoir-dogs.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Reservoir Dogs</h3>
+            <a href="movies/reservoir-dogs.html" class="movie-card-styled">
+                <h3>Reservoir Dogs</h3>
             </a>
             </div>
         </section>
@@ -187,20 +244,20 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">S</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/the-sandlot.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">The Sandlot</h3>
+            <a href="movies/the-sandlot.html" class="movie-card-styled">
+                <h3>The Sandlot</h3>
             </a>
-            <a href="movies/sleepy-hollow.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Sleepy Hollow</h3>
+            <a href="movies/sleepy-hollow.html" class="movie-card-styled">
+                <h3>Sleepy Hollow</h3>
             </a>
-            <a href="movies/state-property.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">State Property</h3>
+            <a href="movies/state-property.html" class="movie-card-styled">
+                <h3>State Property</h3>
             </a>
-            <a href="movies/still-alice.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Still Alice</h3>
+            <a href="movies/still-alice.html" class="movie-card-styled">
+                <h3>Still Alice</h3>
             </a>
-            <a href="movies/stranger-than-fiction.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Stranger Than Fiction</h3>
+            <a href="movies/stranger-than-fiction.html" class="movie-card-styled">
+                <h3>Stranger Than Fiction</h3>
             </a>
             </div>
         </section>
@@ -208,11 +265,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">T</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/take-me-home-tonight.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Take Me Home Tonight</h3>
+            <a href="movies/take-me-home-tonight.html" class="movie-card-styled">
+                <h3>Take Me Home Tonight</h3>
             </a>
-            <a href="movies/this-christmas.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">This Christmas</h3>
+            <a href="movies/this-christmas.html" class="movie-card-styled">
+                <h3>This Christmas</h3>
             </a>
             </div>
         </section>
@@ -220,11 +277,11 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">W</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/weapons.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">Weapons</h3>
+            <a href="movies/weapons.html" class="movie-card-styled">
+                <h3>Weapons</h3>
             </a>
-            <a href="movies/white-men-cant-jump.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">White Men Can't Jump</h3>
+            <a href="movies/white-men-cant-jump.html" class="movie-card-styled">
+                <h3>White Men Can't Jump</h3>
             </a>
             </div>
         </section>
@@ -232,8 +289,8 @@
             <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">Y</h2>
             <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
                 
-            <a href="movies/youre-next.html" class="movie-card" style="text-decoration: none; color: inherit; border: 1px solid #e0e0e0; border-radius: 8px; padding: 1.2rem; display: block; background: #fff; text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; color: #111;">You're Next</h3>
+            <a href="movies/youre-next.html" class="movie-card-styled">
+                <h3>You're Next</h3>
             </a>
             </div>
         </section>
