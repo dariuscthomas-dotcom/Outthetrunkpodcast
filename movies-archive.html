@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Archive - Out The Trunk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
         html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #fcfcfc;
+            color: #222;
+        }
+        
+        .az-navigation {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            line-height: 2.2;
+            background: #ffffff;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #eaeaea;
+        }
         
         .nav-btn {
             display: inline-block;
-            padding: 8px 14px;
+            padding: 6px 12px;
             margin: 3px;
             border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.95rem;
+            font-weight: 700;
+            font-size: 0.9rem;
             transition: all 0.2s ease-in-out;
         }
         
@@ -23,274 +42,408 @@
             color: #fff !important;
             border: 1px solid #0085CA;
             text-decoration: none;
-            box-shadow: 0 2px 4px rgba(0, 133, 202, 0.2);
+            box-shadow: 0 2px 6px rgba(0, 133, 202, 0.25);
         }
         
         .active-btn:hover {
             background-color: #006dae;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 133, 202, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 133, 202, 0.35);
         }
         
         .disabled-btn {
-            border: 1px solid #e5e5e5;
-            color: #ccc;
+            border: 1px solid #eaeaea;
+            color: #d1d1d1;
             background-color: #fafafa;
+        }
+        
+        .group-header {
+            font-size: 1.8rem;
+            font-weight: 800;
+            border-bottom: 2px solid #0085CA;
+            padding-bottom: 0.4rem;
+            margin-bottom: 1.5rem;
+            color: #111;
+        }
+        
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.25rem;
         }
         
         .movie-card-styled {
             text-decoration: none;
             color: #111;
             background: #ffffff;
-            border: 1px solid #e0e0e0;
+            border: 1px solid #eaeaea;
             border-left: 4px solid #0085CA;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 1.25rem 1rem;
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-            transition: all 0.2s ease-in-out;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.03);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .movie-card-styled:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 133, 202, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15);
             border-color: #0085CA;
             background-color: #f8fcff;
         }
         
         .movie-card-styled h3 {
             margin: 0;
-            font-size: 1.15rem;
+            font-size: 1.05rem;
             font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        .card-meta {
+            display: block;
+            margin-top: 0.35rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #0085CA;
         }
     </style>
 </head>
 <body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <header style="text-align: center; margin-bottom: 2rem;">
-            <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Movie Archive</h1>
-            <p style="color: #666;">Browse all movie reviews and show notes</p>
+            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
+            <p style="color: #666; font-size: 1.05rem;">Browse all movie reviews and show notes</p>
         </header>
 
-        <nav class="az-navigation" style="text-align: center; margin-bottom: 2.5rem; line-height: 2;">
+        <nav class="az-navigation">
     <a href="#group-#" class="nav-btn active-btn">#</a><a href="#group-A" class="nav-btn active-btn">A</a><a href="#group-B" class="nav-btn active-btn">B</a><a href="#group-C" class="nav-btn active-btn">C</a><a href="#group-D" class="nav-btn active-btn">D</a><span class="nav-btn disabled-btn">E</span><a href="#group-F" class="nav-btn active-btn">F</a><a href="#group-G" class="nav-btn active-btn">G</a><span class="nav-btn disabled-btn">H</span><span class="nav-btn disabled-btn">I</span><a href="#group-J" class="nav-btn active-btn">J</a><span class="nav-btn disabled-btn">K</span><a href="#group-L" class="nav-btn active-btn">L</a><a href="#group-M" class="nav-btn active-btn">M</a><a href="#group-N" class="nav-btn active-btn">N</a><a href="#group-O" class="nav-btn active-btn">O</a><a href="#group-P" class="nav-btn active-btn">P</a><span class="nav-btn disabled-btn">Q</span><a href="#group-R" class="nav-btn active-btn">R</a><a href="#group-S" class="nav-btn active-btn">S</a><a href="#group-T" class="nav-btn active-btn">T</a><span class="nav-btn disabled-btn">U</span><span class="nav-btn disabled-btn">V</span><a href="#group-W" class="nav-btn active-btn">W</a><span class="nav-btn disabled-btn">X</span><a href="#group-Y" class="nav-btn active-btn">Y</a><span class="nav-btn disabled-btn">Z</span>
 </nav>
 
         
         <section id="group-#" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">#</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">#</h2>
+            <div class="movie-grid">
                 
             <a href="movies/12-angry-men.html" class="movie-card-styled">
-                <h3>12 Angry Men</h3>
+                <div class="card-content">
+                    <h3>12 Angry Men</h3>
+                    <span class="card-meta"> ★ 5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-A" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">A</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">A</h2>
+            <div class="movie-grid">
                 
             <a href="movies/american-beauty.html" class="movie-card-styled">
-                <h3>American Beauty</h3>
+                <div class="card-content">
+                    <h3>American Beauty</h3>
+                    <span class="card-meta"> ★ 3/5</span>
+                </div>
             </a>
             <a href="movies/arrival.html" class="movie-card-styled">
-                <h3>Arrival</h3>
+                <div class="card-content">
+                    <h3>Arrival</h3>
+                    <span class="card-meta"> ★ 4.5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-B" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">B</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">B</h2>
+            <div class="movie-grid">
                 
             <a href="movies/baps.html" class="movie-card-styled">
-                <h3>B.A.P.S.</h3>
+                <div class="card-content">
+                    <h3>B.A.P.S.</h3>
+                    <span class="card-meta"> ★ nan/5</span>
+                </div>
             </a>
             <a href="movies/baby-driver.html" class="movie-card-styled">
-                <h3>Baby Driver</h3>
+                <div class="card-content">
+                    <h3>Baby Driver</h3>
+                    <span class="card-meta"> ★ 3.2/5</span>
+                </div>
             </a>
             <a href="movies/backrooms.html" class="movie-card-styled">
-                <h3>Backrooms</h3>
+                <div class="card-content">
+                    <h3>Backrooms</h3>
+                    <span class="card-meta"> ★ 0.5/5</span>
+                </div>
             </a>
             <a href="movies/the-best-man.html" class="movie-card-styled">
-                <h3>The Best Man</h3>
+                <div class="card-content">
+                    <h3>The Best Man</h3>
+                    <span class="card-meta"> ★ 4/5</span>
+                </div>
             </a>
             <a href="movies/boomerang.html" class="movie-card-styled">
-                <h3>Boomerang</h3>
+                <div class="card-content">
+                    <h3>Boomerang</h3>
+                    <span class="card-meta"> ★ 2.5/5</span>
+                </div>
             </a>
             <a href="movies/brown-sugar.html" class="movie-card-styled">
-                <h3>Brown Sugar</h3>
+                <div class="card-content">
+                    <h3>Brown Sugar</h3>
+                    <span class="card-meta"> ★ 4.2/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-C" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">C</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">C</h2>
+            <div class="movie-grid">
                 
             <a href="movies/children-of-men.html" class="movie-card-styled">
-                <h3>Children of Men</h3>
+                <div class="card-content">
+                    <h3>Children of Men</h3>
+                    <span class="card-meta"> ★ 2.8/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-D" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">D</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">D</h2>
+            <div class="movie-grid">
                 
             <a href="movies/the-dark-knight.html" class="movie-card-styled">
-                <h3>The Dark Knight</h3>
+                <div class="card-content">
+                    <h3>The Dark Knight</h3>
+                    <span class="card-meta"> ★ 5/5</span>
+                </div>
             </a>
             <a href="movies/the-drama.html" class="movie-card-styled">
-                <h3>The Drama</h3>
+                <div class="card-content">
+                    <h3>The Drama</h3>
+                    <span class="card-meta"> ★ 4/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-F" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">F</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">F</h2>
+            <div class="movie-grid">
                 
             <a href="movies/friday.html" class="movie-card-styled">
-                <h3>Friday</h3>
+                <div class="card-content">
+                    <h3>Friday</h3>
+                    <span class="card-meta"> ★ 3.5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-G" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">G</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">G</h2>
+            <div class="movie-grid">
                 
             <a href="movies/game-night.html" class="movie-card-styled">
-                <h3>Game Night</h3>
+                <div class="card-content">
+                    <h3>Game Night</h3>
+                    <span class="card-meta"> ★ 2/5</span>
+                </div>
             </a>
             <a href="movies/good-boys.html" class="movie-card-styled">
-                <h3>Good Boys</h3>
+                <div class="card-content">
+                    <h3>Good Boys</h3>
+                    <span class="card-meta"> ★ 3/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-J" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">J</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">J</h2>
+            <div class="movie-grid">
                 
             <a href="movies/the-judge.html" class="movie-card-styled">
-                <h3>The Judge</h3>
+                <div class="card-content">
+                    <h3>The Judge</h3>
+                    <span class="card-meta"> ★ 3.2/5</span>
+                </div>
             </a>
             <a href="movies/juror-no-2.html" class="movie-card-styled">
-                <h3>Juror No. 2</h3>
+                <div class="card-content">
+                    <h3>Juror No. 2</h3>
+                    <span class="card-meta"> ★ nan/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-L" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">L</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">L</h2>
+            <div class="movie-grid">
                 
             <a href="movies/love-basketball.html" class="movie-card-styled">
-                <h3>Love & Basketball</h3>
+                <div class="card-content">
+                    <h3>Love & Basketball</h3>
+                    <span class="card-meta"> ★ 4/5</span>
+                </div>
             </a>
             <a href="movies/love-jones.html" class="movie-card-styled">
-                <h3>Love Jones</h3>
+                <div class="card-content">
+                    <h3>Love Jones</h3>
+                    <span class="card-meta"> ★ 3.8/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-M" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">M</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">M</h2>
+            <div class="movie-grid">
                 
             <a href="movies/mrs-doubtfire.html" class="movie-card-styled">
-                <h3>Mrs. Doubtfire</h3>
+                <div class="card-content">
+                    <h3>Mrs. Doubtfire</h3>
+                    <span class="card-meta"> ★ 5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-N" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">N</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">N</h2>
+            <div class="movie-grid">
                 
             <a href="movies/nick-norahs-infinite-playlist.html" class="movie-card-styled">
-                <h3>Nick & Norah's Infinite Playlist</h3>
+                <div class="card-content">
+                    <h3>Nick & Norah's Infinite Playlist</h3>
+                    <span class="card-meta"> ★ 3.5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-O" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">O</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">O</h2>
+            <div class="movie-grid">
                 
             <a href="movies/obsession.html" class="movie-card-styled">
-                <h3>Obsession</h3>
+                <div class="card-content">
+                    <h3>Obsession</h3>
+                    <span class="card-meta"> ★ 4/5</span>
+                </div>
             </a>
             <a href="movies/the-odyssey.html" class="movie-card-styled">
-                <h3>The Odyssey</h3>
+                <div class="card-content">
+                    <h3>The Odyssey</h3>
+                    <span class="card-meta"> ★ 5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-P" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">P</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">P</h2>
+            <div class="movie-grid">
                 
             <a href="movies/the-photograph.html" class="movie-card-styled">
-                <h3>The Photograph</h3>
+                <div class="card-content">
+                    <h3>The Photograph</h3>
+                    <span class="card-meta"> ★ 2.2/5</span>
+                </div>
             </a>
             <a href="movies/the-prestige.html" class="movie-card-styled">
-                <h3>The Prestige</h3>
+                <div class="card-content">
+                    <h3>The Prestige</h3>
+                    <span class="card-meta"> ★ 5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-R" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">R</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">R</h2>
+            <div class="movie-grid">
                 
             <a href="movies/reservoir-dogs.html" class="movie-card-styled">
-                <h3>Reservoir Dogs</h3>
+                <div class="card-content">
+                    <h3>Reservoir Dogs</h3>
+                    <span class="card-meta"> ★ 2.5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-S" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">S</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">S</h2>
+            <div class="movie-grid">
                 
             <a href="movies/the-sandlot.html" class="movie-card-styled">
-                <h3>The Sandlot</h3>
+                <div class="card-content">
+                    <h3>The Sandlot</h3>
+                    <span class="card-meta"> ★ 5/5</span>
+                </div>
             </a>
             <a href="movies/sleepy-hollow.html" class="movie-card-styled">
-                <h3>Sleepy Hollow</h3>
+                <div class="card-content">
+                    <h3>Sleepy Hollow</h3>
+                    <span class="card-meta"> ★ 3/5</span>
+                </div>
             </a>
             <a href="movies/state-property.html" class="movie-card-styled">
-                <h3>State Property</h3>
+                <div class="card-content">
+                    <h3>State Property</h3>
+                    <span class="card-meta"> ★ 3.8/5</span>
+                </div>
             </a>
             <a href="movies/still-alice.html" class="movie-card-styled">
-                <h3>Still Alice</h3>
+                <div class="card-content">
+                    <h3>Still Alice</h3>
+                    <span class="card-meta"> ★ 4.8/5</span>
+                </div>
             </a>
             <a href="movies/stranger-than-fiction.html" class="movie-card-styled">
-                <h3>Stranger Than Fiction</h3>
+                <div class="card-content">
+                    <h3>Stranger Than Fiction</h3>
+                    <span class="card-meta"> ★ 2.5/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-T" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">T</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">T</h2>
+            <div class="movie-grid">
                 
             <a href="movies/take-me-home-tonight.html" class="movie-card-styled">
-                <h3>Take Me Home Tonight</h3>
+                <div class="card-content">
+                    <h3>Take Me Home Tonight</h3>
+                    <span class="card-meta"> ★ 1.8/5</span>
+                </div>
             </a>
             <a href="movies/this-christmas.html" class="movie-card-styled">
-                <h3>This Christmas</h3>
+                <div class="card-content">
+                    <h3>This Christmas</h3>
+                    <span class="card-meta"> ★ 3.2/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-W" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">W</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">W</h2>
+            <div class="movie-grid">
                 
             <a href="movies/weapons.html" class="movie-card-styled">
-                <h3>Weapons</h3>
+                <div class="card-content">
+                    <h3>Weapons</h3>
+                    <span class="card-meta"> ★ 3/5</span>
+                </div>
             </a>
             <a href="movies/white-men-cant-jump.html" class="movie-card-styled">
-                <h3>White Men Can't Jump</h3>
+                <div class="card-content">
+                    <h3>White Men Can't Jump</h3>
+                    <span class="card-meta"> ★ 3.8/5</span>
+                </div>
             </a>
             </div>
         </section>
         <section id="group-Y" style="margin-bottom: 3rem; scroll-margin-top: 2rem;">
-            <h2 style="font-size: 2rem; border-bottom: 2px solid #0085CA; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111;">Y</h2>
-            <div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.2rem;">
+            <h2 class="group-header">Y</h2>
+            <div class="movie-grid">
                 
             <a href="movies/youre-next.html" class="movie-card-styled">
-                <h3>You're Next</h3>
+                <div class="card-content">
+                    <h3>You're Next</h3>
+                    <span class="card-meta"> ★ 3.2/5</span>
+                </div>
             </a>
             </div>
         </section>
