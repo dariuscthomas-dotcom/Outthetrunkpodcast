@@ -10,171 +10,35 @@
     <link rel="stylesheet" href="../styles.css">
     <style>
         html { scroll-behavior: smooth; }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: #fcfcfc;
-            color: #222222;
-        }
-        .subpage-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        .home-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            color: #0085CA;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 0.95rem;
-            background: #ffffff;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            border: 1px solid #eaeaea;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-            transition: all 0.2s ease;
-        }
-        .home-btn:hover {
-            background: #f0f8ff;
-            transform: translateX(-3px);
-            border-color: #0085CA;
-        }
-        .hero-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            padding: 1.5rem;
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-            border: 1px solid #eaeaea;
-        }
-        .hero-video-container {
-            margin-bottom: 2rem;
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-        }
-        .hero-video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .ratings-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-            margin-bottom: 2rem;
-        }
-        .rating-card {
-            background: #ffffff;
-            border: 1px solid #eaeaea;
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-        }
-        .rating-card h3 {
-            font-size: 0.85rem;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin: 0 0 0.5rem 0;
-        }
-        .star-display {
-            color: #0085CA;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            margin-bottom: 0.25rem;
-        }
-        .rating-num {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #111;
-        }
-        .modern-card {
-            background: #ffffff;
-            border: 1px solid #eaeaea;
-            border-radius: 12px;
-            padding: 1.75rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            line-height: 1.6;
-        }
-        .modern-card h2 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-top: 0;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 0.5rem;
-            color: #111;
-        }
-        .modern-card h3 {
-            font-size: 1.1rem;
-            color: #0085CA;
-            margin-top: 1.25rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        .modern-card ul {
-            padding-left: 1.2rem;
-            margin-bottom: 1rem;
-        }
-        .modern-card li {
-            margin-bottom: 0.4rem;
-        }
-        .back-to-top {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #0085CA;
-            color: #ffffff !important;
-            text-decoration: none;
-            padding: 10px 16px;
-            border-radius: 30px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4);
-            transition: all 0.2s ease-in-out;
-            z-index: 1000;
-        }
-        .back-to-top:hover {
-            background: #006dae;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0, 133, 202, 0.5);
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }
+        .subpage-nav { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
+        .home-btn { display: inline-flex; align-items: center; gap: 0.4rem; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; }
+        .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
+        .hero-header { text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .hero-video-container { margin-bottom: 2rem; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .hero-video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
+        .ratings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem; }
+        .rating-card { background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .star-display { color: #0085CA; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 0.25rem; }
+        .rating-num { font-size: 1.25rem; font-weight: 700; color: #111; }
+        .modern-card { background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }
+        .modern-card h2 { font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }
+        .modern-card h3 { font-size: 1.1rem; color: #0085CA; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }
+        .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-index: 1000; }
+        .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
     </style>
 </head>
 <body id="top">
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
-        
         <div class="subpage-nav">
             <a href="../index.html" class="home-btn">← Home</a>
             <a href="../movies-archive.html" class="home-btn">Movie Archive</a>
         </div>
-
         <header class="hero-header">
             <p style="color: #0085CA; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">Juror No. 2 (2024)</h1>
         </header>
-
-        
-        <div class="hero-video-container">
-            <iframe 
-                src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" 
-                title="Juror No. 2 (2024)" frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-            </iframe>
-        </div>
-
+        <div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2 (2024)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
         <section class="ratings-grid">
             <div class="rating-card">
                 <h3>Jordan's Rating</h3>
@@ -187,9 +51,7 @@
                 <div class="rating-num">N/A</div>
             </div>
         </section>
-
-        <section class="modern-card">
-            <section class="show-notes-highlights">
+        <section class="modern-card"><section class="show-notes-highlights">
   <h2>Show Notes &amp; Highlights</h2>
   <h3>Episode Rundown</h3>
   <h3>Front Half / Episode Segments</h3>
@@ -214,16 +76,11 @@
       <li>self-preservation</li>
     </ul>
   </div>
-</section>
-        </section>
-
+</section></section>
         <section class="modern-card">
             <h2>Full Episode Transcript</h2>
-            <div style="margin-top: 1rem;">
-                <p style='color: #666;'>Transcript coming soon.</p>
-            </div>
+            <div style="margin-top: 1rem;"><p style='color: #666;'>Transcript coming soon.</p></div>
         </section>
-
         <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 </body>

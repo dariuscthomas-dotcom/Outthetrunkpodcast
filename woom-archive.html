@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOOM Archive - Out The Trunk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }
+        .home-btn { display: inline-flex; align-items: center; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }
+        .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
+        .woom-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+        .woom-card-styled { text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #0085CA; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }
+        .woom-card-styled:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: #0085CA; background-color: #f8fcff; }
+        .woom-card-styled h3 { margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }
+        .card-meta { display: block; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 700; color: #0085CA; }
+        .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-index: 1000; }
+        .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
+    </style>
+</head>
+<body id="top">
+    <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
+        <a href="index.html" class="home-btn">← Home</a>
+        <header style="text-align: center; margin-bottom: 2.5rem;">
+            <p style="color: #0085CA; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
+            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
+            <p style="color: #666; font-size: 1.05rem;">Browse all WOOM episodes chronologically by recorded date</p>
+        </header>
+
+        <div class="woom-grid">
+            
+        <a href="woom/preparation-always-beats-winging-it-woom-090126.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Preparation Always Beats Winging It (WOOM 09/01/26)</h3>
+                <span class="card-meta">September 01, 2026</span>
+            </div>
+        </a>
+        <a href="woom/smartphones-are-the-new-cigarettes-woom-082526.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Smartphones Are the New Cigarettes (WOOM 08/25/26)</h3>
+                <span class="card-meta">August 25, 2026</span>
+            </div>
+        </a>
+        <a href="woom/has-social-media-made-success-too-public-woom-081826.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Has Social Media Made Success Too Public? (WOOM 08/18/26)</h3>
+                <span class="card-meta">August 18, 2026</span>
+            </div>
+        </a>
+        <a href="woom/getting-older-dating-smarter-and-gatekeeping-culture-woom-081126.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Getting Older, Dating Smarter, and Gatekeeping Culture (WOOM 08/11/26)</h3>
+                <span class="card-meta">August 11, 2026</span>
+            </div>
+        </a>
+        <a href="woom/dress-codes-date-gifts-and-the-cost-of-balance-woom-080426.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Dress Codes, Date Gifts, and the Cost of Balance (WOOM 08/04/26)</h3>
+                <span class="card-meta">August 04, 2026</span>
+            </div>
+        </a>
+        <a href="woom/why-music-biopics-keep-missing-the-point-woom-072126.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Why Music Biopics Keep Missing the Point (WOOM 07/21/26)</h3>
+                <span class="card-meta">July 21, 2026</span>
+            </div>
+        </a>
+        <a href="woom/can-the-starving-artist-still-survive-woom-070726.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Can the Starving Artist Still Survive? (WOOM 07/07/26)</h3>
+                <span class="card-meta">July 07, 2026</span>
+            </div>
+        </a>
+        <a href="woom/when-wings-cost-too-much-just-say-no-woom-062326.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>When Wings Cost Too Much, Just Say No (WOOM 06/23/26)</h3>
+                <span class="card-meta">June 23, 2026</span>
+            </div>
+        </a>
+        <a href="woom/who-deserves-a-piece-of-the-windfall-woom-060926.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Who Deserves a Piece of the Windfall? (WOOM 06/09/26)</h3>
+                <span class="card-meta">June 09, 2026</span>
+            </div>
+        </a>
+        <a href="woom/midlife-crises-afros-and-digital-footprints-woom-060226.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Midlife Crises, Afros, and Digital Footprints (WOOM 06/02/26)</h3>
+                <span class="card-meta">June 02, 2026</span>
+            </div>
+        </a>
+        <a href="woom/stardom-sacrifice-and-the-rapper-voltron-woom-052626.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Stardom, Sacrifice, and the Rapper Voltron (WOOM 05/26/26)</h3>
+                <span class="card-meta">May 26, 2026</span>
+            </div>
+        </a>
+        <a href="woom/delete-the-smartphone-release-the-art-woom-050626.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Delete the Smartphone, Release the Art (WOOM 05/06/26)</h3>
+                <span class="card-meta">May 06, 2026</span>
+            </div>
+        </a>
+        <a href="woom/take-yes-for-an-answer-woom-042826.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Take Yes for an Answer (WOOM 04/28/26)</h3>
+                <span class="card-meta">April 28, 2026</span>
+            </div>
+        </a>
+        <a href="woom/the-price-of-community-is-convenience-woom-041426.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>The Price of Community Is Convenience (WOOM 04/14/26)</h3>
+                <span class="card-meta">April 14, 2026</span>
+            </div>
+        </a>
+        <a href="woom/rewatchability-elitism-and-getting-older-woom-040726.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Rewatchability, Elitism, and Getting Older (WOOM 04/07/26)</h3>
+                <span class="card-meta">April 07, 2026</span>
+            </div>
+        </a>
+        <a href="woom/are-ai-book-summaries-cheating-woom-033126.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Are AI Book Summaries Cheating? (WOOM 03/31/26)</h3>
+                <span class="card-meta">March 31, 2026</span>
+            </div>
+        </a>
+        <a href="woom/when-legends-refuse-to-leave-the-stage-woom-032426.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>When Legends Refuse to Leave the Stage (WOOM 03/24/26)</h3>
+                <span class="card-meta">March 24, 2026</span>
+            </div>
+        </a>
+        <a href="woom/let-people-enjoy-things-woom-031726.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Let People Enjoy Things (WOOM 03/17/26)</h3>
+                <span class="card-meta">March 17, 2026</span>
+            </div>
+        </a>
+        <a href="woom/availability-is-the-best-ability-woom-030326.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Availability Is the Best Ability (WOOM 03/03/26)</h3>
+                <span class="card-meta">March 03, 2026</span>
+            </div>
+        </a>
+        <a href="woom/family-ties-video-games-and-social-accountability-woom-022426.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Family Ties, Video Games, and Social Accountability (WOOM 02/24/26)</h3>
+                <span class="card-meta">February 24, 2026</span>
+            </div>
+        </a>
+        <a href="woom/valentines-ghosting-and-hobbies-that-matter-woom-021726.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Valentine’s Ghosting and Hobbies That Matter (WOOM 02/17/26)</h3>
+                <span class="card-meta">February 17, 2026</span>
+            </div>
+        </a>
+        <a href="woom/who-keeps-grandmas-house-woom-021026.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Who Keeps Grandma’s House? (WOOM 02/10/26)</h3>
+                <span class="card-meta">February 10, 2026</span>
+            </div>
+        </a>
+        <a href="woom/does-the-biggest-album-deserve-the-award-woom-020326.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Does the Biggest Album Deserve the Award? (WOOM 02/03/26)</h3>
+                <span class="card-meta">February 03, 2026</span>
+            </div>
+        </a>
+        <a href="woom/the-snowed-in-ghosting-test-woom-012726.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>The Snowed-In Ghosting Test (WOOM 01/27/26)</h3>
+                <span class="card-meta">January 27, 2026</span>
+            </div>
+        </a>
+        <a href="woom/when-convenience-kills-community-woom-012026.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>When Convenience Kills Community (WOOM 01/20/26)</h3>
+                <span class="card-meta">January 20, 2026</span>
+            </div>
+        </a>
+        <a href="woom/stop-networking-up-and-start-networking-across-woom-011326.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Stop Networking Up and Start Networking Across (WOOM 01/13/26)</h3>
+                <span class="card-meta">January 13, 2026</span>
+            </div>
+        </a>
+        <a href="woom/how-to-find-your-rhythm-after-a-break-woom-010626.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>How to Find Your Rhythm After a Break (WOOM 01/06/26)</h3>
+                <span class="card-meta">January 06, 2026</span>
+            </div>
+        </a>
+        <a href="woom/stop-posting-the-pedicure-worker-woom-120925.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Stop Posting the Pedicure Worker (WOOM 12/09/25)</h3>
+                <span class="card-meta">December 09, 2025</span>
+            </div>
+        </a>
+        <a href="woom/how-much-shame-is-the-content-worth-woom-120225.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>How Much Shame Is the Content Worth? (WOOM 12/02/25)</h3>
+                <span class="card-meta">December 02, 2025</span>
+            </div>
+        </a>
+        <a href="woom/grown-men-cant-say-ouch-woom-111825.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Grown Men Can’t Say “Ouch”? (WOOM 11/18/25)</h3>
+                <span class="card-meta">November 18, 2025</span>
+            </div>
+        </a>
+        <a href="woom/perfectionism-is-fear-with-better-branding-woom-111125.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Perfectionism Is Fear with Better Branding (WOOM 11/11/25)</h3>
+                <span class="card-meta">November 11, 2025</span>
+            </div>
+        </a>
+        <a href="woom/when-love-memory-and-identity-change-woom-110425.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>When Love, Memory, and Identity Change (WOOM 11/04/25)</h3>
+                <span class="card-meta">November 04, 2025</span>
+            </div>
+        </a>
+        <a href="woom/can-legacy-acts-still-carry-the-tour-woom-102825.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Can Legacy Acts Still Carry the Tour? (WOOM 10/28/25)</h3>
+                <span class="card-meta">October 28, 2025</span>
+            </div>
+        </a>
+        <a href="woom/page-stage-and-finding-your-creative-rhythm-woom-102125.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Page, Stage, and Finding Your Creative Rhythm (WOOM 10/21/25)</h3>
+                <span class="card-meta">October 21, 2025</span>
+            </div>
+        </a>
+        <a href="woom/when-is-a-concert-worth-the-hassle-woom-101525.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>When Is a Concert Worth the Hassle? (WOOM 10/15/25)</h3>
+                <span class="card-meta">October 15, 2025</span>
+            </div>
+        </a>
+        <a href="woom/adult-friendship-takes-work-woom-100725.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Adult Friendship Takes Work (WOOM 10/07/25)</h3>
+                <span class="card-meta">October 07, 2025</span>
+            </div>
+        </a>
+        <a href="woom/can-you-love-the-art-and-reject-the-artist-woom-093025.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Can You Love the Art and Reject the Artist? (WOOM 09/30/25)</h3>
+                <span class="card-meta">September 30, 2025</span>
+            </div>
+        </a>
+        <a href="woom/pto-birthdays-and-terrible-friend-advice-woom-092325.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>PTO, Birthdays, and Terrible Friend Advice (WOOM 09/23/25)</h3>
+                <span class="card-meta">September 23, 2025</span>
+            </div>
+        </a>
+        <a href="woom/weddings-side-quests-and-group-trip-chaos-woom-090925.html" class="woom-card-styled">
+            <div class="card-content">
+                <h3>Weddings, Side Quests, and Group Trip Chaos (WOOM 09/09/25)</h3>
+                <span class="card-meta">September 09, 2025</span>
+            </div>
+        </a>
+        </div>
+
+        <a href="#top" class="back-to-top">↑ Back to Top</a>
+    </main>
+</body>
+</html>
