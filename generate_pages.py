@@ -11,6 +11,7 @@ WOOM_DIR = "woom"
 
 MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
+INDEX_PATH = "index.html"
 
 # Panthers Process Blue Accent
 ACCENT_COLOR = "#0085CA"
@@ -19,11 +20,42 @@ os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
 # ---------------------------------------------------------
+# MASTER NAV LOCK: Ensures index.html ALWAYS keeps WOOM Archive
+# ---------------------------------------------------------
+def lock_index_navigation():
+    if not os.path.exists(INDEX_PATH):
+        return
+
+    with open(INDEX_PATH, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    master_nav = """<nav id="site-nav" class="site-nav" aria-label="Main navigation">
+      <a href="#woom" style="color: #FFFFFF;">WOOM</a>
+      <a href="woom-archive.html" style="color: #FFFFFF;">WOOM Archive</a>
+      <a href="#movies" style="color: #FFFFFF;">Movies</a>
+      <a href="movies-archive.html" style="color: #FFFFFF;">Movie Archive</a>
+      <a href="#classic-segments" style="color: #FFFFFF;">Classic Segments</a>
+      <a href="#hosts" style="color: #FFFFFF;">Meet The Hosts</a>
+      <a class="listen-link" href="#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">Listen</a>
+    </nav>"""
+
+    # Replace existing <nav id="site-nav"> ... </nav> block with master_nav
+    updated_content = re.sub(
+        r'<nav id="site-nav".*?</nav>',
+        master_nav,
+        content,
+        flags=re.DOTALL
+    )
+
+    with open(INDEX_PATH, "w", encoding="utf-8") as f:
+        f.write(updated_content)
+    print("Locked navigation bar in index.html successfully!")
+
+# ---------------------------------------------------------
 # HELPER FUNCTIONS
 # ---------------------------------------------------------
 
 def normalize_title(title):
-    """Converts 'Best Man, The' to 'The Best Man'."""
     title = str(title).strip()
     match = re.match(r"^(.*?),\s*(The|A|An)$", title, re.IGNORECASE)
     if match:
@@ -31,7 +63,6 @@ def normalize_title(title):
     return title
 
 def get_sort_key(title):
-    """Strips leading 'The ', 'A ', 'An ' for alphabetical sorting."""
     normalized = normalize_title(title).upper()
     for prefix in ["THE ", "A ", "AN "]:
         if normalized.startswith(prefix):
@@ -39,7 +70,6 @@ def get_sort_key(title):
     return normalized
 
 def get_youtube_id(url):
-    """Extracts YouTube video ID safely."""
     if not isinstance(url, str):
         return None
     url = url.strip()
@@ -49,13 +79,11 @@ def get_youtube_id(url):
     return match.group(1) if match else None
 
 def clean_slug(title):
-    """Generates clean URL slug like 'my-woom-episode'."""
     normalized = normalize_title(title)
     filename = re.sub(r"[^\w\s-]", "", normalized).strip().lower()
     return re.sub(r"[-\s]+", "-", filename)
 
 def render_stars(rating_val):
-    """Converts numeric ratings to star graphics."""
     try:
         val = float(rating_val)
         full_stars = int(val)
@@ -70,7 +98,6 @@ def render_stars(rating_val):
         return "☆☆☆☆☆"
 
 def format_rating_badge(val):
-    """Formats numeric ratings into badges."""
     if pd.isna(val) or str(val).strip().lower() in ["nan", "n/a", ""]:
         return "N/A"
     try:
@@ -80,7 +107,6 @@ def format_rating_badge(val):
         return "N/A"
 
 def calculate_avg_rating(jordan_val, darius_val):
-    """Calculates average host rating."""
     try:
         j = float(jordan_val)
         d = float(darius_val)
@@ -90,13 +116,11 @@ def calculate_avg_rating(jordan_val, darius_val):
         return None
 
 def format_transcript(raw_text):
-    """Formats transcripts supporting timestamps (00:00:01 Jordan text), standard names, and line breaks."""
     if not raw_text or str(raw_text).strip().lower() in ["nan", ""]:
         return "<p style='color: #666;'>Transcript coming soon.</p>"
     
     text_str = str(raw_text).strip()
     
-    # Check if text contains timestamped entries like 00:00:01 Jordan
     if re.search(r'\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius)', text_str):
         parts = re.split(r'(?=\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius))', text_str)
         formatted_p = []
@@ -114,7 +138,6 @@ def format_transcript(raw_text):
                 formatted_p.append(f'<p style="margin-bottom: 1rem; line-height: 1.6;">{part_str}</p>')
         return "".join(formatted_p)
     
-    # Standard format line-by-line fallback
     paragraphs = [p.strip() for p in text_str.split("\n") if p.strip()]
     formatted_p = []
     for p in paragraphs:
@@ -126,6 +149,9 @@ def format_transcript(raw_text):
         formatted_p.append(f"<p style='margin-bottom: 1rem; line-height: 1.6;'>{p_highlighted}</p>")
         
     return "".join(formatted_p)
+
+# Lock index.html nav bar first
+lock_index_navigation()
 
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
@@ -310,24 +336,21 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE (WITH TRANSCRIPTS SHEET)
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE
 # ---------------------------------------------------------
 print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
     xls_w = pd.ExcelFile(WOOM_EXCEL)
     
-    # Load Main Metadata Sheet
     sheet_w_main = xls_w.sheet_names[0]
     df_w_main = pd.read_excel(xls_w, sheet_name=sheet_w_main)
     df_w_main.columns = [str(c).strip().lower() for c in df_w_main.columns]
 
-    # Load Transcripts Sheet if present (Tab 2)
     if len(xls_w.sheet_names) > 1 or "transcripts" in [s.lower() for s in xls_w.sheet_names]:
         ts_sheet_w = xls_w.sheet_names[1] if len(xls_w.sheet_names) > 1 else "Transcripts"
         df_w_trans = pd.read_excel(xls_w, sheet_name=ts_sheet_w)
         df_w_trans.columns = [str(c).strip().lower() for c in df_w_trans.columns]
         
-        # Merge on episode title or webpage title
         merge_col = None
         for candidate in ['episode title', 'episode_title', 'webpage title', 'webpage_title', 'title']:
             if candidate in df_w_main.columns and candidate in df_w_trans.columns:
@@ -345,13 +368,11 @@ if os.path.exists(WOOM_EXCEL):
         if 'transcript' not in df_woom.columns:
             df_woom['transcript'] = ""
 
-    # Identify key columns safely
     title_col = [c for c in df_woom.columns if "title" in c or "name" in c][0] if any("title" in c or "name" in c for c in df_woom.columns) else df_woom.columns[0]
     date_col = [c for c in df_woom.columns if "date" in c][0] if any("date" in c for c in df_woom.columns) else None
     yt_col = [c for c in df_woom.columns if "youtube" in c or "link" in c][0] if any("youtube" in c or "link" in c for c in df_woom.columns) else None
     notes_col = [c for c in df_woom.columns if "notes" in c or "highlights" in c or "show" in c][0] if any("notes" in c or "highlights" in c or "show" in c for c in df_woom.columns) else None
 
-    # Date parsing and sorting (Newest recorded episodes at top)
     if date_col:
         df_woom['parsed_date'] = pd.to_datetime(df_woom[date_col], errors='coerce')
         df_woom = df_woom.sort_values(by='parsed_date', ascending=False)
@@ -366,7 +387,6 @@ if os.path.exists(WOOM_EXCEL):
         clean_title = normalize_title(raw_title)
         slug = clean_slug(raw_title)
 
-        # Date Display
         if date_col and pd.notna(row.get('parsed_date')):
             date_str = row.get('parsed_date').strftime('%B %d, %Y')
         elif date_col and pd.notna(row.get(date_col)):
@@ -489,4 +509,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Transcripts with timestamps processed and rendered.")
+print("Build complete! Locked navigation in index.html and generated all subpages.")
