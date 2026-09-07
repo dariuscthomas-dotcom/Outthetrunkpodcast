@@ -20,7 +20,7 @@ os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
 # ---------------------------------------------------------
-# MASTER NAV LOCK: Ensures index.html ALWAYS keeps WOOM Archive
+# MASTER HEADER LOCK: Preserves mobile toggle & WOOM Archive
 # ---------------------------------------------------------
 def lock_index_navigation():
     if not os.path.exists(INDEX_PATH):
@@ -29,7 +29,16 @@ def lock_index_navigation():
     with open(INDEX_PATH, "r", encoding="utf-8") as f:
         content = f.read()
 
-    master_nav = """<nav id="site-nav" class="site-nav" aria-label="Main navigation">
+    master_header = """<header class="site-header" id="top" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 1rem 1.5rem;">
+    <a class="brand" href="#top" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.5rem;">
+      <span class="brand-text">Out The Trunk</span>
+    </a>
+    
+    <!-- PURE CSS MOBILE MENU TOGGLE -->
+    <input type="checkbox" id="nav-toggle-input" class="nav-toggle-input">
+    <label for="nav-toggle-input" class="nav-toggle">Menu</label>
+    
+    <nav id="site-nav" class="site-nav" aria-label="Main navigation">
       <a href="#woom" style="color: #FFFFFF;">WOOM</a>
       <a href="woom-archive.html" style="color: #FFFFFF;">WOOM Archive</a>
       <a href="#movies" style="color: #FFFFFF;">Movies</a>
@@ -37,19 +46,19 @@ def lock_index_navigation():
       <a href="#classic-segments" style="color: #FFFFFF;">Classic Segments</a>
       <a href="#hosts" style="color: #FFFFFF;">Meet The Hosts</a>
       <a class="listen-link" href="#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">Listen</a>
-    </nav>"""
+    </nav>
+  </header>"""
 
-    # Replace existing <nav id="site-nav"> ... </nav> block with master_nav
     updated_content = re.sub(
-        r'<nav id="site-nav".*?</nav>',
-        master_nav,
+        r'<header class="site-header".*?</header>',
+        master_header,
         content,
         flags=re.DOTALL
     )
 
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
         f.write(updated_content)
-    print("Locked navigation bar in index.html successfully!")
+    print("Locked header and mobile navigation in index.html successfully!")
 
 # ---------------------------------------------------------
 # HELPER FUNCTIONS
@@ -150,7 +159,7 @@ def format_transcript(raw_text):
         
     return "".join(formatted_p)
 
-# Lock index.html nav bar first
+# Lock index.html header first
 lock_index_navigation()
 
 # ---------------------------------------------------------
@@ -509,4 +518,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Locked navigation in index.html and generated all subpages.")
+print("Build complete! Locked header, fixed mobile menu CSS, and generated subpages.")
