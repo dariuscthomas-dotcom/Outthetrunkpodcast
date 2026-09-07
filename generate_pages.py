@@ -4,7 +4,7 @@ import pandas as pd
 
 # Paths & Settings
 MOVIES_EXCEL = "Movie Archive Inputs_3.xlsx" if os.path.exists("Movie Archive Inputs_3.xlsx") else "Movie Archive Inputs.xlsx"
-WOOM_EXCEL = "WOOM Archive Inputs.xlsx"
+WOOM_EXCEL = "WOOM Archive Inputs_2.xlsx" if os.path.exists("WOOM Archive Inputs_2.xlsx") else "WOOM Archive Inputs.xlsx"
 
 MOVIES_DIR = "movies"
 WOOM_DIR = "woom"
@@ -90,13 +90,33 @@ def calculate_avg_rating(jordan_val, darius_val):
         return None
 
 def format_transcript(raw_text):
-    """Formats transcripts, bolding, underlining, and highlighting Jordan: and Darius:."""
+    """Formats transcripts supporting timestamps (00:00:01 Jordan text), standard names, and line breaks."""
     if not raw_text or str(raw_text).strip().lower() in ["nan", ""]:
         return "<p style='color: #666;'>Transcript coming soon.</p>"
     
-    paragraphs = [p.strip() for p in str(raw_text).split("\n") if p.strip()]
-    formatted_p = []
+    text_str = str(raw_text).strip()
     
+    # Check if text contains timestamped entries like 00:00:01 Jordan
+    if re.search(r'\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius)', text_str):
+        parts = re.split(r'(?=\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius))', text_str)
+        formatted_p = []
+        for part in parts:
+            part_str = part.strip()
+            if not part_str:
+                continue
+            m = re.match(r'(\d{2}:\d{2}:\d{2})\s+(Jordan|Darius)\s+(.*)', part_str, re.DOTALL)
+            if m:
+                ts, name, text = m.groups()
+                text_cleaned = text.strip()
+                line = f'<p style="margin-bottom: 1rem; line-height: 1.6;"><span style="color: #888; font-size: 0.85rem; margin-right: 0.5rem; font-family: monospace;">[{ts}]</span><u style="color: {ACCENT_COLOR}; font-weight: bold;">{name}:</u> {text_cleaned}</p>'
+                formatted_p.append(line)
+            else:
+                formatted_p.append(f'<p style="margin-bottom: 1rem; line-height: 1.6;">{part_str}</p>')
+        return "".join(formatted_p)
+    
+    # Standard format line-by-line fallback
+    paragraphs = [p.strip() for p in text_str.split("\n") if p.strip()]
+    formatted_p = []
     for p in paragraphs:
         p_highlighted = re.sub(
             r'^(Jordan|Darius):', 
@@ -228,7 +248,7 @@ if os.path.exists(MOVIES_EXCEL):
 
     movie_list.sort(key=lambda x: x['sort_key'])
 
-    # Build Movie Archive HTML
+    # Movie Archive HTML
     all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
     active_groups = set(m['letter_group'] for m in movie_list)
     nav_buttons = [f'<a href="#group-{g}" class="nav-btn active-btn">{g}</a>' if g in active_groups else f'<span class="nav-btn disabled-btn">{g}</span>' for g in all_groups]
@@ -290,29 +310,36 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE (WITH TRANSCRIPTS SHEET)
 # ---------------------------------------------------------
-print("Processing WOOM Archive...")
+print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
     xls_w = pd.ExcelFile(WOOM_EXCEL)
-    sheet_w = "WOOM Episodes" if "WOOM Episodes" in xls_w.sheet_names else xls_w.sheet_names[0]
-    df_w_main = pd.read_excel(xls_w, sheet_name=sheet_w)
-
-    # Clean column names for flexibility
+    
+    # Load Main Metadata Sheet
+    sheet_w_main = xls_w.sheet_names[0]
+    df_w_main = pd.read_excel(xls_w, sheet_name=sheet_w_main)
     df_w_main.columns = [str(c).strip().lower() for c in df_w_main.columns]
 
-    if "transcripts" in xls_w.sheet_names or "Transcripts" in xls_w.sheet_names:
-        ts_sheet_w = "Transcripts" if "Transcripts" in xls_w.sheet_names else "transcripts"
+    # Load Transcripts Sheet if present (Tab 2)
+    if len(xls_w.sheet_names) > 1 or "transcripts" in [s.lower() for s in xls_w.sheet_names]:
+        ts_sheet_w = xls_w.sheet_names[1] if len(xls_w.sheet_names) > 1 else "Transcripts"
         df_w_trans = pd.read_excel(xls_w, sheet_name=ts_sheet_w)
         df_w_trans.columns = [str(c).strip().lower() for c in df_w_trans.columns]
         
-        # Find matching title column
-        t_col = "episode_title" if "episode_title" in df_w_main.columns else "title"
-        if t_col in df_w_trans.columns and "transcript" in df_w_trans.columns:
-            df_woom = pd.merge(df_w_main, df_w_trans[[t_col, 'transcript']], on=t_col, how="left")
+        # Merge on episode title or webpage title
+        merge_col = None
+        for candidate in ['episode title', 'episode_title', 'webpage title', 'webpage_title', 'title']:
+            if candidate in df_w_main.columns and candidate in df_w_trans.columns:
+                merge_col = candidate
+                break
+        
+        if merge_col and 'transcript' in df_w_trans.columns:
+            df_woom = pd.merge(df_w_main, df_w_trans[[merge_col, 'transcript']], on=merge_col, how="left")
         else:
             df_woom = df_w_main
-            df_woom['transcript'] = ""
+            if 'transcript' not in df_woom.columns:
+                df_woom['transcript'] = ""
     else:
         df_woom = df_w_main
         if 'transcript' not in df_woom.columns:
@@ -462,4 +489,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("ALL Movie and WOOM archives generated successfully!")
+print("Build complete! Transcripts with timestamps processed and rendered.")
