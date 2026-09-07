@@ -9,10 +9,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <style>
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #fcfcfc;
             color: #222222;
+        }
+        .subpage-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #0085CA;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }
+        .home-btn:hover {
+            background: #f0f8ff;
+            transform: translateX(-3px);
+            border-color: #0085CA;
         }
         .hero-header {
             text-align: center;
@@ -103,27 +130,36 @@
         .modern-card li {
             margin-bottom: 0.4rem;
         }
-        .major-themes ul {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            list-style: none;
-            padding-left: 0;
-        }
-        .major-themes li {
-            background: #f0f8ff;
-            color: #0085CA;
-            border: 1px solid #0085CA;
-            border-radius: 20px;
-            padding: 0.25rem 0.85rem;
+        .back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #0085CA;
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 700;
             font-size: 0.85rem;
-            font-weight: 600;
-            margin: 0;
+            box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4);
+            transition: all 0.2s ease-in-out;
+            z-index: 1000;
+        }
+        .back-to-top:hover {
+            background: #006dae;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 133, 202, 0.5);
         }
     </style>
 </head>
-<body>
+<body id="top">
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
+        
+        <div class="subpage-nav">
+            <a href="../index.html" class="home-btn">← Home</a>
+            <a href="../movies-archive.html" class="home-btn">Movie Archive</a>
+        </div>
+
         <header class="hero-header">
             <p style="color: #0085CA; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">Juror No. 2 (2024)</h1>
@@ -187,6 +223,8 @@
                 <p style='color: #666;'>Transcript coming soon.</p>
             </div>
         </section>
+
+        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 </body>
 </html>

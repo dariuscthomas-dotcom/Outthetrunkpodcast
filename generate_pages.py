@@ -171,7 +171,7 @@ for idx, row in df.iterrows():
     else:
         embed_html = ""
 
-    # 1. GENERATE INDIVIDUAL MOVIE PAGE (WITH MODERN SANS-SERIF & RATING BADGES)
+    # 1. INDIVIDUAL MOVIE PAGE TEMPLATE (WITH HOME & BACK TO TOP BUTTONS)
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -183,10 +183,37 @@ for idx, row in df.iterrows():
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <style>
+        html {{ scroll-behavior: smooth; }}
         body {{
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #fcfcfc;
             color: #222222;
+        }}
+        .subpage-nav {{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }}
+        .home-btn {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: {ACCENT_COLOR};
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+        }}
+        .home-btn:hover {{
+            background: #f0f8ff;
+            transform: translateX(-3px);
+            border-color: {ACCENT_COLOR};
         }}
         .hero-header {{
             text-align: center;
@@ -277,27 +304,36 @@ for idx, row in df.iterrows():
         .modern-card li {{
             margin-bottom: 0.4rem;
         }}
-        .major-themes ul {{
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            list-style: none;
-            padding-left: 0;
-        }}
-        .major-themes li {{
-            background: #f0f8ff;
-            color: {ACCENT_COLOR};
-            border: 1px solid {ACCENT_COLOR};
-            border-radius: 20px;
-            padding: 0.25rem 0.85rem;
+        .back-to-top {{
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: {ACCENT_COLOR};
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 700;
             font-size: 0.85rem;
-            font-weight: 600;
-            margin: 0;
+            box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4);
+            transition: all 0.2s ease-in-out;
+            z-index: 1000;
+        }}
+        .back-to-top:hover {{
+            background: #006dae;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 133, 202, 0.5);
         }}
     </style>
 </head>
-<body>
+<body id="top">
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
+        
+        <div class="subpage-nav">
+            <a href="../index.html" class="home-btn">← Home</a>
+            <a href="../movies-archive.html" class="home-btn">Movie Archive</a>
+        </div>
+
         <header class="hero-header">
             <p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{display_title}</h1>
@@ -328,6 +364,8 @@ for idx, row in df.iterrows():
                 {formatted_transcript}
             </div>
         </section>
+
+        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 </body>
 </html>
@@ -348,7 +386,7 @@ for idx, row in df.iterrows():
 
 movie_list.sort(key=lambda x: x['sort_key'])
 
-# 2. BUILD ALPHABETICAL ARCHIVE PAGE
+# 2. ALPHABETICAL ARCHIVE PAGE TEMPLATE
 all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
 active_groups = set(m['letter_group'] for m in movie_list)
 
@@ -373,7 +411,6 @@ for g in all_groups:
     if g in grouped_movies:
         cards = ""
         for item in grouped_movies[g]:
-            meta_str = f" ({item['year_str']})" if item['year_str'] else ""
             rating_meta = f'<span class="card-meta"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else ""
             
             cards += f'''
@@ -392,7 +429,7 @@ for g in all_groups:
             </div>
         </section>'''
 
-# 3. WRITE MOVIES-ARCHIVE.HTML PAGE WITH MODERN UI STYLING
+# 3. WRITE MOVIES-ARCHIVE.HTML PAGE
 archive_html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -410,7 +447,27 @@ archive_html = f"""<!DOCTYPE html>
             background-color: #fcfcfc;
             color: #222;
         }}
-        
+        .home-btn {{
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: {ACCENT_COLOR};
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            background: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 1px solid #eaeaea;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+            margin-bottom: 1.5rem;
+        }}
+        .home-btn:hover {{
+            background: #f0f8ff;
+            transform: translateX(-3px);
+            border-color: {ACCENT_COLOR};
+        }}
         .az-navigation {{
             text-align: center;
             margin-bottom: 2.5rem;
@@ -421,7 +478,6 @@ archive_html = f"""<!DOCTYPE html>
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
             border: 1px solid #eaeaea;
         }}
-        
         .nav-btn {{
             display: inline-block;
             padding: 6px 12px;
@@ -431,7 +487,6 @@ archive_html = f"""<!DOCTYPE html>
             font-size: 0.9rem;
             transition: all 0.2s ease-in-out;
         }}
-        
         .active-btn {{
             background-color: {ACCENT_COLOR};
             color: #fff !important;
@@ -439,19 +494,16 @@ archive_html = f"""<!DOCTYPE html>
             text-decoration: none;
             box-shadow: 0 2px 6px rgba(0, 133, 202, 0.25);
         }}
-        
         .active-btn:hover {{
             background-color: #006dae;
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0, 133, 202, 0.35);
         }}
-        
         .disabled-btn {{
             border: 1px solid #eaeaea;
             color: #d1d1d1;
             background-color: #fafafa;
         }}
-        
         .group-header {{
             font-size: 1.8rem;
             font-weight: 800;
@@ -460,13 +512,11 @@ archive_html = f"""<!DOCTYPE html>
             margin-bottom: 1.5rem;
             color: #111;
         }}
-        
         .movie-grid {{
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
             gap: 1.25rem;
         }}
-        
         .movie-card-styled {{
             text-decoration: none;
             color: #111;
@@ -482,21 +532,18 @@ archive_html = f"""<!DOCTYPE html>
             box-shadow: 0 3px 8px rgba(0,0,0,0.03);
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
         }}
-        
         .movie-card-styled:hover {{
             transform: translateY(-4px);
             box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15);
             border-color: {ACCENT_COLOR};
             background-color: #f8fcff;
         }}
-        
         .movie-card-styled h3 {{
             margin: 0;
             font-size: 1.05rem;
             font-weight: 600;
             line-height: 1.3;
         }}
-        
         .card-meta {{
             display: block;
             margin-top: 0.35rem;
@@ -504,10 +551,32 @@ archive_html = f"""<!DOCTYPE html>
             font-weight: 700;
             color: {ACCENT_COLOR};
         }}
+        .back-to-top {{
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: {ACCENT_COLOR};
+            color: #ffffff !important;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4);
+            transition: all 0.2s ease-in-out;
+            z-index: 1000;
+        }}
+        .back-to-top:hover {{
+            background: #006dae;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 133, 202, 0.5);
+        }}
     </style>
 </head>
-<body>
+<body id="top">
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
+        <a href="index.html" class="home-btn">← Home</a>
+
         <header style="text-align: center; margin-bottom: 2rem;">
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
             <p style="color: #666; font-size: 1.05rem;">Browse all movie reviews and show notes</p>
@@ -516,6 +585,8 @@ archive_html = f"""<!DOCTYPE html>
         {nav_bar_html}
 
         {sections_html}
+
+        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 </body>
 </html>
@@ -524,4 +595,4 @@ archive_html = f"""<!DOCTYPE html>
 with open(ARCHIVE_PATH, "w", encoding="utf-8") as f:
     f.write(archive_html)
 
-print("Modern website code update complete!")
+print("Build complete! Added Home button and floating Back to Top buttons.")
