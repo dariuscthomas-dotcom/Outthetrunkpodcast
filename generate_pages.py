@@ -36,7 +36,7 @@ def lock_index_navigation():
     
     <!-- PURE CSS MOBILE MENU TOGGLE -->
     <input type="checkbox" id="nav-toggle-input" class="nav-toggle-input">
-    <label for="nav-toggle-input" class="nav-toggle">Menu</label>
+    <label for="nav-toggle-input" class="nav-toggle" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">Menu</label>
     
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
       <a href="#woom" style="color: #FFFFFF;">WOOM</a>
@@ -58,7 +58,7 @@ def lock_index_navigation():
 
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
         f.write(updated_content)
-    print("Locked header and mobile navigation in index.html successfully!")
+    print("Locked header and mobile menu button in index.html successfully!")
 
 # ---------------------------------------------------------
 # HELPER FUNCTIONS
@@ -518,4 +518,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Locked header, fixed mobile menu CSS, and generated subpages.")
+print("Build complete! Fixed mobile menu button styling and pushed spreadsheet updates.")
