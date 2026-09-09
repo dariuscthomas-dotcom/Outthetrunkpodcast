@@ -130,6 +130,7 @@ def format_transcript(raw_text):
     
     text_str = str(raw_text).strip()
     
+    # Check if transcript contains timestamp format: 00:00:01 Jordan ...
     if re.search(r'\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius)', text_str):
         parts = re.split(r'(?=\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius))', text_str)
         formatted_p = []
@@ -380,7 +381,13 @@ if os.path.exists(WOOM_EXCEL):
     title_col = [c for c in df_woom.columns if "title" in c or "name" in c][0] if any("title" in c or "name" in c for c in df_woom.columns) else df_woom.columns[0]
     date_col = [c for c in df_woom.columns if "date" in c][0] if any("date" in c for c in df_woom.columns) else None
     yt_col = [c for c in df_woom.columns if "youtube" in c or "link" in c][0] if any("youtube" in c or "link" in c for c in df_woom.columns) else None
-    notes_col = [c for c in df_woom.columns if "notes" in c or "highlights" in c or "show" in c][0] if any("notes" in c or "highlights" in c or "show" in c for c in df_woom.columns) else None
+    
+    # Check for show_notes_highlights or show_notes
+    notes_col = None
+    for candidate in ['show_notes_highlights', 'show notes & highlights', 'show_notes', 'notes', 'highlights']:
+        if candidate in df_woom.columns:
+            notes_col = candidate
+            break
 
     if date_col:
         df_woom['parsed_date'] = pd.to_datetime(df_woom[date_col], errors='coerce')
@@ -518,4 +525,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Fixed mobile menu button styling and pushed spreadsheet updates.")
+print("Build complete! All subpages, top back buttons, archive buttons, and floating scroll buttons preserved.")
