@@ -20,7 +20,7 @@ os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
 # ---------------------------------------------------------
-# MASTER HEADER LOCK: Preserves mobile toggle & WOOM Archive
+# MASTER HEADER LOCK: Preserves mobile button & JS handler
 # ---------------------------------------------------------
 def lock_index_navigation():
     if not os.path.exists(INDEX_PATH):
@@ -34,9 +34,8 @@ def lock_index_navigation():
       <span class="brand-text">Out The Trunk</span>
     </a>
     
-    <!-- PURE CSS MOBILE MENU TOGGLE -->
-    <input type="checkbox" id="nav-toggle-input" class="nav-toggle-input">
-    <label for="nav-toggle-input" class="nav-toggle" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">Menu</label>
+    <!-- BULLETPROOF MOBILE BUTTON WITH INLINE JS TOGGLE -->
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
     
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
       <a href="#woom" style="color: #FFFFFF;">WOOM</a>
@@ -58,7 +57,7 @@ def lock_index_navigation():
 
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
         f.write(updated_content)
-    print("Locked header and mobile menu button in index.html successfully!")
+    print("Locked master header with inline JS menu toggle in index.html!")
 
 # ---------------------------------------------------------
 # HELPER FUNCTIONS
@@ -130,7 +129,6 @@ def format_transcript(raw_text):
     
     text_str = str(raw_text).strip()
     
-    # Check if transcript contains timestamp format: 00:00:01 Jordan ...
     if re.search(r'\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius)', text_str):
         parts = re.split(r'(?=\d{2}:\d{2}:\d{2}\s+(?:Jordan|Darius))', text_str)
         formatted_p = []
@@ -382,7 +380,6 @@ if os.path.exists(WOOM_EXCEL):
     date_col = [c for c in df_woom.columns if "date" in c][0] if any("date" in c for c in df_woom.columns) else None
     yt_col = [c for c in df_woom.columns if "youtube" in c or "link" in c][0] if any("youtube" in c or "link" in c for c in df_woom.columns) else None
     
-    # Check for show_notes_highlights or show_notes
     notes_col = None
     for candidate in ['show_notes_highlights', 'show notes & highlights', 'show_notes', 'notes', 'highlights']:
         if candidate in df_woom.columns:
@@ -525,4 +522,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! All subpages, top back buttons, archive buttons, and floating scroll buttons preserved.")
+print("Build complete! Locked inline JS mobile menu handler into index.html.")
