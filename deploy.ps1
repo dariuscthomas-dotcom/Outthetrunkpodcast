@@ -1,1 +1,0 @@
-python generate_pages.py; git add .; git commit -m "Update episode archives"; git push origin master:main --force
