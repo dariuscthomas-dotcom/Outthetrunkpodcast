@@ -20,7 +20,7 @@ os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
 # ---------------------------------------------------------
-# MASTER HEADER LOCK: Preserves mobile button & JS handler
+# MASTER HEADER LOCK
 # ---------------------------------------------------------
 def lock_index_navigation():
     if not os.path.exists(INDEX_PATH):
@@ -34,7 +34,6 @@ def lock_index_navigation():
       <span class="brand-text">Out The Trunk</span>
     </a>
     
-    <!-- BULLETPROOF MOBILE BUTTON WITH INLINE JS TOGGLE -->
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
     
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
@@ -57,7 +56,6 @@ def lock_index_navigation():
 
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
         f.write(updated_content)
-    print("Locked master header with inline JS menu toggle in index.html!")
 
 # ---------------------------------------------------------
 # HELPER FUNCTIONS
@@ -114,14 +112,19 @@ def format_rating_badge(val):
     except ValueError:
         return "N/A"
 
-def calculate_avg_rating(jordan_val, darius_val):
+def calculate_avg_num(jordan_val, darius_val):
     try:
         j = float(jordan_val)
         d = float(darius_val)
-        avg = (j + d) / 2
-        return f"{int(avg)}/5" if avg.is_integer() else f"{avg:.1f}/5"
+        return (j + d) / 2.0
     except (ValueError, TypeError):
         return None
+
+def calculate_avg_rating(jordan_val, darius_val):
+    avg = calculate_avg_num(jordan_val, darius_val)
+    if avg is not None:
+        return f"{int(avg)}/5" if avg.is_integer() else f"{avg:.1f}/5"
+    return None
 
 def format_transcript(raw_text):
     if not raw_text or str(raw_text).strip().lower() in ["nan", ""]:
@@ -158,11 +161,10 @@ def format_transcript(raw_text):
         
     return "".join(formatted_p)
 
-# Lock index.html header first
 lock_index_navigation()
 
 # ---------------------------------------------------------
-# 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
+# 1. BUILD MOVIE PAGES & MOVIE ARCHIVE (TITLE & RATING VIEWS)
 # ---------------------------------------------------------
 print("Processing Movie Archive...")
 if os.path.exists(MOVIES_EXCEL):
@@ -205,6 +207,7 @@ if os.path.exists(MOVIES_EXCEL):
         d_stars = render_stars(row.get('darius_rating'))
         j_badge = format_rating_badge(row.get('jordan_rating'))
         d_badge = format_rating_badge(row.get('darius_rating'))
+        avg_num = calculate_avg_num(row.get('jordan_rating'), row.get('darius_rating'))
         avg_rating = calculate_avg_rating(row.get('jordan_rating'), row.get('darius_rating'))
 
         show_notes_html = str(row.get(col_e_m, "")).strip() if pd.notna(row.get(col_e_m)) else "<p>Show notes available in full podcast audio.</p>"
@@ -278,11 +281,11 @@ if os.path.exists(MOVIES_EXCEL):
         with open(os.path.join(MOVIES_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(html_content)
 
-        movie_list.append({'clean_title': clean_title, 'avg_rating': avg_rating, 'slug': slug, 'sort_key': sort_key, 'letter_group': letter_group})
+        movie_list.append({'clean_title': clean_title, 'avg_num': avg_num, 'avg_rating': avg_rating, 'slug': slug, 'sort_key': sort_key, 'letter_group': letter_group})
 
     movie_list.sort(key=lambda x: x['sort_key'])
 
-    # Movie Archive HTML
+    # 1. BUILD A-Z TITLE SECTIONS
     all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
     active_groups = set(m['letter_group'] for m in movie_list)
     nav_buttons = [f'<a href="#group-{g}" class="nav-btn active-btn">{g}</a>' if g in active_groups else f'<span class="nav-btn disabled-btn">{g}</span>' for g in all_groups]
@@ -296,6 +299,24 @@ if os.path.exists(MOVIES_EXCEL):
         if g in grouped_movies:
             cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else ''}</div></a>''' for item in grouped_movies[g]])
             sections_html += f'''<section id="group-{g}" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header">{g}</h2><div class="movie-grid">{cards}</div></section>'''
+
+    # 2. BUILD RATING SECTIONS (5 Stars down to 1 Star)
+    rating_tiers = [
+        (5.0, 5.0, "5 Stars (Masterpieces)"),
+        (4.0, 4.9, "4 Stars (Highly Recommended)"),
+        (3.0, 3.9, "3 Stars (Solid / Worth A Watch)"),
+        (2.0, 2.9, "2 Stars (Mixed / Flawed)"),
+        (0.0, 1.9, "1 Star (Avoid / Rough)"),
+    ]
+
+    rating_sections_html = ""
+    for min_r, max_r, tier_label in rating_tiers:
+        tier_movies = [m for m in movie_list if m['avg_num'] is not None and min_r <= m['avg_num'] <= max_r]
+        if tier_movies:
+            # Sort highest rating first
+            tier_movies.sort(key=lambda x: x['avg_num'], reverse=True)
+            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
+            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header">{tier_label}</h2><div class="movie-grid">{cards}</div></section>'''
 
     movie_archive_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -312,6 +333,12 @@ if os.path.exists(MOVIES_EXCEL):
         body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
+        
+        /* View Toggle Switch */
+        .toggle-container {{ display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }}
+        .toggle-btn {{ background: #fff; border: 2px solid #00788C; color: #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }}
+        .toggle-btn.active {{ background: #00788C; color: #fff; }}
+
         .az-navigation {{ text-align: center; margin-bottom: 2.5rem; line-height: 2.2; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #eaeaea; }}
         .nav-btn {{ display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }}
         .active-btn {{ background-color: {ACCENT_COLOR}; color: #fff !important; border: 1px solid {ACCENT_COLOR}; text-decoration: none; }}
@@ -330,14 +357,51 @@ if os.path.exists(MOVIES_EXCEL):
 <body id="top">
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="index.html" class="home-btn">← Home</a>
-        <header style="text-align: center; margin-bottom: 2rem;">
+        <header style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
             <p style="color: #666; font-size: 1.05rem;">Browse all movie reviews and show notes</p>
         </header>
-        <nav class="az-navigation">{"".join(nav_buttons)}</nav>
-        {sections_html}
+
+        <!-- BROWSE TOGGLE BUTTONS -->
+        <div class="toggle-container">
+            <button id="btn-title" class="toggle-btn active" onclick="showView('title')">Browse by Title (A–Z)</button>
+            <button id="btn-rating" class="toggle-btn" onclick="showView('rating')">Browse by Rating (★)</button>
+        </div>
+
+        <!-- VIEW 1: TITLE (A-Z) -->
+        <div id="view-title">
+            <nav class="az-navigation">{"".join(nav_buttons)}</nav>
+            {sections_html}
+        </div>
+
+        <!-- VIEW 2: RATING -->
+        <div id="view-rating" style="display: none;">
+            {rating_sections_html}
+        </div>
+
         <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
+
+    <script>
+        function showView(viewType) {{
+            var viewTitle = document.getElementById('view-title');
+            var viewRating = document.getElementById('view-rating');
+            var btnTitle = document.getElementById('btn-title');
+            var btnRating = document.getElementById('btn-rating');
+
+            if (viewType === 'rating') {{
+                viewTitle.style.display = 'none';
+                viewRating.style.display = 'block';
+                btnTitle.classList.remove('active');
+                btnRating.classList.add('active');
+            }} else {{
+                viewTitle.style.display = 'block';
+                viewRating.style.display = 'none';
+                btnTitle.classList.add('active');
+                btnRating.classList.remove('active');
+            }}
+        }}
+    </script>
 </body>
 </html>"""
     with open(MOVIES_ARCHIVE_PATH, "w", encoding="utf-8") as f:
@@ -522,4 +586,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Locked inline JS mobile menu handler into index.html.")
+print("Build complete! Added rating filter toggle to Movie Archive.")
