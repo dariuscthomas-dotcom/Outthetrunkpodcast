@@ -50,13 +50,13 @@ body {
 }
 
 /* Navigation Links - Desktop Defaults */
-.site-nav, .site-header nav {
+#site-nav, .site-nav {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-.site-nav a, .site-header nav a {
+#site-nav a, .site-nav a {
   color: #FFFFFF !important;
   text-decoration: none;
   font-weight: 700;
@@ -64,7 +64,7 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.site-nav a:hover, .site-header nav a:hover {
+#site-nav a:hover, .site-nav a:hover {
   opacity: 0.85;
 }
 
@@ -152,8 +152,8 @@ body {
     display: block !important;
   }
 
-  .site-nav, .site-header nav {
-    display: none;
+  #site-nav, .site-nav {
+    display: none !important;
     width: 100%;
     flex-direction: column;
     align-items: center;
@@ -165,11 +165,11 @@ body {
   }
 
   /* Toggled via script.js */
-  .site-nav.is-open, .site-header nav.is-open {
+  #site-nav.is-open, .site-nav.is-open {
     display: flex !important;
   }
 
-  .site-nav a, .site-header nav a {
+  #site-nav a, .site-nav a {
     font-size: 1rem;
     color: #FFFFFF !important;
     text-align: center;

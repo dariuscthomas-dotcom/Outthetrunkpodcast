@@ -208,8 +208,8 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false">MENU</button>
-        <nav id="site-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <nav id="site-nav" class="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -304,8 +304,8 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false">MENU</button>
-        <nav id="site-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <nav id="site-nav" class="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -497,8 +497,8 @@ if os.path.exists(WOOM_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false">MENU</button>
-        <nav id="site-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <nav id="site-nav" class="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -572,8 +572,8 @@ if os.path.exists(WOOM_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false">MENU</button>
-        <nav id="site-nav">
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <nav id="site-nav" class="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;">WOOM Archive</a>
             <a href="/#movies">Movies</a>
