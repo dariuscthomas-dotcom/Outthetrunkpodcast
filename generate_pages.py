@@ -10,7 +10,7 @@ WOOM_DIR = "woom"
 
 MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
-INDEX_PATH = "index.html"
+_PATH = ".html"
 
 ACCENT_COLOR = "#0085CA"
 
@@ -26,11 +26,11 @@ MASTER_TOPICS = [
     "Technology & Internet Culture", "Sports & Athletics", "Food & Food Culture", "Nostalgia & Hobbies"
 ]
 
-def lock_index_navigation():
-    if not os.path.exists(INDEX_PATH):
+def lock__navigation():
+    if not os.path.exists(_PATH):
         return
 
-    with open(INDEX_PATH, "r", encoding="utf-8") as f:
+    with open(_PATH, "r", encoding="utf-8") as f:
         content = f.read()
 
     master_header = """<header class="site-header" id="top" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 1rem 1.5rem;">
@@ -56,7 +56,7 @@ def lock_index_navigation():
         flags=re.DOTALL
     )
 
-    with open(INDEX_PATH, "w", encoding="utf-8") as f:
+    with open(_PATH, "w", encoding="utf-8") as f:
         f.write(updated_content)
 
 def normalize_title(title):
@@ -159,7 +159,7 @@ def format_transcript(raw_text):
         
     return "".join(formatted_p)
 
-lock_index_navigation()
+lock__navigation()
 
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
@@ -240,14 +240,14 @@ if os.path.exists(MOVIES_EXCEL):
         .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
         .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
         .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-index: 1000; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
         .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body id="top">
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
         <div class="subpage-nav">
-            <a href="../index.html" class="home-btn">← Home</a>
+            <a href="../" class="home-btn">← Home</a>
             <a href="../movies-archive.html" class="home-btn">Movie Archive</a>
         </div>
         <header class="hero-header">
@@ -342,13 +342,13 @@ if os.path.exists(MOVIES_EXCEL):
         .movie-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         .movie-card-styled h3 {{ margin: 0; font-size: 1.05rem; font-weight: 600; }}
         .card-meta {{ display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-index: 1000; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
         .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body id="top">
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <a href="index.html" class="home-btn">← Home</a>
+        <a href="/" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
             <p style="color: #666; font-size: 1.05rem;">Browse all movie reviews and show notes</p>
@@ -499,14 +499,14 @@ if os.path.exists(WOOM_EXCEL):
         .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
         .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
         .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-index: 1000; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
         .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body id="top">
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
         <div class="subpage-nav">
-            <a href="../index.html" class="home-btn">← Home</a>
+            <a href="../.html" class="home-btn">← Home</a>
             <a href="../woom-archive.html" class="home-btn">WOOM Archive</a>
         </div>
         <header class="hero-header">
@@ -574,13 +574,13 @@ if os.path.exists(WOOM_EXCEL):
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         .woom-card-styled h3 {{ margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }}
         .card-meta {{ display: block; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-index: 1000; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
         .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body id="top">
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <a href="index.html" class="home-btn">← Home</a>
+        <a .html" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 2rem;">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
@@ -613,7 +613,7 @@ if os.path.exists(WOOM_EXCEL):
                     card.style.display = 'flex';
                 }} else {{
                     var cardTopics = card.getAttribute('data-topics') || '';
-                    if (cardTopics.indexOf(selectedTopic) !== -1) {{
+                    if (cardTopics.Of(selectedTopic) !== -1) {{
                         card.style.display = 'flex';
                     }} else {{
                         card.style.display = 'none';
