@@ -34,8 +34,8 @@ MASTER_TOPICS = [
 ]
 
 def lock_index_navigation():
-    if not os.path.exists(INDEX_PATH):
-        return
+    # Disabled so Python never overwrites manual edits to index.html
+    pass
 
     with open(INDEX_PATH, "r", encoding="utf-8") as f:
         content = f.read()
