@@ -208,7 +208,8 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav>
+        <button class="nav-toggle" aria-expanded="false">MENU</button>
+        <nav id="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -227,7 +228,7 @@ if os.path.exists(MOVIES_EXCEL):
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{display_title}</h1>
         </header>
         {embed_html}
-        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; margin-top: 1.5rem;">
             <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
                 <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Jordan's Rating</h3>
                 <div style="color: {ACCENT_COLOR}; font-size: 1.5rem; letter-spacing: 2px;">{j_stars}</div>
@@ -246,6 +247,7 @@ if os.path.exists(MOVIES_EXCEL):
         </section>
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
+    <script src="../script.js"></script>
 </body>
 </html>"""
         with open(os.path.join(MOVIES_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
@@ -302,7 +304,8 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav>
+        <button class="nav-toggle" aria-expanded="false">MENU</button>
+        <nav id="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -339,6 +342,7 @@ if os.path.exists(MOVIES_EXCEL):
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 
+    <script src="script.js"></script>
     <script>
         function showView(viewType) {{
             var viewTitle = document.getElementById('view-title');
@@ -493,7 +497,8 @@ if os.path.exists(WOOM_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav>
+        <button class="nav-toggle" aria-expanded="false">MENU</button>
+        <nav id="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -512,13 +517,14 @@ if os.path.exists(WOOM_EXCEL):
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title}</h1>
         </header>
         {embed_html}
-        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">{show_notes_html}</section>
+        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; margin-top: 1.5rem;">{show_notes_html}</section>
         <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">
             <h2 style="font-size: 1.35rem; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
+    <script src="../script.js"></script>
 </body>
 </html>"""
         with open(os.path.join(WOOM_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
@@ -566,7 +572,8 @@ if os.path.exists(WOOM_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav>
+        <button class="nav-toggle" aria-expanded="false">MENU</button>
+        <nav id="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -607,6 +614,7 @@ if os.path.exists(WOOM_EXCEL):
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 
+    <script src="script.js"></script>
     <script>
         var currentTopic = 'all';
 
@@ -681,4 +689,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! All archives and subpages updated cleanly.")
+print("Build complete! All archives and subpages updated cleanly with script hooks.")

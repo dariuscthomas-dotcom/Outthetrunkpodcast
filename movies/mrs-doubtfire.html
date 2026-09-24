@@ -15,7 +15,8 @@
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav>
+        <button class="nav-toggle" aria-expanded="false">MENU</button>
+        <nav id="site-nav">
             <a href="/#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
@@ -34,7 +35,7 @@
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">Mrs. Doubtfire (1993)</h1>
         </header>
         <div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/RnEQFx-Jc3A" title="Mrs. Doubtfire (1993)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; margin-top: 1.5rem;">
             <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
                 <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Jordan's Rating</h3>
                 <div style="color: #0085CA; font-size: 1.5rem; letter-spacing: 2px;">★★★★★</div>
@@ -78,5 +79,6 @@
         </section>
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
     </main>
+    <script src="../script.js"></script>
 </body>
 </html>

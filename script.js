@@ -2,12 +2,12 @@
    OUT THE TRUNK - INTERACTIVE NAVIGATION
    ========================================== */
 
-document.addEventListener('DOMContentLoaded', function() {
+function initMobileMenu() {
   var navToggle = document.querySelector('.nav-toggle');
   var siteNav = document.getElementById('site-nav') || document.querySelector('.site-header nav');
 
   if (navToggle && siteNav) {
-    navToggle.addEventListener('click', function(e) {
+    navToggle.onclick = function(e) {
       e.stopPropagation();
       var isOpen = siteNav.classList.contains('is-open');
       
@@ -18,23 +18,29 @@ document.addEventListener('DOMContentLoaded', function() {
         siteNav.classList.add('is-open');
         navToggle.setAttribute('aria-expanded', 'true');
       }
-    });
+    };
 
     // Close menu when clicking anywhere outside header nav
-    document.addEventListener('click', function(e) {
+    document.onclick = function(e) {
       if (!siteNav.contains(e.target) && !navToggle.contains(e.target)) {
         siteNav.classList.remove('is-open');
         navToggle.setAttribute('aria-expanded', 'false');
       }
-    });
+    };
 
     // Close menu when a navigation link is clicked
     var navLinks = siteNav.querySelectorAll('a');
-    navLinks.forEach(function(link) {
-      link.addEventListener('click', function() {
+    for (var i = 0; i < navLinks.length; i++) {
+      navLinks[i].onclick = function() {
         siteNav.classList.remove('is-open');
         navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
+      };
+    }
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMobileMenu);
+} else {
+  initMobileMenu();
+}
