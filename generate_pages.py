@@ -402,7 +402,6 @@ if os.path.exists(MOVIES_EXCEL):
             <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
         </header>
 
-        <!-- MOVIE SEARCH BAR -->
         <div class="search-container">
             <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()">
         </div>
@@ -457,7 +456,6 @@ if os.path.exists(MOVIES_EXCEL):
                 }}
             }});
 
-            // Hide empty letter section headers when searching
             var sectionGroups = document.querySelectorAll('.movie-section-group');
             sectionGroups.forEach(function(sec) {{
                 var visibleCards = sec.querySelectorAll('.movie-card-styled[style*="display: flex"]');
@@ -817,4 +815,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Movie rating safety added, unified headers integrated, and Movie search live.")
+print("Build complete! Navigation lock synced across all templates.")

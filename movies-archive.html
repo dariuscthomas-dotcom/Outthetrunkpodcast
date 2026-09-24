@@ -58,7 +58,6 @@
             <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
         </header>
 
-        <!-- MOVIE SEARCH BAR -->
         <div class="search-container">
             <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()">
         </div>
@@ -113,7 +112,6 @@
                 }
             });
 
-            // Hide empty letter section headers when searching
             var sectionGroups = document.querySelectorAll('.movie-section-group');
             sectionGroups.forEach(function(sec) {
                 var visibleCards = sec.querySelectorAll('.movie-card-styled[style*="display: flex"]');
