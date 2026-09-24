@@ -19,7 +19,7 @@ body {
   line-height: 1.5;
 }
 
-/* TOP NAVIGATION HEADER ONLY */
+/* TOP NAVIGATION HEADER */
 .site-header {
   background-color: #1D1160;
   border-bottom: 3px solid #00788C;
@@ -49,14 +49,18 @@ body {
   color: #FFFFFF !important;
 }
 
-/* Navigation Links - Desktop Defaults */
-#site-nav, .site-nav {
+/* DESKTOP NAVIGATION DEFAULTS */
+.nav-container {
+  display: block;
+}
+
+.site-nav {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-#site-nav a, .site-nav a {
+.site-nav a {
   color: #FFFFFF !important;
   text-decoration: none;
   font-weight: 700;
@@ -64,7 +68,7 @@ body {
   transition: opacity 0.2s ease;
 }
 
-#site-nav a:hover, .site-nav a:hover {
+.site-nav a:hover {
   opacity: 0.85;
 }
 
@@ -76,9 +80,9 @@ body {
   font-weight: 700;
 }
 
-/* Menu Toggle Button Defaults (Hidden on Desktop) */
-.nav-toggle {
-  display: none;
+/* MENU TOGGLE SUMMARY BUTTON DEFAULTS */
+summary.nav-toggle {
+  display: none; /* Hidden on desktop */
   color: #FFFFFF;
   background-color: #00788C;
   border: 2px solid #00788C;
@@ -89,9 +93,19 @@ body {
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  list-style: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Container & Layout Utilities */
+/* Hide default disclosure arrows across Safari/Chrome/Firefox */
+summary.nav-toggle::-webkit-details-marker,
+summary.nav-toggle::marker {
+  display: none !important;
+  content: "";
+}
+
+/* UTILITY LAYOUT CONTAINERS */
 .container {
   width: 100%;
   max-width: 1000px;
@@ -140,47 +154,55 @@ body {
 }
 
 /* ==========================================
-   MOBILE RESPONSIVE NAVIGATION FIX
+   MOBILE NATIVE DETAILS NAVIGATION
    ========================================== */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .site-header {
-    flex-wrap: wrap !important;
-    padding: 0.75rem 1rem !important;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
   }
 
-  .nav-toggle {
-    display: block !important;
+  .nav-container {
+    width: auto;
   }
 
-  /* Default mobile nav state: hidden */
-  #site-nav, .site-nav {
+  details.nav-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  summary.nav-toggle {
+    display: inline-block;
+  }
+
+  /* Force hide menu content when details is closed */
+  details.nav-container:not([open]) .site-nav {
     display: none !important;
-    width: 100% !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 0.85rem !important;
-    padding-top: 1rem !important;
-    padding-bottom: 0.75rem !important;
-    margin-top: 0.5rem !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
   }
 
-  /* Open state toggled directly by button onclick */
-  #site-nav.is-open, .site-nav.is-open {
-    display: flex !important;
+  /* Opened state menu inside details */
+  .site-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    width: 100%;
   }
 
-  /* Explicit link styling inside open menu */
-  #site-nav.is-open a, .site-nav.is-open a {
-    display: block !important;
+  .site-nav a {
+    display: block;
     color: #FFFFFF !important;
-    font-size: 1.05rem !important;
-    font-weight: 700 !important;
-    text-align: center !important;
-    width: 100% !important;
-    padding: 0.35rem 0 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    padding: 0.35rem 0;
   }
 
   .search-container {

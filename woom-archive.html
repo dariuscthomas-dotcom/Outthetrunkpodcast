@@ -15,14 +15,16 @@
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="document.getElementById('site-nav').classList.toggle('is-open');">MENU</button>
-        <nav id="site-nav" class="site-nav">
-            <a href="/#woom" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM</a>
-            <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM Archive</a>
-            <a href="/#movies" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movies</a>
-            <a href="movies-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movie Archive</a>
-            <a href="/#listen" class="listen-link" onclick="document.getElementById('site-nav').classList.remove('is-open');">Listen</a>
-        </nav>
+        <details class="nav-container" id="nav-details">
+            <summary class="nav-toggle">MENU</summary>
+            <nav id="site-nav" class="site-nav">
+                <a href="/#woom" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM</a>
+                <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM Archive</a>
+                <a href="/#movies" onclick="document.getElementById('nav-details').removeAttribute('open');">Movies</a>
+                <a href="movies-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">Movie Archive</a>
+                <a href="/#listen" class="listen-link" onclick="document.getElementById('nav-details').removeAttribute('open');">Listen</a>
+            </nav>
+        </details>
     </header>
 
     <main class="container">
