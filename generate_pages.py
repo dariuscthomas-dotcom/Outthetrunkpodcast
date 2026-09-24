@@ -10,14 +10,12 @@ WOOM_DIR = "woom"
 
 MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
-INDEX_PATH = "index.html"
 
 ACCENT_COLOR = "#0085CA"
 
 os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
-# Streamlined 12-Category Taxonomy
 MASTER_TOPICS = [
     "Relationships & Family",
     "Friendship & Community",
@@ -32,40 +30,6 @@ MASTER_TOPICS = [
     "Sports & Athletics",
     "Food & Lifestyle"
 ]
-
-def lock_index_navigation():
-    # Disabled so Python never overwrites manual edits to index.html
-    pass
-
-    with open(INDEX_PATH, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    master_header = """<header class="site-header" id="top" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-    <a class="brand" href="/" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
-      <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
-      <span class="brand-text">Out The Trunk</span>
-    </a>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
-    <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-      <a href="javascript:void(0)" onclick="document.getElementById('woom').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">WOOM</a>
-      <a href="woom-archive.html" style="color: #FFFFFF;">WOOM Archive</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('movies').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Movies</a>
-      <a href="movies-archive.html" style="color: #FFFFFF;">Movie Archive</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('classic-segments').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Classic Segments</a>
-      <a href="javascript:void(0)" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Meet The Hosts</a>
-      <a class="listen-link" href="javascript:void(0)" onclick="document.getElementById('listen').scrollIntoView({behavior: 'smooth'});" style="background-color: #00788C; color: #FFFFFF; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">Listen</a>
-    </nav>
-  </header>"""
-
-    updated_content = re.sub(
-        r'<header class="site-header".*?</header>',
-        master_header,
-        content,
-        flags=re.DOTALL
-    )
-
-    with open(INDEX_PATH, "w", encoding="utf-8") as f:
-        f.write(updated_content)
 
 def normalize_title(title):
     title = str(title).strip()
@@ -174,8 +138,6 @@ def format_transcript(raw_text):
 def strip_html_tags(text):
     return re.sub(r'<[^>]+>', ' ', str(text))
 
-lock_index_navigation()
-
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
 # ---------------------------------------------------------
@@ -227,7 +189,7 @@ if os.path.exists(MOVIES_EXCEL):
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get("youtube_link"))
-        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{display_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>''' if yt_id else ""
+        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{display_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>''' if yt_id else ""
 
         html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -556,7 +518,7 @@ if os.path.exists(WOOM_EXCEL):
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get(yt_col)) if yt_col else None
-        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>''' if yt_id else ""
+        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>''' if yt_id else ""
 
         date_badge_html = f'<p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">RECORDED: {date_str.upper()}</p>' if date_str else '<p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">WOOM EPISODE</p>'
 
@@ -815,4 +777,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Navigation lock synced across all templates.")
+print("Build complete! All archives and subpages updated cleanly.")
