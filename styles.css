@@ -165,7 +165,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
   }
 
-  /* Open state toggled by script.js */
+  /* Open state toggled directly by button onclick */
   #site-nav.is-open, .site-nav.is-open {
     display: flex !important;
   }

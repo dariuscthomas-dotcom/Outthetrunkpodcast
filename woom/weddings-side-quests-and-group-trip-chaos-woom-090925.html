@@ -15,13 +15,13 @@
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="document.getElementById('site-nav').classList.toggle('is-open');">MENU</button>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
-            <a href="../woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
-            <a href="../movies-archive.html">Movie Archive</a>
-            <a href="/#listen" class="listen-link">Listen</a>
+            <a href="/#woom" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM</a>
+            <a href="../woom-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM Archive</a>
+            <a href="/#movies" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movies</a>
+            <a href="../movies-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movie Archive</a>
+            <a href="/#listen" class="listen-link" onclick="document.getElementById('site-nav').classList.remove('is-open');">Listen</a>
         </nav>
     </header>
 
@@ -75,6 +75,5 @@
         </section>
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
     </main>
-    <script src="../script.js"></script>
 </body>
 </html>

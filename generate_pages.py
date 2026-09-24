@@ -208,13 +208,13 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="document.getElementById('site-nav').classList.toggle('is-open');">MENU</button>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
-            <a href="../woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
-            <a href="../movies-archive.html">Movie Archive</a>
-            <a href="/#listen" class="listen-link">Listen</a>
+            <a href="/#woom" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM</a>
+            <a href="../woom-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM Archive</a>
+            <a href="/#movies" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movies</a>
+            <a href="../movies-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movie Archive</a>
+            <a href="/#listen" class="listen-link" onclick="document.getElementById('site-nav').classList.remove('is-open');">Listen</a>
         </nav>
     </header>
 
@@ -247,7 +247,6 @@ if os.path.exists(MOVIES_EXCEL):
         </section>
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
-    <script src="../script.js"></script>
 </body>
 </html>"""
         with open(os.path.join(MOVIES_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
@@ -304,13 +303,13 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="document.getElementById('site-nav').classList.toggle('is-open');">MENU</button>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
-            <a href="woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
-            <a href="movies-archive.html" style="border-bottom: 2px solid #00788C;">Movie Archive</a>
-            <a href="/#listen" class="listen-link">Listen</a>
+            <a href="/#woom" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM</a>
+            <a href="woom-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM Archive</a>
+            <a href="/#movies" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movies</a>
+            <a href="movies-archive.html" style="border-bottom: 2px solid #00788C;" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movie Archive</a>
+            <a href="/#listen" class="listen-link" onclick="document.getElementById('site-nav').classList.remove('is-open');">Listen</a>
         </nav>
     </header>
 
@@ -342,7 +341,6 @@ if os.path.exists(MOVIES_EXCEL):
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 
-    <script src="script.js"></script>
     <script>
         function showView(viewType) {{
             var viewTitle = document.getElementById('view-title');
@@ -497,13 +495,13 @@ if os.path.exists(WOOM_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="document.getElementById('site-nav').classList.toggle('is-open');">MENU</button>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
-            <a href="../woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
-            <a href="../movies-archive.html">Movie Archive</a>
-            <a href="/#listen" class="listen-link">Listen</a>
+            <a href="/#woom" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM</a>
+            <a href="../woom-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM Archive</a>
+            <a href="/#movies" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movies</a>
+            <a href="../movies-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movie Archive</a>
+            <a href="/#listen" class="listen-link" onclick="document.getElementById('site-nav').classList.remove('is-open');">Listen</a>
         </nav>
     </header>
 
@@ -524,7 +522,6 @@ if os.path.exists(WOOM_EXCEL):
         </section>
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
-    <script src="../script.js"></script>
 </body>
 </html>"""
         with open(os.path.join(WOOM_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
@@ -572,13 +569,13 @@ if os.path.exists(WOOM_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+        <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="document.getElementById('site-nav').classList.toggle('is-open');">MENU</button>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
-            <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
-            <a href="movies-archive.html">Movie Archive</a>
-            <a href="/#listen" class="listen-link">Listen</a>
+            <a href="/#woom" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM</a>
+            <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM Archive</a>
+            <a href="/#movies" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movies</a>
+            <a href="movies-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movie Archive</a>
+            <a href="/#listen" class="listen-link" onclick="document.getElementById('site-nav').classList.remove('is-open');">Listen</a>
         </nav>
     </header>
 
@@ -614,7 +611,6 @@ if os.path.exists(WOOM_EXCEL):
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 
-    <script src="script.js"></script>
     <script>
         var currentTopic = 'all';
 

@@ -21,15 +21,15 @@
       <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
       <span class="brand-text">Out The Trunk</span>
     </a>
-    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav">MENU</button>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="document.getElementById('site-nav').classList.toggle('is-open');">MENU</button>
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-      <a href="#woom">WOOM</a>
-      <a href="woom-archive.html">WOOM Archive</a>
-      <a href="#movies">Movies</a>
-      <a href="movies-archive.html">Movie Archive</a>
-      <a href="#classic-segments">Classic Segments</a>
-      <a href="#hosts">Meet The Hosts</a>
-      <a class="listen-link" href="#listen">Listen</a>
+      <a href="#woom" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM</a>
+      <a href="woom-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">WOOM Archive</a>
+      <a href="#movies" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movies</a>
+      <a href="movies-archive.html" onclick="document.getElementById('site-nav').classList.remove('is-open');">Movie Archive</a>
+      <a href="#classic-segments" onclick="document.getElementById('site-nav').classList.remove('is-open');">Classic Segments</a>
+      <a href="#hosts" onclick="document.getElementById('site-nav').classList.remove('is-open');">Meet The Hosts</a>
+      <a class="listen-link" href="#listen" onclick="document.getElementById('site-nav').classList.remove('is-open');">Listen</a>
     </nav>
   </header>
 
@@ -202,6 +202,5 @@
     <p style="font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem;">Out The Trunk with Jordan and Darius</p>
     <p class="small" style="color: #A1A8AC; font-size: 0.85rem;">Movies. Culture.</p>
   </footer>
-  <script src="script.js"></script>
 </body>
 </html>
