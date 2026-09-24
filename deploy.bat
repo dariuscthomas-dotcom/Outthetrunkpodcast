@@ -15,7 +15,7 @@ echo.
 echo ===========================================
 echo 3/3 Pushing changes to remote repository...
 echo ===========================================
-git push
+git push -u origin master
 
 echo.
 echo ===========================================
