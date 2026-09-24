@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creativity & Art - WOOM Topics - Out The Trunk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }
+        .home-btn { display: inline-flex; align-items: center; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }
+        .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
+        
+        .topic-header { text-align: center; margin-bottom: 2.5rem; background: #fff; padding: 2rem; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+        .topic-header p { color: #0085CA; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem; }
+        .topic-header h1 { font-size: 2.5rem; font-weight: 900; margin: 0 0 0.5rem 0; color: #111; }
+        .topic-count { font-size: 0.95rem; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .woom-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+        .woom-card-styled { text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #0085CA; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }
+        .woom-card-styled:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: #0085CA; background-color: #f8fcff; }
+        .woom-card-styled h3 { margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }
+        .card-meta { display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: #0085CA; }
+        
+        .card-topics { display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }
+        .tag-link { color: #8A94A6; text-decoration: none; transition: color 0.2s; }
+        .tag-link:hover { color: #0085CA; text-decoration: underline; }
+
+        .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }
+        .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
+    </style>
+</head>
+<body>
+    <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
+        <a href="../woom-archive.html" class="home-btn">← Back to WOOM Archive</a>
+        
+        <header class="topic-header">
+            <p>WOOM TOPIC HUB</p>
+            <h1>Creativity & Art</h1>
+            <div class="topic-count">14 Episodes Tagged</div>
+        </header>
+
+        <div class="woom-grid">
+            
+            <a href="../woom/what-are-people-pretending-to-like.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>What Are People Pretending to Like</h3>
+                    <span class="card-meta">October 02, 2026</span>
+                    <span class="card-topics"><a href="../topics/food-lifestyle.html" class="tag-link" onclick="event.stopPropagation();">Food & Lifestyle</a> • <a href="../topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="../topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
+                </div>
+            </a>
+            <a href="../woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
+                    <span class="card-meta">September 08, 2026</span>
+                    <span class="card-topics"><a href="../topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="../topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
+                </div>
+            </a>
+            <a href="../woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
+                    <span class="card-meta">September 08, 2026</span>
+                    <span class="card-topics"><a href="../topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="../topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
+                </div>
+            </a>
+            <a href="../woom/preparation-always-beats-winging-it-woom-090126.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Preparation Always Beats Winging It (WOOM 09/01/26)</h3>
+                    <span class="card-meta">September 01, 2026</span>
+                    <span class="card-topics"><a href="../topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="../topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
+                </div>
+            </a>
+            <a href="../woom/why-music-biopics-keep-missing-the-point-woom-072126.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Why Music Biopics Keep Missing the Point (WOOM 07/21/26)</h3>
+                    <span class="card-meta">July 21, 2026</span>
+                    <span class="card-topics"><a href="../topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="../topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
+                </div>
+            </a>
+            <a href="../woom/can-the-starving-artist-still-survive-woom-070726.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Can the Starving Artist Still Survive? (WOOM 07/07/26)</h3>
+                    <span class="card-meta">July 07, 2026</span>
+                    <span class="card-topics"><a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="../topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="../topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a></span>
+                </div>
+            </a>
+            <a href="../woom/stardom-sacrifice-and-the-rapper-voltron-woom-052626.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Stardom, Sacrifice, and the Rapper Voltron (WOOM 05/26/26)</h3>
+                    <span class="card-meta">May 26, 2026</span>
+                    <span class="card-topics"><a href="../topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="../topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a></span>
+                </div>
+            </a>
+            <a href="../woom/delete-the-smartphone-release-the-art-woom-050626.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Delete the Smartphone, Release the Art (WOOM 05/06/26)</h3>
+                    <span class="card-meta">May 06, 2026</span>
+                    <span class="card-topics"><a href="../topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="../topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a></span>
+                </div>
+            </a>
+            <a href="../woom/valentines-ghosting-and-hobbies-that-matter-woom-021726.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Valentine’s Ghosting and Hobbies That Matter (WOOM 02/17/26)</h3>
+                    <span class="card-meta">February 17, 2026</span>
+                    <span class="card-topics"><a href="../topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="../topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
+                </div>
+            </a>
+            <a href="../woom/does-the-biggest-album-deserve-the-award-woom-020326.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Does the Biggest Album Deserve the Award? (WOOM 02/03/26)</h3>
+                    <span class="card-meta">February 03, 2026</span>
+                    <span class="card-topics"><a href="../topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
+                </div>
+            </a>
+            <a href="../woom/stop-networking-up-and-start-networking-across-woom-011326.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Stop Networking Up and Start Networking Across (WOOM 01/13/26)</h3>
+                    <span class="card-meta">January 13, 2026</span>
+                    <span class="card-topics"><a href="../topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="../topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a></span>
+                </div>
+            </a>
+            <a href="../woom/how-to-find-your-rhythm-after-a-break-woom-010626.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>How to Find Your Rhythm After a Break (WOOM 01/06/26)</h3>
+                    <span class="card-meta">January 06, 2026</span>
+                    <span class="card-topics"><a href="../topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="../topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
+                </div>
+            </a>
+            <a href="../woom/perfectionism-is-fear-with-better-branding-woom-111125.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Perfectionism Is Fear with Better Branding (WOOM 11/11/25)</h3>
+                    <span class="card-meta">November 11, 2025</span>
+                    <span class="card-topics"><a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="../topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="../topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a></span>
+                </div>
+            </a>
+            <a href="../woom/page-stage-and-finding-your-creative-rhythm-woom-102125.html" class="woom-card-styled">
+                <div class="card-content">
+                    <h3>Page, Stage, and Finding Your Creative Rhythm (WOOM 10/21/25)</h3>
+                    <span class="card-meta">October 21, 2025</span>
+                    <span class="card-topics"><a href="../topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="../topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="../topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a></span>
+                </div>
+            </a>
+        </div>
+
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
+    </main>
+</body>
+</html>

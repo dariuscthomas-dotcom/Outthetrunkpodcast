@@ -18,6 +18,13 @@
         .search-input { width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 6px 16px rgba(0, 120, 140, 0.12); }
         .search-input:focus { box-shadow: 0 8px 24px rgba(0, 120, 140, 0.25); border-color: #1D1160; }
         
+        /* Auto-Suggest Floating Dropdown */
+        .suggestions-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border: 1px solid #eaeaea; border-radius: 16px; margin-top: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); overflow: hidden; z-index: 2000; display: none; }
+        .suggestion-item { padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid #f5f5f5; transition: background 0.15s; font-size: 0.95rem; font-weight: 600; color: #111; }
+        .suggestion-item:last-child { border-bottom: none; }
+        .suggestion-item:hover { background: #f0f8ff; color: #00788C; }
+        .suggestion-badge { font-size: 0.72rem; text-transform: uppercase; font-weight: 800; padding: 2px 8px; border-radius: 12px; background: #eef6fc; color: #00788C; letter-spacing: 0.5px; }
+
         .results-count { text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .filter-section { margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }
@@ -31,13 +38,12 @@
         .woom-card-styled { text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #0085CA; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }
         .woom-card-styled:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: #0085CA; background-color: #f8fcff; }
         
-        /* Dominant Title Styling (+15% Size & Extra Bold) */
         .woom-card-styled h3 { margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }
-        
         .card-meta { display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: #0085CA; }
         
-        /* Subtle Supporting Gray Tags */
         .card-topics { display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }
+        .tag-link { color: #8A94A6; text-decoration: none; transition: color 0.2s; }
+        .tag-link:hover { color: #0085CA; text-decoration: underline; }
 
         .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }
         .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
@@ -52,8 +58,10 @@
             <p style="color: #666; font-size: 1.05rem;">Search topics, questions, and episodes or browse by theme</p>
         </header>
 
+        <!-- SEARCH BAR WITH AUTO-SUGGEST DROPDOWN -->
         <div class="search-container">
-            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
+            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="handleSearchInput()" autocomplete="off">
+            <div id="suggestions-box" class="suggestions-dropdown"></div>
         </div>
 
         <div id="results-banner" class="results-count">Showing 43 Episodes</div>
@@ -142,7 +150,7 @@
             <div class="card-content">
                 <h3>Change, Ownership, and the Cost of Going Out</h3>
                 <span class="card-meta">October 09, 2026</span>
-                <span class="card-topics">Movies & Cinema • Social Norms & Etiquette • Technology & Internet Culture • Money & Class</span>
+                <span class="card-topics"><a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a></span>
             </div>
         </a>
         <a href="woom/what-are-people-pretending-to-like.html" class="woom-card-styled" data-topics="Food & Lifestyle|Aging & Personal Growth|Technology & Internet Culture|Creativity & Art" data-search="what are people pretending to like food & lifestyle aging & personal growth technology & internet culture creativity & art  
@@ -204,7 +212,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>What Are People Pretending to Like</h3>
                 <span class="card-meta">October 02, 2026</span>
-                <span class="card-topics">Food & Lifestyle • Aging & Personal Growth • Technology & Internet Culture • Creativity & Art</span>
+                <span class="card-topics"><a href="topics/food-lifestyle.html" class="tag-link" onclick="event.stopPropagation();">Food & Lifestyle</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
             </div>
         </a>
         <a href="woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled" data-topics="Relationships & Family|Friendship & Community|Creativity & Art|Technology & Internet Culture" data-search="grab the baton: cookouts, childhood chaos & creative discipline relationships & family friendship & community creativity & art technology & internet culture  
@@ -262,7 +270,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
                 <span class="card-meta">September 08, 2026</span>
-                <span class="card-topics">Relationships & Family • Friendship & Community • Creativity & Art • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled" data-topics="Relationships & Family|Friendship & Community|Creativity & Art|Technology & Internet Culture" data-search="grab the baton: cookouts, childhood chaos & creative discipline relationships & family friendship & community creativity & art technology & internet culture  
@@ -320,7 +328,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
                 <span class="card-meta">September 08, 2026</span>
-                <span class="card-topics">Relationships & Family • Friendship & Community • Creativity & Art • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/preparation-always-beats-winging-it-woom-090126.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Work & Ambition|Creativity & Art|Technology & Internet Culture" data-search="preparation always beats winging it (woom 09/01/26) aging & personal growth work & ambition creativity & art technology & internet culture  
@@ -377,7 +385,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Preparation Always Beats Winging It (WOOM 09/01/26)</h3>
                 <span class="card-meta">September 01, 2026</span>
-                <span class="card-topics">Aging & Personal Growth • Work & Ambition • Creativity & Art • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/smartphones-are-the-new-cigarettes-woom-082526.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Aging & Personal Growth|Movies & Cinema|Money & Class" data-search="smartphones are the new cigarettes (woom 08/25/26) technology & internet culture aging & personal growth movies & cinema money & class  
@@ -437,7 +445,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Smartphones Are the New Cigarettes (WOOM 08/25/26)</h3>
                 <span class="card-meta">August 25, 2026</span>
-                <span class="card-topics">Technology & Internet Culture • Aging & Personal Growth • Movies & Cinema • Money & Class</span>
+                <span class="card-topics"><a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a></span>
             </div>
         </a>
         <a href="woom/has-social-media-made-success-too-public-woom-081826.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Technology & Internet Culture|Work & Ambition|Movies & Cinema" data-search="has social media made success too public? (woom 08/18/26) aging & personal growth technology & internet culture work & ambition movies & cinema  
@@ -492,7 +500,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Has Social Media Made Success Too Public? (WOOM 08/18/26)</h3>
                 <span class="card-meta">August 18, 2026</span>
-                <span class="card-topics">Aging & Personal Growth • Technology & Internet Culture • Work & Ambition • Movies & Cinema</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a></span>
             </div>
         </a>
         <a href="woom/getting-older-dating-smarter-and-gatekeeping-culture-woom-081126.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Relationships & Family|Movies & Cinema|Food & Lifestyle" data-search="getting older, dating smarter, and gatekeeping culture (woom 08/11/26) aging & personal growth relationships & family movies & cinema food & lifestyle  
@@ -544,7 +552,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Getting Older, Dating Smarter, and Gatekeeping Culture (WOOM 08/11/26)</h3>
                 <span class="card-meta">August 11, 2026</span>
-                <span class="card-topics">Aging & Personal Growth • Relationships & Family • Movies & Cinema • Food & Lifestyle</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/food-lifestyle.html" class="tag-link" onclick="event.stopPropagation();">Food & Lifestyle</a></span>
             </div>
         </a>
         <a href="woom/dress-codes-date-gifts-and-the-cost-of-balance-woom-080426.html" class="woom-card-styled" data-topics="Social Norms & Etiquette|Aging & Personal Growth|Relationships & Family|Movies & Cinema" data-search="dress codes, date gifts, and the cost of balance (woom 08/04/26) social norms & etiquette aging & personal growth relationships & family movies & cinema  
@@ -597,7 +605,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Dress Codes, Date Gifts, and the Cost of Balance (WOOM 08/04/26)</h3>
                 <span class="card-meta">August 04, 2026</span>
-                <span class="card-topics">Social Norms & Etiquette • Aging & Personal Growth • Relationships & Family • Movies & Cinema</span>
+                <span class="card-topics"><a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a></span>
             </div>
         </a>
         <a href="woom/why-music-biopics-keep-missing-the-point-woom-072126.html" class="woom-card-styled" data-topics="Movies & Cinema|Music & Hip-Hop|Creativity & Art" data-search="why music biopics keep missing the point (woom 07/21/26) movies & cinema music & hip-hop creativity & art  
@@ -638,7 +646,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Why Music Biopics Keep Missing the Point (WOOM 07/21/26)</h3>
                 <span class="card-meta">July 21, 2026</span>
-                <span class="card-topics">Movies & Cinema • Music & Hip-Hop • Creativity & Art</span>
+                <span class="card-topics"><a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
             </div>
         </a>
         <a href="woom/can-the-starving-artist-still-survive-woom-070726.html" class="woom-card-styled" data-topics="Creativity & Art|Money & Class|Work & Ambition|Music & Hip-Hop" data-search="can the starving artist still survive? (woom 07/07/26) creativity & art money & class work & ambition music & hip-hop  
@@ -681,7 +689,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Can the Starving Artist Still Survive? (WOOM 07/07/26)</h3>
                 <span class="card-meta">July 07, 2026</span>
-                <span class="card-topics">Creativity & Art • Money & Class • Work & Ambition • Music & Hip-Hop</span>
+                <span class="card-topics"><a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a></span>
             </div>
         </a>
         <a href="woom/when-wings-cost-too-much-just-say-no-woom-062326.html" class="woom-card-styled" data-topics="Sports & Athletics|Money & Class|Food & Lifestyle|Technology & Internet Culture" data-search="when wings cost too much, just say no (woom 06/23/26) sports & athletics money & class food & lifestyle technology & internet culture  
@@ -721,7 +729,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>When Wings Cost Too Much, Just Say No (WOOM 06/23/26)</h3>
                 <span class="card-meta">June 23, 2026</span>
-                <span class="card-topics">Sports & Athletics • Money & Class • Food & Lifestyle • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/food-lifestyle.html" class="tag-link" onclick="event.stopPropagation();">Food & Lifestyle</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/who-deserves-a-piece-of-the-windfall-woom-060926.html" class="woom-card-styled" data-topics="Money & Class|Sports & Athletics|Music & Hip-Hop|Technology & Internet Culture" data-search="who deserves a piece of the windfall? (woom 06/09/26) money & class sports & athletics music & hip-hop technology & internet culture  
@@ -770,7 +778,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Who Deserves a Piece of the Windfall? (WOOM 06/09/26)</h3>
                 <span class="card-meta">June 09, 2026</span>
-                <span class="card-topics">Money & Class • Sports & Athletics • Music & Hip-Hop • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a> • <a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/midlife-crises-afros-and-digital-footprints-woom-060226.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Relationships & Family|Technology & Internet Culture" data-search="midlife crises, afros, and digital footprints (woom 06/02/26) aging & personal growth relationships & family technology & internet culture  
@@ -810,7 +818,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Midlife Crises, Afros, and Digital Footprints (WOOM 06/02/26)</h3>
                 <span class="card-meta">June 02, 2026</span>
-                <span class="card-topics">Aging & Personal Growth • Relationships & Family • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/stardom-sacrifice-and-the-rapper-voltron-woom-052626.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Sports & Athletics|Creativity & Art|Movies & Cinema" data-search="stardom, sacrifice, and the rapper voltron (woom 05/26/26) music & hip-hop sports & athletics creativity & art movies & cinema  
@@ -857,7 +865,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Stardom, Sacrifice, and the Rapper Voltron (WOOM 05/26/26)</h3>
                 <span class="card-meta">May 26, 2026</span>
-                <span class="card-topics">Music & Hip-Hop • Sports & Athletics • Creativity & Art • Movies & Cinema</span>
+                <span class="card-topics"><a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a></span>
             </div>
         </a>
         <a href="woom/delete-the-smartphone-release-the-art-woom-050626.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Creativity & Art|Movies & Cinema|Sports & Athletics" data-search="delete the smartphone, release the art (woom 05/06/26) technology & internet culture creativity & art movies & cinema sports & athletics  
@@ -900,7 +908,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Delete the Smartphone, Release the Art (WOOM 05/06/26)</h3>
                 <span class="card-meta">May 06, 2026</span>
-                <span class="card-topics">Technology & Internet Culture • Creativity & Art • Movies & Cinema • Sports & Athletics</span>
+                <span class="card-topics"><a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a></span>
             </div>
         </a>
         <a href="woom/take-yes-for-an-answer-woom-042826.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Movies & Cinema|Technology & Internet Culture|Relationships & Family" data-search="take yes for an answer (woom 04/28/26) music & hip-hop movies & cinema technology & internet culture relationships & family  
@@ -946,7 +954,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Take Yes for an Answer (WOOM 04/28/26)</h3>
                 <span class="card-meta">April 28, 2026</span>
-                <span class="card-topics">Music & Hip-Hop • Movies & Cinema • Technology & Internet Culture • Relationships & Family</span>
+                <span class="card-topics"><a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a></span>
             </div>
         </a>
         <a href="woom/the-price-of-community-is-convenience-woom-041426.html" class="woom-card-styled" data-topics="Friendship & Community|Technology & Internet Culture|Sports & Athletics|Food & Lifestyle" data-search="the price of community is convenience (woom 04/14/26) friendship & community technology & internet culture sports & athletics food & lifestyle  
@@ -992,7 +1000,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>The Price of Community Is Convenience (WOOM 04/14/26)</h3>
                 <span class="card-meta">April 14, 2026</span>
-                <span class="card-topics">Friendship & Community • Technology & Internet Culture • Sports & Athletics • Food & Lifestyle</span>
+                <span class="card-topics"><a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a> • <a href="topics/food-lifestyle.html" class="tag-link" onclick="event.stopPropagation();">Food & Lifestyle</a></span>
             </div>
         </a>
         <a href="woom/rewatchability-elitism-and-getting-older-woom-040726.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Money & Class|Movies & Cinema|Friendship & Community" data-search="rewatchability, elitism, and getting older (woom 04/07/26) aging & personal growth money & class movies & cinema friendship & community  
@@ -1037,7 +1045,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Rewatchability, Elitism, and Getting Older (WOOM 04/07/26)</h3>
                 <span class="card-meta">April 07, 2026</span>
-                <span class="card-topics">Aging & Personal Growth • Money & Class • Movies & Cinema • Friendship & Community</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a></span>
             </div>
         </a>
         <a href="woom/are-ai-book-summaries-cheating-woom-033126.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Money & Class|Aging & Personal Growth" data-search="are ai book summaries cheating? (woom 03/31/26) technology & internet culture money & class aging & personal growth  
@@ -1082,7 +1090,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Are AI Book Summaries Cheating? (WOOM 03/31/26)</h3>
                 <span class="card-meta">March 31, 2026</span>
-                <span class="card-topics">Technology & Internet Culture • Money & Class • Aging & Personal Growth</span>
+                <span class="card-topics"><a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a></span>
             </div>
         </a>
         <a href="woom/when-legends-refuse-to-leave-the-stage-woom-032426.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Money & Class|Relationships & Family|Sports & Athletics" data-search="when legends refuse to leave the stage (woom 03/24/26) aging & personal growth money & class relationships & family sports & athletics  
@@ -1124,7 +1132,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>When Legends Refuse to Leave the Stage (WOOM 03/24/26)</h3>
                 <span class="card-meta">March 24, 2026</span>
-                <span class="card-topics">Aging & Personal Growth • Money & Class • Relationships & Family • Sports & Athletics</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a></span>
             </div>
         </a>
         <a href="woom/let-people-enjoy-things-woom-031726.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Social Norms & Etiquette|Movies & Cinema" data-search="let people enjoy things (woom 03/17/26) technology & internet culture social norms & etiquette movies & cinema  
@@ -1165,7 +1173,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Let People Enjoy Things (WOOM 03/17/26)</h3>
                 <span class="card-meta">March 17, 2026</span>
-                <span class="card-topics">Technology & Internet Culture • Social Norms & Etiquette • Movies & Cinema</span>
+                <span class="card-topics"><a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a></span>
             </div>
         </a>
         <a href="woom/availability-is-the-best-ability-woom-030326.html" class="woom-card-styled" data-topics="Sports & Athletics|Movies & Cinema" data-search="availability is the best ability (woom 03/03/26) sports & athletics movies & cinema  
@@ -1207,7 +1215,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Availability Is the Best Ability (WOOM 03/03/26)</h3>
                 <span class="card-meta">March 03, 2026</span>
-                <span class="card-topics">Sports & Athletics • Movies & Cinema</span>
+                <span class="card-topics"><a href="topics/sports-athletics.html" class="tag-link" onclick="event.stopPropagation();">Sports & Athletics</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a></span>
             </div>
         </a>
         <a href="woom/family-ties-video-games-and-social-accountability-woom-022426.html" class="woom-card-styled" data-topics="Relationships & Family|Social Norms & Etiquette|Technology & Internet Culture" data-search="family ties, video games, and social accountability (woom 02/24/26) relationships & family social norms & etiquette technology & internet culture  
@@ -1249,7 +1257,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Family Ties, Video Games, and Social Accountability (WOOM 02/24/26)</h3>
                 <span class="card-meta">February 24, 2026</span>
-                <span class="card-topics">Relationships & Family • Social Norms & Etiquette • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/valentines-ghosting-and-hobbies-that-matter-woom-021726.html" class="woom-card-styled" data-topics="Relationships & Family|Creativity & Art|Aging & Personal Growth|Technology & Internet Culture" data-search="valentine’s ghosting and hobbies that matter (woom 02/17/26) relationships & family creativity & art aging & personal growth technology & internet culture  
@@ -1291,7 +1299,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Valentine’s Ghosting and Hobbies That Matter (WOOM 02/17/26)</h3>
                 <span class="card-meta">February 17, 2026</span>
-                <span class="card-topics">Relationships & Family • Creativity & Art • Aging & Personal Growth • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/who-keeps-grandmas-house-woom-021026.html" class="woom-card-styled" data-topics="Relationships & Family|Money & Class" data-search="who keeps grandma’s house? (woom 02/10/26) relationships & family money & class  
@@ -1332,7 +1340,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Who Keeps Grandma’s House? (WOOM 02/10/26)</h3>
                 <span class="card-meta">February 10, 2026</span>
-                <span class="card-topics">Relationships & Family • Money & Class</span>
+                <span class="card-topics"><a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a></span>
             </div>
         </a>
         <a href="woom/does-the-biggest-album-deserve-the-award-woom-020326.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Creativity & Art" data-search="does the biggest album deserve the award? (woom 02/03/26) music & hip-hop creativity & art  
@@ -1372,7 +1380,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Does the Biggest Album Deserve the Award? (WOOM 02/03/26)</h3>
                 <span class="card-meta">February 03, 2026</span>
-                <span class="card-topics">Music & Hip-Hop • Creativity & Art</span>
+                <span class="card-topics"><a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
             </div>
         </a>
         <a href="woom/the-snowed-in-ghosting-test-woom-012726.html" class="woom-card-styled" data-topics="Relationships & Family|Aging & Personal Growth" data-search="the snowed-in ghosting test (woom 01/27/26) relationships & family aging & personal growth  
@@ -1412,7 +1420,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>The Snowed-In Ghosting Test (WOOM 01/27/26)</h3>
                 <span class="card-meta">January 27, 2026</span>
-                <span class="card-topics">Relationships & Family • Aging & Personal Growth</span>
+                <span class="card-topics"><a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a></span>
             </div>
         </a>
         <a href="woom/when-convenience-kills-community-woom-012026.html" class="woom-card-styled" data-topics="Friendship & Community|Social Norms & Etiquette|Technology & Internet Culture|Work & Ambition" data-search="when convenience kills community (woom 01/20/26) friendship & community social norms & etiquette technology & internet culture work & ambition  
@@ -1454,7 +1462,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>When Convenience Kills Community (WOOM 01/20/26)</h3>
                 <span class="card-meta">January 20, 2026</span>
-                <span class="card-topics">Friendship & Community • Social Norms & Etiquette • Technology & Internet Culture • Work & Ambition</span>
+                <span class="card-topics"><a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a></span>
             </div>
         </a>
         <a href="woom/stop-networking-up-and-start-networking-across-woom-011326.html" class="woom-card-styled" data-topics="Friendship & Community|Work & Ambition|Creativity & Art|Social Norms & Etiquette" data-search="stop networking up and start networking across (woom 01/13/26) friendship & community work & ambition creativity & art social norms & etiquette  
@@ -1496,7 +1504,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Stop Networking Up and Start Networking Across (WOOM 01/13/26)</h3>
                 <span class="card-meta">January 13, 2026</span>
-                <span class="card-topics">Friendship & Community • Work & Ambition • Creativity & Art • Social Norms & Etiquette</span>
+                <span class="card-topics"><a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a></span>
             </div>
         </a>
         <a href="woom/how-to-find-your-rhythm-after-a-break-woom-010626.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Work & Ambition|Creativity & Art" data-search="how to find your rhythm after a break (woom 01/06/26) aging & personal growth work & ambition creativity & art  
@@ -1536,7 +1544,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>How to Find Your Rhythm After a Break (WOOM 01/06/26)</h3>
                 <span class="card-meta">January 06, 2026</span>
-                <span class="card-topics">Aging & Personal Growth • Work & Ambition • Creativity & Art</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a></span>
             </div>
         </a>
         <a href="woom/stop-posting-the-pedicure-worker-woom-120925.html" class="woom-card-styled" data-topics="Social Norms & Etiquette|Money & Class|Technology & Internet Culture|Work & Ambition" data-search="stop posting the pedicure worker (woom 12/09/25) social norms & etiquette money & class technology & internet culture work & ambition  
@@ -1576,7 +1584,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Stop Posting the Pedicure Worker (WOOM 12/09/25)</h3>
                 <span class="card-meta">December 09, 2025</span>
-                <span class="card-topics">Social Norms & Etiquette • Money & Class • Technology & Internet Culture • Work & Ambition</span>
+                <span class="card-topics"><a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a></span>
             </div>
         </a>
         <a href="woom/how-much-shame-is-the-content-worth-woom-120225.html" class="woom-card-styled" data-topics="Food & Lifestyle|Relationships & Family|Money & Class|Technology & Internet Culture" data-search="how much shame is the content worth? (woom 12/02/25) food & lifestyle relationships & family money & class technology & internet culture  
@@ -1618,7 +1626,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>How Much Shame Is the Content Worth? (WOOM 12/02/25)</h3>
                 <span class="card-meta">December 02, 2025</span>
-                <span class="card-topics">Food & Lifestyle • Relationships & Family • Money & Class • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/food-lifestyle.html" class="tag-link" onclick="event.stopPropagation();">Food & Lifestyle</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/grown-men-cant-say-ouch-woom-111825.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Social Norms & Etiquette" data-search="grown men can’t say “ouch”? (woom 11/18/25) aging & personal growth social norms & etiquette  
@@ -1657,7 +1665,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Grown Men Can’t Say “Ouch”? (WOOM 11/18/25)</h3>
                 <span class="card-meta">November 18, 2025</span>
-                <span class="card-topics">Aging & Personal Growth • Social Norms & Etiquette</span>
+                <span class="card-topics"><a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a></span>
             </div>
         </a>
         <a href="woom/perfectionism-is-fear-with-better-branding-woom-111125.html" class="woom-card-styled" data-topics="Creativity & Art|Aging & Personal Growth|Relationships & Family|Social Norms & Etiquette" data-search="perfectionism is fear with better branding (woom 11/11/25) creativity & art aging & personal growth relationships & family social norms & etiquette  
@@ -1700,7 +1708,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Perfectionism Is Fear with Better Branding (WOOM 11/11/25)</h3>
                 <span class="card-meta">November 11, 2025</span>
-                <span class="card-topics">Creativity & Art • Aging & Personal Growth • Relationships & Family • Social Norms & Etiquette</span>
+                <span class="card-topics"><a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a></span>
             </div>
         </a>
         <a href="woom/when-love-memory-and-identity-change-woom-110425.html" class="woom-card-styled" data-topics="Relationships & Family|Aging & Personal Growth|Technology & Internet Culture" data-search="when love, memory, and identity change (woom 11/04/25) relationships & family aging & personal growth technology & internet culture  
@@ -1742,7 +1750,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>When Love, Memory, and Identity Change (WOOM 11/04/25)</h3>
                 <span class="card-meta">November 04, 2025</span>
-                <span class="card-topics">Relationships & Family • Aging & Personal Growth • Technology & Internet Culture</span>
+                <span class="card-topics"><a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a></span>
             </div>
         </a>
         <a href="woom/can-legacy-acts-still-carry-the-tour-woom-102825.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Aging & Personal Growth" data-search="can legacy acts still carry the tour? (woom 10/28/25) music & hip-hop aging & personal growth  
@@ -1782,7 +1790,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Can Legacy Acts Still Carry the Tour? (WOOM 10/28/25)</h3>
                 <span class="card-meta">October 28, 2025</span>
-                <span class="card-topics">Music & Hip-Hop • Aging & Personal Growth</span>
+                <span class="card-topics"><a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a></span>
             </div>
         </a>
         <a href="woom/page-stage-and-finding-your-creative-rhythm-woom-102125.html" class="woom-card-styled" data-topics="Creativity & Art|Aging & Personal Growth|Work & Ambition" data-search="page, stage, and finding your creative rhythm (woom 10/21/25) creativity & art aging & personal growth work & ambition  
@@ -1823,7 +1831,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Page, Stage, and Finding Your Creative Rhythm (WOOM 10/21/25)</h3>
                 <span class="card-meta">October 21, 2025</span>
-                <span class="card-topics">Creativity & Art • Aging & Personal Growth • Work & Ambition</span>
+                <span class="card-topics"><a href="topics/creativity-art.html" class="tag-link" onclick="event.stopPropagation();">Creativity & Art</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a></span>
             </div>
         </a>
         <a href="woom/when-is-a-concert-worth-the-hassle-woom-101525.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Friendship & Community|Money & Class" data-search="when is a concert worth the hassle? (woom 10/15/25) music & hip-hop friendship & community money & class  
@@ -1863,7 +1871,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>When Is a Concert Worth the Hassle? (WOOM 10/15/25)</h3>
                 <span class="card-meta">October 15, 2025</span>
-                <span class="card-topics">Music & Hip-Hop • Friendship & Community • Money & Class</span>
+                <span class="card-topics"><a href="topics/music-hip-hop.html" class="tag-link" onclick="event.stopPropagation();">Music & Hip-Hop</a> • <a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/money-class.html" class="tag-link" onclick="event.stopPropagation();">Money & Class</a></span>
             </div>
         </a>
         <a href="woom/adult-friendship-takes-work-woom-100725.html" class="woom-card-styled" data-topics="Friendship & Community|Aging & Personal Growth|Social Norms & Etiquette" data-search="adult friendship takes work (woom 10/07/25) friendship & community aging & personal growth social norms & etiquette  
@@ -1904,7 +1912,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Adult Friendship Takes Work (WOOM 10/07/25)</h3>
                 <span class="card-meta">October 07, 2025</span>
-                <span class="card-topics">Friendship & Community • Aging & Personal Growth • Social Norms & Etiquette</span>
+                <span class="card-topics"><a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a></span>
             </div>
         </a>
         <a href="woom/can-you-love-the-art-and-reject-the-artist-woom-093025.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Movies & Cinema|Social Norms & Etiquette" data-search="can you love the art and reject the artist? (woom 09/30/25) technology & internet culture movies & cinema social norms & etiquette  
@@ -1944,7 +1952,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Can You Love the Art and Reject the Artist? (WOOM 09/30/25)</h3>
                 <span class="card-meta">September 30, 2025</span>
-                <span class="card-topics">Technology & Internet Culture • Movies & Cinema • Social Norms & Etiquette</span>
+                <span class="card-topics"><a href="topics/technology-internet-culture.html" class="tag-link" onclick="event.stopPropagation();">Technology & Internet Culture</a> • <a href="topics/movies-cinema.html" class="tag-link" onclick="event.stopPropagation();">Movies & Cinema</a> • <a href="topics/social-norms-etiquette.html" class="tag-link" onclick="event.stopPropagation();">Social Norms & Etiquette</a></span>
             </div>
         </a>
         <a href="woom/pto-birthdays-and-terrible-friend-advice-woom-092325.html" class="woom-card-styled" data-topics="Work & Ambition|Aging & Personal Growth|Friendship & Community" data-search="pto, birthdays, and terrible friend advice (woom 09/23/25) work & ambition aging & personal growth friendship & community  
@@ -1985,7 +1993,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>PTO, Birthdays, and Terrible Friend Advice (WOOM 09/23/25)</h3>
                 <span class="card-meta">September 23, 2025</span>
-                <span class="card-topics">Work & Ambition • Aging & Personal Growth • Friendship & Community</span>
+                <span class="card-topics"><a href="topics/work-ambition.html" class="tag-link" onclick="event.stopPropagation();">Work & Ambition</a> • <a href="topics/aging-personal-growth.html" class="tag-link" onclick="event.stopPropagation();">Aging & Personal Growth</a> • <a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a></span>
             </div>
         </a>
         <a href="woom/weddings-side-quests-and-group-trip-chaos-woom-090925.html" class="woom-card-styled" data-topics="Friendship & Community|Relationships & Family" data-search="weddings, side quests, and group trip chaos (woom 09/09/25) friendship & community relationships & family  
@@ -2025,7 +2033,7 @@ jordan argued that adversity is often romanticized and that many people claim to
             <div class="card-content">
                 <h3>Weddings, Side Quests, and Group Trip Chaos (WOOM 09/09/25)</h3>
                 <span class="card-meta">September 09, 2025</span>
-                <span class="card-topics">Friendship & Community • Relationships & Family</span>
+                <span class="card-topics"><a href="topics/friendship-community.html" class="tag-link" onclick="event.stopPropagation();">Friendship & Community</a> • <a href="topics/relationships-family.html" class="tag-link" onclick="event.stopPropagation();">Relationships & Family</a></span>
             </div>
         </a>
         </div>
@@ -2035,12 +2043,105 @@ jordan argued that adversity is often romanticized and that many people claim to
 
     <script>
         var currentTopic = 'all';
+        var suggestionsData = [
+{ label: "Relationships & Family", type: "Topic" },
+{ label: "Friendship & Community", type: "Topic" },
+{ label: "Aging & Personal Growth", type: "Topic" },
+{ label: "Work & Ambition", type: "Topic" },
+{ label: "Money & Class", type: "Topic" },
+{ label: "Social Norms & Etiquette", type: "Topic" },
+{ label: "Technology & Internet Culture", type: "Topic" },
+{ label: "Movies & Cinema", type: "Topic" },
+{ label: "Music & Hip-Hop", type: "Topic" },
+{ label: "Creativity & Art", type: "Topic" },
+{ label: "Sports & Athletics", type: "Topic" },
+{ label: "Food & Lifestyle", type: "Topic" },
+{ label: "Change, Ownership, and the Cost of Going Out", type: "Episode" },
+{ label: "What Are People Pretending to Like", type: "Episode" },
+{ label: "Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline", type: "Episode" },
+{ label: "Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline", type: "Episode" },
+{ label: "Preparation Always Beats Winging It (WOOM 09/01/26)", type: "Episode" },
+{ label: "Smartphones Are the New Cigarettes (WOOM 08/25/26)", type: "Episode" },
+{ label: "Has Social Media Made Success Too Public? (WOOM 08/18/26)", type: "Episode" },
+{ label: "Getting Older, Dating Smarter, and Gatekeeping Culture (WOOM 08/11/26)", type: "Episode" },
+{ label: "Dress Codes, Date Gifts, and the Cost of Balance (WOOM 08/04/26)", type: "Episode" },
+{ label: "Why Music Biopics Keep Missing the Point (WOOM 07/21/26)", type: "Episode" },
+{ label: "Can the Starving Artist Still Survive? (WOOM 07/07/26)", type: "Episode" },
+{ label: "When Wings Cost Too Much, Just Say No (WOOM 06/23/26)", type: "Episode" },
+{ label: "Who Deserves a Piece of the Windfall? (WOOM 06/09/26)", type: "Episode" },
+{ label: "Midlife Crises, Afros, and Digital Footprints (WOOM 06/02/26)", type: "Episode" },
+{ label: "Stardom, Sacrifice, and the Rapper Voltron (WOOM 05/26/26)", type: "Episode" },
+{ label: "Delete the Smartphone, Release the Art (WOOM 05/06/26)", type: "Episode" },
+{ label: "Take Yes for an Answer (WOOM 04/28/26)", type: "Episode" },
+{ label: "The Price of Community Is Convenience (WOOM 04/14/26)", type: "Episode" },
+{ label: "Rewatchability, Elitism, and Getting Older (WOOM 04/07/26)", type: "Episode" },
+{ label: "Are AI Book Summaries Cheating? (WOOM 03/31/26)", type: "Episode" },
+{ label: "When Legends Refuse to Leave the Stage (WOOM 03/24/26)", type: "Episode" },
+{ label: "Let People Enjoy Things (WOOM 03/17/26)", type: "Episode" },
+{ label: "Availability Is the Best Ability (WOOM 03/03/26)", type: "Episode" },
+{ label: "Family Ties, Video Games, and Social Accountability (WOOM 02/24/26)", type: "Episode" },
+{ label: "Valentine’s Ghosting and Hobbies That Matter (WOOM 02/17/26)", type: "Episode" },
+{ label: "Who Keeps Grandma’s House? (WOOM 02/10/26)", type: "Episode" },
+{ label: "Does the Biggest Album Deserve the Award? (WOOM 02/03/26)", type: "Episode" },
+{ label: "The Snowed-In Ghosting Test (WOOM 01/27/26)", type: "Episode" },
+{ label: "When Convenience Kills Community (WOOM 01/20/26)", type: "Episode" },
+{ label: "Stop Networking Up and Start Networking Across (WOOM 01/13/26)", type: "Episode" },
+{ label: "How to Find Your Rhythm After a Break (WOOM 01/06/26)", type: "Episode" },
+{ label: "Stop Posting the Pedicure Worker (WOOM 12/09/25)", type: "Episode" },
+{ label: "How Much Shame Is the Content Worth? (WOOM 12/02/25)", type: "Episode" },
+{ label: "Grown Men Can’t Say “Ouch”? (WOOM 11/18/25)", type: "Episode" },
+{ label: "Perfectionism Is Fear with Better Branding (WOOM 11/11/25)", type: "Episode" },
+{ label: "When Love, Memory, and Identity Change (WOOM 11/04/25)", type: "Episode" },
+{ label: "Can Legacy Acts Still Carry the Tour? (WOOM 10/28/25)", type: "Episode" },
+{ label: "Page, Stage, and Finding Your Creative Rhythm (WOOM 10/21/25)", type: "Episode" },
+{ label: "When Is a Concert Worth the Hassle? (WOOM 10/15/25)", type: "Episode" },
+{ label: "Adult Friendship Takes Work (WOOM 10/07/25)", type: "Episode" },
+{ label: "Can You Love the Art and Reject the Artist? (WOOM 09/30/25)", type: "Episode" },
+{ label: "PTO, Birthdays, and Terrible Friend Advice (WOOM 09/23/25)", type: "Episode" },
+{ label: "Weddings, Side Quests, and Group Trip Chaos (WOOM 09/09/25)", type: "Episode" }
+];
 
         function filterTopic(selectedTopic, btnElement) {
             currentTopic = selectedTopic;
             var chips = document.querySelectorAll('.topic-chip');
             chips.forEach(function(c) { c.classList.remove('active'); });
             btnElement.classList.add('active');
+            filterArchive();
+        }
+
+        function handleSearchInput() {
+            var inputVal = document.getElementById('archive-search').value.toLowerCase().trim();
+            var box = document.getElementById('suggestions-box');
+
+            if (inputVal.length < 2) {
+                box.style.display = 'none';
+                box.innerHTML = '';
+            } else {
+                var matches = suggestionsData.filter(function(item) {
+                    return item.label.toLowerCase().indexOf(inputVal) !== -1;
+                }).slice(0, 6);
+
+                if (matches.length > 0) {
+                    box.innerHTML = matches.map(function(item) {
+                        var escapedLabel = item.label.replace(/'/g, "\'");
+                        return '<div class="suggestion-item" onclick="selectSuggestion('' + escapedLabel + '')">' +
+                               '<span>' + item.label + '</span>' +
+                               '<span class="suggestion-badge">' + item.type + '</span>' +
+                               '</div>';
+                    }).join('');
+                    box.style.display = 'block';
+                } else {
+                    box.style.display = 'none';
+                    box.innerHTML = '';
+                }
+            }
+            filterArchive();
+        }
+
+        function selectSuggestion(val) {
+            var input = document.getElementById('archive-search');
+            input.value = val;
+            document.getElementById('suggestions-box').style.display = 'none';
             filterArchive();
         }
 
@@ -2068,6 +2169,12 @@ jordan argued that adversity is often romanticized and that many people claim to
             var banner = document.getElementById('results-banner');
             banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's');
         }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                document.getElementById('suggestions-box').style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
