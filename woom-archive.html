@@ -14,14 +14,19 @@
         .home-btn { display: inline-flex; align-items: center; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }
         .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
         
-        .search-container { width: 100%; max-width: 600px; margin: 0 auto 1.5rem auto; position: relative; }
-        .search-input { width: 100%; padding: 0.85rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 120, 140, 0.08); }
-        .search-input:focus { box-shadow: 0 6px 18px rgba(0, 120, 140, 0.2); border-color: #1D1160; }
+        /* Tweak 2: Make Search the Star (Hero Search Box) */
+        .search-container { width: 100%; max-width: 750px; margin: 0 auto 1.75rem auto; position: relative; }
+        .search-input { width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 6px 16px rgba(0, 120, 140, 0.12); }
+        .search-input:focus { box-shadow: 0 8px 24px rgba(0, 120, 140, 0.25); border-color: #1D1160; }
         
-        .filter-section { margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }
-        .filter-section h3 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: #00788C; margin-bottom: 0.85rem; font-weight: 800; }
-        .topic-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
-        .topic-chip { background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.4rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
+        /* Result Count Banner */
+        .results-count { text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* Tweak 1: Filter by Topic Header */
+        .filter-section { margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }
+        .filter-section h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 0.75rem; font-weight: 800; }
+        .topic-chips { display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; }
+        .topic-chip { background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.35rem 0.75rem; border-radius: 20px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }
         .topic-chip:hover { border-color: #00788C; color: #00788C; }
         .topic-chip.active { background: #00788C; color: #fff; border-color: #00788C; }
         
@@ -40,18 +45,21 @@
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <p style="color: #0085CA; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Search episodes or filter by segment topic</p>
+            <p style="color: #666; font-size: 1.05rem;">Search topics, questions, and episodes or browse by theme</p>
         </header>
 
-        <!-- FREE FORM SEARCH BAR -->
+        <!-- PROMINENT SEARCH BAR -->
         <div class="search-container">
             <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
         </div>
 
+        <div id="results-banner" class="results-count">Showing 43 Episodes</div>
+
+        <!-- TWEAK 1: FILTER BY TOPIC -->
         <div class="filter-section">
-            <h3>Filter By Segment Topic</h3>
+            <h3>Filter by Topic</h3>
             <div class="topic-chips">
-                <button class="topic-chip active" onclick="filterTopic('all', this)">All Episodes</button><button class="topic-chip" onclick="filterTopic('Relationships & Family', this)">Relationships & Family</button><button class="topic-chip" onclick="filterTopic('Friendship & Community', this)">Friendship & Community</button><button class="topic-chip" onclick="filterTopic('Aging & Personal Growth', this)">Aging & Personal Growth</button><button class="topic-chip" onclick="filterTopic('Work & Ambition', this)">Work & Ambition</button><button class="topic-chip" onclick="filterTopic('Money & Class', this)">Money & Class</button><button class="topic-chip" onclick="filterTopic('Social Norms & Etiquette', this)">Social Norms & Etiquette</button><button class="topic-chip" onclick="filterTopic('Technology & Internet Culture', this)">Technology & Internet Culture</button><button class="topic-chip" onclick="filterTopic('Movies & Cinema', this)">Movies & Cinema</button><button class="topic-chip" onclick="filterTopic('Music & Hip-Hop', this)">Music & Hip-Hop</button><button class="topic-chip" onclick="filterTopic('Creativity & Art', this)">Creativity & Art</button><button class="topic-chip" onclick="filterTopic('Sports & Athletics', this)">Sports & Athletics</button><button class="topic-chip" onclick="filterTopic('Food & Lifestyle', this)">Food & Lifestyle</button>
+                <button class="topic-chip active" onclick="filterTopic('all', this)">All Episodes (43)</button><button class="topic-chip" onclick="filterTopic('Relationships & Family', this)">Relationships & Family (15)</button><button class="topic-chip" onclick="filterTopic('Friendship & Community', this)">Friendship & Community (10)</button><button class="topic-chip" onclick="filterTopic('Aging & Personal Growth', this)">Aging & Personal Growth (20)</button><button class="topic-chip" onclick="filterTopic('Work & Ambition', this)">Work & Ambition (9)</button><button class="topic-chip" onclick="filterTopic('Money & Class', this)">Money & Class (12)</button><button class="topic-chip" onclick="filterTopic('Social Norms & Etiquette', this)">Social Norms & Etiquette (11)</button><button class="topic-chip" onclick="filterTopic('Technology & Internet Culture', this)">Technology & Internet Culture (22)</button><button class="topic-chip" onclick="filterTopic('Movies & Cinema', this)">Movies & Cinema (13)</button><button class="topic-chip" onclick="filterTopic('Music & Hip-Hop', this)">Music & Hip-Hop (8)</button><button class="topic-chip" onclick="filterTopic('Creativity & Art', this)">Creativity & Art (14)</button><button class="topic-chip" onclick="filterTopic('Sports & Athletics', this)">Sports & Athletics (7)</button><button class="topic-chip" onclick="filterTopic('Food & Lifestyle', this)">Food & Lifestyle (5)</button>
             </div>
         </div>
 
@@ -1992,8 +2000,10 @@ jordan argued that adversity is often romanticized and that many people claim to
         }
 
         function filterArchive() {
-            var searchQuery = document.getElementById('archive-search').value.toLowerCase().strip ? document.getElementById('archive-search').value.toLowerCase().strip() : document.getElementById('archive-search').value.toLowerCase().trim();
+            var searchInput = document.getElementById('archive-search');
+            var searchQuery = searchInput.value.toLowerCase().trim();
             var cards = document.querySelectorAll('.woom-card-styled');
+            var visibleCount = 0;
 
             cards.forEach(function(card) {
                 var cardTopics = card.getAttribute('data-topics') || '';
@@ -2004,10 +2014,14 @@ jordan argued that adversity is often romanticized and that many people claim to
 
                 if (matchesTopic && matchesSearch) {
                     card.style.display = 'flex';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            var banner = document.getElementById('results-banner');
+            banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's');
         }
     </script>
 </body>

@@ -407,7 +407,7 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH SEARCH & TOPIC FILTERS
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH TWEAKS
 # ---------------------------------------------------------
 print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
@@ -459,6 +459,7 @@ if os.path.exists(WOOM_EXCEL):
         df_woom = df_woom.sort_values(by='parsed_date', ascending=False)
     
     woom_list = []
+    topic_counts = {t: 0 for t in MASTER_TOPICS}
 
     for idx, row in df_woom.iterrows():
         raw_title = str(row.get(title_col, "")).strip()
@@ -477,6 +478,10 @@ if os.path.exists(WOOM_EXCEL):
 
         raw_topics = str(row.get(topics_col, "")).strip() if topics_col and pd.notna(row.get(topics_col)) else ""
         episode_topics = [t.strip() for t in raw_topics.split(",") if t.strip()] if raw_topics and raw_topics.lower() != "nan" else []
+
+        for t in episode_topics:
+            if t in topic_counts:
+                topic_counts[t] += 1
 
         raw_notes = str(row.get(notes_col, "")).strip() if notes_col and pd.notna(row.get(notes_col)) else ""
         clean_notes = strip_html_tags(raw_notes)
@@ -540,15 +545,17 @@ if os.path.exists(WOOM_EXCEL):
 
         woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics, 'clean_notes': clean_notes})
 
-    topic_chips = ['<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes</button>']
+    # Tweak 3: Build Topic Chips with Dynamic Counts (Social Proof)
+    total_episodes = len(woom_list)
+    topic_chips = [f'<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes ({total_episodes})</button>']
     for t in MASTER_TOPICS:
-        topic_chips.append(f'<button class="topic-chip" onclick="filterTopic(\'{t}\', this)">{t}</button>')
+        count = topic_counts[t]
+        topic_chips.append(f'<button class="topic-chip" onclick="filterTopic(\'{t}\', this)">{t} ({count})</button>')
 
     cards_woom = ""
     for item in woom_list:
         date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
         data_topics = "|".join(item['topics'])
-        # Store clean search text inside data-search attribute
         search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
         cards_woom += f'''
         <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}">
@@ -574,14 +581,19 @@ if os.path.exists(WOOM_EXCEL):
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
         
-        .search-container {{ width: 100%; max-width: 600px; margin: 0 auto 1.5rem auto; position: relative; }}
-        .search-input {{ width: 100%; padding: 0.85rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 120, 140, 0.08); }}
-        .search-input:focus {{ box-shadow: 0 6px 18px rgba(0, 120, 140, 0.2); border-color: #1D1160; }}
+        /* Tweak 2: Make Search the Star (Hero Search Box) */
+        .search-container {{ width: 100%; max-width: 750px; margin: 0 auto 1.75rem auto; position: relative; }}
+        .search-input {{ width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 6px 16px rgba(0, 120, 140, 0.12); }}
+        .search-input:focus {{ box-shadow: 0 8px 24px rgba(0, 120, 140, 0.25); border-color: #1D1160; }}
         
-        .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
-        .filter-section h3 {{ font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: #00788C; margin-bottom: 0.85rem; font-weight: 800; }}
-        .topic-chips {{ display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }}
-        .topic-chip {{ background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.4rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }}
+        /* Result Count Banner */
+        .results-count {{ text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }}
+
+        /* Tweak 1: Filter by Topic Header */
+        .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
+        .filter-section h3 {{ font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 0.75rem; font-weight: 800; }}
+        .topic-chips {{ display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; }}
+        .topic-chip {{ background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.35rem 0.75rem; border-radius: 20px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }}
         .topic-chip:hover {{ border-color: #00788C; color: #00788C; }}
         .topic-chip.active {{ background: #00788C; color: #fff; border-color: #00788C; }}
         
@@ -600,16 +612,19 @@ if os.path.exists(WOOM_EXCEL):
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Search episodes or filter by segment topic</p>
+            <p style="color: #666; font-size: 1.05rem;">Search topics, questions, and episodes or browse by theme</p>
         </header>
 
-        <!-- FREE FORM SEARCH BAR -->
+        <!-- PROMINENT SEARCH BAR -->
         <div class="search-container">
             <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
         </div>
 
+        <div id="results-banner" class="results-count">Showing {total_episodes} Episodes</div>
+
+        <!-- TWEAK 1: FILTER BY TOPIC -->
         <div class="filter-section">
-            <h3>Filter By Segment Topic</h3>
+            <h3>Filter by Topic</h3>
             <div class="topic-chips">
                 {"".join(topic_chips)}
             </div>
@@ -634,8 +649,10 @@ if os.path.exists(WOOM_EXCEL):
         }}
 
         function filterArchive() {{
-            var searchQuery = document.getElementById('archive-search').value.toLowerCase().strip ? document.getElementById('archive-search').value.toLowerCase().strip() : document.getElementById('archive-search').value.toLowerCase().trim();
+            var searchInput = document.getElementById('archive-search');
+            var searchQuery = searchInput.value.toLowerCase().trim();
             var cards = document.querySelectorAll('.woom-card-styled');
+            var visibleCount = 0;
 
             cards.forEach(function(card) {{
                 var cardTopics = card.getAttribute('data-topics') || '';
@@ -646,10 +663,14 @@ if os.path.exists(WOOM_EXCEL):
 
                 if (matchesTopic && matchesSearch) {{
                     card.style.display = 'flex';
+                    visibleCount++;
                 }} else {{
                     card.style.display = 'none';
                 }}
             }});
+
+            var banner = document.getElementById('results-banner');
+            banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's');
         }}
     </script>
 </body>
@@ -657,4 +678,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Search bar added to WOOM Archive.")
+print("Build complete! Search bar prominent, topic headers renamed, and episode counts added.")
