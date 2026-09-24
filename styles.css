@@ -168,9 +168,8 @@ summary.nav-toggle::marker {
 
   details.nav-container {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    display: block; /* Restores WebKit's native disclosure mechanism */
+    text-align: right; /* Aligns the MENU button to the right side */
   }
 
   summary.nav-toggle {
