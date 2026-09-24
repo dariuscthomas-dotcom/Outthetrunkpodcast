@@ -21,7 +21,7 @@ body {
 
 /* TOP NAVIGATION HEADER ONLY */
 .site-header {
-  background-color: #1D1160;
+  background-color: #1D1160 !important;
   border-bottom: 3px solid #00788C;
   padding: 0.85rem 1.5rem;
   display: flex;
@@ -33,7 +33,7 @@ body {
 
 .brand {
   text-decoration: none;
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   font-weight: 900;
   font-size: 1.4rem;
   display: flex;
@@ -46,6 +46,7 @@ body {
 .brand-text {
   white-space: nowrap;
   display: inline-block;
+  color: #FFFFFF !important;
 }
 
 /* Navigation Links - Desktop Defaults */
@@ -56,7 +57,7 @@ body {
 }
 
 .site-nav a, .site-header nav a {
-  color: #FFFFFF;
+  color: #FFFFFF !important;
   text-decoration: none;
   font-weight: 700;
   font-size: 0.9rem;
@@ -139,12 +140,12 @@ body {
 }
 
 /* ==========================================
-   MOBILE RESPONSIVE NAVIGATION
+   MOBILE RESPONSIVE NAVIGATION FIX
    ========================================== */
 @media (max-width: 768px) {
   .site-header {
-    flex-wrap: wrap;
-    padding: 0.75rem 1rem;
+    flex-wrap: wrap !important;
+    padding: 0.75rem 1rem !important;
   }
 
   .nav-toggle {
@@ -153,23 +154,27 @@ body {
 
   .site-nav, .site-header nav {
     display: none !important;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-    padding-top: 1rem;
-    padding-bottom: 0.5rem;
-    margin-top: 0.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    width: 100% !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 0.75rem !important;
+    margin-top: 0.5rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
   }
 
+  /* When JS toggles class 'is-open', display nav links as a stacked menu */
   .site-nav.is-open, .site-header nav.is-open {
     display: flex !important;
   }
 
   .site-nav a, .site-header nav a {
-    font-size: 0.95rem;
-    padding: 0.2rem 0;
+    font-size: 1rem !important;
+    color: #FFFFFF !important;
+    text-align: center !important;
+    width: 100% !important;
+    padding: 0.3rem 0 !important;
   }
 
   .search-container {
