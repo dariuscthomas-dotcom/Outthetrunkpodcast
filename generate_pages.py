@@ -7,7 +7,6 @@ WOOM_EXCEL = "WOOM Archive Inputs_2.xlsx" if os.path.exists("WOOM Archive Inputs
 
 MOVIES_DIR = "movies"
 WOOM_DIR = "woom"
-TOPICS_DIR = "topics"
 
 MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
@@ -17,7 +16,6 @@ ACCENT_COLOR = "#0085CA"
 
 os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
-os.makedirs(TOPICS_DIR, exist_ok=True)
 
 # Streamlined 12-Category Taxonomy
 MASTER_TOPICS = [
@@ -49,9 +47,9 @@ def lock_index_navigation():
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
       <a href="javascript:void(0)" onclick="document.getElementById('woom').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">WOOM</a>
-      <a href="../woom-archive.html" style="color: #FFFFFF;">WOOM Archive</a>
+      <a href="woom-archive.html" style="color: #FFFFFF;">WOOM Archive</a>
       <a href="javascript:void(0)" onclick="document.getElementById('movies').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Movies</a>
-      <a href="../movies-archive.html" style="color: #FFFFFF;">Movie Archive</a>
+      <a href="movies-archive.html" style="color: #FFFFFF;">Movie Archive</a>
       <a href="javascript:void(0)" onclick="document.getElementById('classic-segments').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Classic Segments</a>
       <a href="javascript:void(0)" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Meet The Hosts</a>
       <a class="listen-link" href="javascript:void(0)" onclick="document.getElementById('listen').scrollIntoView({behavior: 'smooth'});" style="background-color: #00788C; color: #FFFFFF; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">Listen</a>
@@ -409,9 +407,9 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & TOPIC HUB PAGES
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH ENHANCED TITLE HIERARCHY
 # ---------------------------------------------------------
-print("Processing WOOM Archive, Transcripts & Topic Landing Pages...")
+print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
     xls_w = pd.ExcelFile(WOOM_EXCEL)
     sheet_w_main = xls_w.sheet_names[0]
@@ -547,96 +545,6 @@ if os.path.exists(WOOM_EXCEL):
 
         woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics, 'clean_notes': clean_notes})
 
-    # ---------------------------------------------------------
-    # BUILD INDIVIDUAL 12 TOPIC HUB PAGES
-    # ---------------------------------------------------------
-    for master_topic in MASTER_TOPICS:
-        topic_slug = clean_slug(master_topic)
-        topic_episodes = [ep for ep in woom_list if master_topic in ep['topics']]
-        
-        topic_cards_html = ""
-        for item in topic_episodes:
-            date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
-            
-            # Clickable topic links
-            tag_links = []
-            for t in item['topics']:
-                t_slug = clean_slug(t)
-                tag_links.append(f'<a href="../topics/{t_slug}.html" class="tag-link" onclick="event.stopPropagation();">{t}</a>')
-            
-            topics_line = f'<span class="card-topics">{" • ".join(tag_links)}</span>' if tag_links else ""
-            
-            topic_cards_html += f'''
-            <a href="../woom/{item['slug']}.html" class="woom-card-styled">
-                <div class="card-content">
-                    <h3>{item['clean_title']}</h3>
-                    {date_meta}
-                    {topics_line}
-                </div>
-            </a>'''
-
-        if not topic_cards_html:
-            topic_cards_html = f'<p style="text-align: center; color: #666; grid-column: 1/-1;">No episodes found for this topic yet.</p>'
-
-        topic_page_html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{master_topic} - WOOM Topics - Out The Trunk</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../styles.css">
-    <style>
-        html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
-        .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
-        .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
-        
-        .topic-header {{ text-align: center; margin-bottom: 2.5rem; background: #fff; padding: 2rem; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }}
-        .topic-header p {{ color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem; }}
-        .topic-header h1 {{ font-size: 2.5rem; font-weight: 900; margin: 0 0 0.5rem 0; color: #111; }}
-        .topic-count {{ font-size: 0.95rem; font-weight: 700; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }}
-
-        .woom-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }}
-        .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
-        .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
-        .woom-card-styled h3 {{ margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }}
-        .card-meta {{ display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        
-        .card-topics {{ display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }}
-        .tag-link {{ color: #8A94A6; text-decoration: none; transition: color 0.2s; }}
-        .tag-link:hover {{ color: {ACCENT_COLOR}; text-decoration: underline; }}
-
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
-    </style>
-</head>
-<body>
-    <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <a href="../woom-archive.html" class="home-btn">← Back to WOOM Archive</a>
-        
-        <header class="topic-header">
-            <p>WOOM TOPIC HUB</p>
-            <h1>{master_topic}</h1>
-            <div class="topic-count">{len(topic_episodes)} Episode{'s' if len(topic_episodes) != 1 else ''} Tagged</div>
-        </header>
-
-        <div class="woom-grid">
-            {topic_cards_html}
-        </div>
-
-        <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
-    </main>
-</body>
-</html>"""
-        with open(os.path.join(TOPICS_DIR, f"{topic_slug}.html"), "w", encoding="utf-8") as f:
-            f.write(topic_page_html)
-
-    # ---------------------------------------------------------
-    # BUILD WOOM ARCHIVE MAIN PAGE WITH AUTO-COMPLETE & CLICKABLE TAGS
-    # ---------------------------------------------------------
     total_episodes = len(woom_list)
     topic_chips = [f'<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes ({total_episodes})</button>']
     for t in MASTER_TOPICS:
@@ -648,13 +556,9 @@ if os.path.exists(WOOM_EXCEL):
         date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
         data_topics = "|".join(item['topics'])
         
-        # Clickable gray tags linking to dedicated topic pages
-        tag_links = []
-        for t in item['topics']:
-            t_slug = clean_slug(t)
-            tag_links.append(f'<a href="topics/{t_slug}.html" class="tag-link" onclick="event.stopPropagation();">{t}</a>')
+        # Subtly sized tags with low contrast color
+        topics_line = f'<span class="card-topics">{" • ".join(item["topics"])}</span>' if item['topics'] else ""
         
-        topics_line = f'<span class="card-topics">{" • ".join(tag_links)}</span>' if tag_links else ""
         search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
         
         cards_woom += f'''
@@ -665,16 +569,6 @@ if os.path.exists(WOOM_EXCEL):
                 {topics_line}
             </div>
         </a>'''
-
-    # Build JavaScript array for Auto-Suggest
-    suggest_items = []
-    for t in MASTER_TOPICS:
-        suggest_items.append(f'{{ label: "{t}", type: "Topic" }}')
-    for item in woom_list:
-        clean_t = item['clean_title'].replace('"', '\\"')
-        suggest_items.append(f'{{ label: "{clean_t}", type: "Episode" }}')
-    
-    js_suggestions_array = "[\n" + ",\n".join(suggest_items) + "\n]"
 
     woom_archive_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -696,13 +590,6 @@ if os.path.exists(WOOM_EXCEL):
         .search-input {{ width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 6px 16px rgba(0, 120, 140, 0.12); }}
         .search-input:focus {{ box-shadow: 0 8px 24px rgba(0, 120, 140, 0.25); border-color: #1D1160; }}
         
-        /* Auto-Suggest Floating Dropdown */
-        .suggestions-dropdown {{ position: absolute; top: 100%; left: 0; right: 0; background: #ffffff; border: 1px solid #eaeaea; border-radius: 16px; margin-top: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.12); overflow: hidden; z-index: 2000; display: none; }}
-        .suggestion-item {{ padding: 0.85rem 1.25rem; display: flex; justify-content: space-between; align-items: center; cursor: pointer; border-bottom: 1px solid #f5f5f5; transition: background 0.15s; font-size: 0.95rem; font-weight: 600; color: #111; }}
-        .suggestion-item:last-child {{ border-bottom: none; }}
-        .suggestion-item:hover {{ background: #f0f8ff; color: #00788C; }}
-        .suggestion-badge {{ font-size: 0.72rem; text-transform: uppercase; font-weight: 800; padding: 2px 8px; border-radius: 12px; background: #eef6fc; color: #00788C; letter-spacing: 0.5px; }}
-
         .results-count {{ text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }}
 
         .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
@@ -716,12 +603,13 @@ if os.path.exists(WOOM_EXCEL):
         .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         
+        /* Dominant Title Styling (+15% Size & Extra Bold) */
         .woom-card-styled h3 {{ margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }}
+        
         .card-meta {{ display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
         
+        /* Subtle Supporting Gray Tags */
         .card-topics {{ display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }}
-        .tag-link {{ color: #8A94A6; text-decoration: none; transition: color 0.2s; }}
-        .tag-link:hover {{ color: {ACCENT_COLOR}; text-decoration: underline; }}
 
         .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
         .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
@@ -736,10 +624,8 @@ if os.path.exists(WOOM_EXCEL):
             <p style="color: #666; font-size: 1.05rem;">Search topics, questions, and episodes or browse by theme</p>
         </header>
 
-        <!-- SEARCH BAR WITH AUTO-SUGGEST DROPDOWN -->
         <div class="search-container">
-            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="handleSearchInput()" autocomplete="off">
-            <div id="suggestions-box" class="suggestions-dropdown"></div>
+            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
         </div>
 
         <div id="results-banner" class="results-count">Showing {total_episodes} Episodes</div>
@@ -760,49 +646,12 @@ if os.path.exists(WOOM_EXCEL):
 
     <script>
         var currentTopic = 'all';
-        var suggestionsData = {js_suggestions_array};
 
         function filterTopic(selectedTopic, btnElement) {{
             currentTopic = selectedTopic;
             var chips = document.querySelectorAll('.topic-chip');
             chips.forEach(function(c) {{ c.classList.remove('active'); }});
             btnElement.classList.add('active');
-            filterArchive();
-        }}
-
-        function handleSearchInput() {{
-            var inputVal = document.getElementById('archive-search').value.toLowerCase().trim();
-            var box = document.getElementById('suggestions-box');
-
-            if (inputVal.length < 2) {{
-                box.style.display = 'none';
-                box.innerHTML = '';
-            }} else {{
-                var matches = suggestionsData.filter(function(item) {{
-                    return item.label.toLowerCase().indexOf(inputVal) !== -1;
-                }}).slice(0, 6);
-
-                if (matches.length > 0) {{
-                    box.innerHTML = matches.map(function(item) {{
-                        var escapedLabel = item.label.replace(/'/g, "\\'");
-                        return '<div class="suggestion-item" onclick="selectSuggestion(\'' + escapedLabel + '\')">' +
-                               '<span>' + item.label + '</span>' +
-                               '<span class="suggestion-badge">' + item.type + '</span>' +
-                               '</div>';
-                    }}).join('');
-                    box.style.display = 'block';
-                }} else {{
-                    box.style.display = 'none';
-                    box.innerHTML = '';
-                }}
-            }}
-            filterArchive();
-        }}
-
-        function selectSuggestion(val) {{
-            var input = document.getElementById('archive-search');
-            input.value = val;
-            document.getElementById('suggestions-box').style.display = 'none';
             filterArchive();
         }}
 
@@ -830,16 +679,10 @@ if os.path.exists(WOOM_EXCEL):
             var banner = document.getElementById('results-banner');
             banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's');
         }}
-
-        document.addEventListener('click', function(e) {{
-            if (!e.target.closest('.search-container')) {{
-                document.getElementById('suggestions-box').style.display = 'none';
-            }}
-        }});
     </script>
 </body>
 </html>"""
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Auto-suggest search & 12 individual topic hub pages successfully generated.")
+print("Build complete! Title size increased and visual contrast hierarchy optimized.")
