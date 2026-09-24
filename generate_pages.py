@@ -407,7 +407,7 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH TINY GRAY TAGS
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH ENHANCED TITLE HIERARCHY
 # ---------------------------------------------------------
 print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
@@ -556,7 +556,7 @@ if os.path.exists(WOOM_EXCEL):
         date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
         data_topics = "|".join(item['topics'])
         
-        # Render tiny gray tags joined by dots (•)
+        # Subtly sized tags with low contrast color
         topics_line = f'<span class="card-topics">{" • ".join(item["topics"])}</span>' if item['topics'] else ""
         
         search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
@@ -578,7 +578,7 @@ if os.path.exists(WOOM_EXCEL):
     <title>WOOM Archive - Out The Trunk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
         html {{ scroll-behavior: smooth; }}
@@ -600,13 +600,16 @@ if os.path.exists(WOOM_EXCEL):
         .topic-chip.active {{ background: #00788C; color: #fff; border-color: #00788C; }}
         
         .woom-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }}
-        .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
+        .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
-        .woom-card-styled h3 {{ margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }}
-        .card-meta {{ display: block; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
         
-        /* Tiny Gray Tags Style */
-        .card-topics {{ display: block; margin-top: 0.5rem; font-size: 0.78rem; color: #718096; font-weight: 500; line-height: 1.3; }}
+        /* Dominant Title Styling (+15% Size & Extra Bold) */
+        .woom-card-styled h3 {{ margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }}
+        
+        .card-meta {{ display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
+        
+        /* Subtle Supporting Gray Tags */
+        .card-topics {{ display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }}
 
         .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
         .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
@@ -682,4 +685,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Tiny gray topic tags added to WOOM archive cards.")
+print("Build complete! Title size increased and visual contrast hierarchy optimized.")
