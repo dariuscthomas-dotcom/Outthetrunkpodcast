@@ -7,6 +7,9 @@ function initMobileMenu() {
   var siteNav = document.getElementById('site-nav') || document.querySelector('.site-header nav');
 
   if (navToggle && siteNav) {
+    // Clear any inline styles left over from index.html
+    siteNav.removeAttribute('style');
+
     navToggle.onclick = function(e) {
       e.stopPropagation();
       var isOpen = siteNav.classList.contains('is-open');

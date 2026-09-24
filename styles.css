@@ -21,7 +21,7 @@ body {
 
 /* TOP NAVIGATION HEADER ONLY */
 .site-header {
-  background-color: #1D1160 !important;
+  background-color: #1D1160;
   border-bottom: 3px solid #00788C;
   padding: 0.85rem 1.5rem;
   display: flex;
@@ -144,8 +144,8 @@ body {
    ========================================== */
 @media (max-width: 768px) {
   .site-header {
-    flex-wrap: wrap !important;
-    padding: 0.75rem 1rem !important;
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
   }
 
   .nav-toggle {
@@ -153,28 +153,28 @@ body {
   }
 
   .site-nav, .site-header nav {
-    display: none !important;
-    width: 100% !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 0.85rem !important;
-    padding-top: 1rem !important;
-    padding-bottom: 0.75rem !important;
-    margin-top: 0.5rem !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  /* When JS toggles class 'is-open', display nav links as a stacked menu */
+  /* Toggled via script.js */
   .site-nav.is-open, .site-header nav.is-open {
     display: flex !important;
   }
 
   .site-nav a, .site-header nav a {
-    font-size: 1rem !important;
+    font-size: 1rem;
     color: #FFFFFF !important;
-    text-align: center !important;
-    width: 100% !important;
-    padding: 0.3rem 0 !important;
+    text-align: center;
+    width: 100%;
+    padding: 0.3rem 0;
   }
 
   .search-container {
