@@ -7,7 +7,6 @@ function initMobileMenu() {
   var siteNav = document.getElementById('site-nav') || document.querySelector('.site-header nav');
 
   if (navToggle && siteNav) {
-    // Clear inline styles if present
     siteNav.removeAttribute('style');
 
     navToggle.addEventListener('click', function(e) {
@@ -23,7 +22,6 @@ function initMobileMenu() {
       }
     });
 
-    // Close menu when clicking anywhere outside header nav
     document.addEventListener('click', function(e) {
       if (!siteNav.contains(e.target) && !navToggle.contains(e.target)) {
         siteNav.classList.remove('is-open');
@@ -31,7 +29,6 @@ function initMobileMenu() {
       }
     });
 
-    // Close menu when a navigation link is clicked
     var navLinks = siteNav.querySelectorAll('a');
     for (var i = 0; i < navLinks.length; i++) {
       navLinks[i].addEventListener('click', function() {
