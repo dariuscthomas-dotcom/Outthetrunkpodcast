@@ -2,7 +2,6 @@
    OUT THE TRUNK - MASTER STYLESHEET
    ========================================== */
 
-/* Global Reset & Base Typography */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -20,8 +19,8 @@ body {
   line-height: 1.5;
 }
 
-/* Header & Brand Layout */
-.site-header, header {
+/* TOP NAVIGATION HEADER ONLY */
+.site-header {
   background-color: #1D1160;
   border-bottom: 3px solid #00788C;
   padding: 0.85rem 1.5rem;
@@ -38,23 +37,23 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  flex-shrink: 0 !important;
-  white-space: nowrap !important;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .brand-text {
-  white-space: nowrap !important;
-  display: inline-block !important;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 /* Navigation Links */
-.site-nav, header nav {
+.site-nav, .site-header nav {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-.site-nav a, header nav a {
+.site-nav a, .site-header nav a {
   color: #FFFFFF;
   text-decoration: none;
   font-weight: 700;
@@ -62,7 +61,7 @@ body {
   transition: opacity 0.2s ease;
 }
 
-.site-nav a:hover, header nav a:hover {
+.site-nav a:hover, .site-header nav a:hover {
   opacity: 0.85;
 }
 
@@ -74,13 +73,9 @@ body {
   font-weight: 700;
 }
 
-/* Buttons & Interactive Elements */
-.button, .toggle-btn, .home-btn, .topic-chip {
-  transition: all 0.2s ease;
-}
-
-.button:hover, .toggle-btn:hover, .home-btn:hover {
-  transform: translateY(-2px);
+/* HIDE MENU BUTTON ON DESKTOP */
+.nav-toggle {
+  display: none !important;
 }
 
 /* Container & Layout Utilities */
@@ -109,7 +104,6 @@ body {
   border: 0;
 }
 
-/* Back To Top Floating Button */
 .back-to-top {
   position: fixed;
   bottom: 25px;
@@ -133,48 +127,44 @@ body {
 }
 
 /* ==========================================
-   RESPONSIVE MOBILE BREAKPOINTS
+   MOBILE RESPONSIVE RULES
    ========================================== */
 @media (max-width: 768px) {
-  .site-header, header {
-    flex-wrap: wrap !important;
-    padding: 0.75rem 1rem !important;
-    gap: 0.5rem !important;
+  .site-header {
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
   }
 
-  .site-nav, header nav {
-    width: 100% !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 0.5rem 0.75rem !important;
-    padding-top: 0.5rem !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  .site-nav, .site-header nav {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  .site-nav a, header nav a {
-    font-size: 0.8rem !important;
-    padding: 0.3rem 0.5rem !important;
-    white-space: nowrap !important;
-  }
-
-  .nav-toggle {
-    display: none !important;
+  .site-nav a, .site-header nav a {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    white-space: nowrap;
   }
 
   .search-container {
-    padding: 0 0.5rem !important;
+    padding: 0 0.5rem;
   }
 
   .toggle-container {
-    flex-direction: column !important;
-    align-items: stretch !important;
-    padding: 0 1rem !important;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 1rem;
   }
 
   .toggle-btn {
-    width: 100% !important;
-    text-align: center !important;
+    width: 100%;
+    text-align: center;
   }
 
   .hof-grid {
