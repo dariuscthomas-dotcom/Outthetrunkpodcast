@@ -32,7 +32,6 @@ def lock_index_navigation():
     with open(INDEX_PATH, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Removes #top anchor and links directly to root domain /
     master_header = """<header class="site-header" id="top" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 1rem 1.5rem;">
     <a class="brand" href="/" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.5rem;">
       <span class="brand-text">Out The Trunk</span>
@@ -240,6 +239,8 @@ if os.path.exists(MOVIES_EXCEL):
         .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
         .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
         .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
+        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body>
@@ -270,6 +271,7 @@ if os.path.exists(MOVIES_EXCEL):
             <h2>Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
+        <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 </body>
 </html>"""
@@ -339,6 +341,8 @@ if os.path.exists(MOVIES_EXCEL):
         .movie-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         .movie-card-styled h3 {{ margin: 0; font-size: 1.05rem; font-weight: 600; }}
         .card-meta {{ display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR}; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
+        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body>
@@ -362,6 +366,8 @@ if os.path.exists(MOVIES_EXCEL):
         <div id="view-rating" style="display: none;">
             {rating_sections_html}
         </div>
+
+        <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 
     <script>
@@ -491,6 +497,8 @@ if os.path.exists(WOOM_EXCEL):
         .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
         .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
         .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
+        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body>
@@ -509,6 +517,7 @@ if os.path.exists(WOOM_EXCEL):
             <h2>Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
+        <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 </body>
 </html>"""
@@ -559,6 +568,8 @@ if os.path.exists(WOOM_EXCEL):
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         .woom-card-styled h3 {{ margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }}
         .card-meta {{ display: block; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
+        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
+        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body>
@@ -580,6 +591,8 @@ if os.path.exists(WOOM_EXCEL):
         <div class="woom-grid" id="woom-grid">
             {cards_woom}
         </div>
+
+        <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 
     <script>
@@ -608,4 +621,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete!")
+print("Build complete! Floating 'Back to Top' buttons restored with pure JS scroll.")

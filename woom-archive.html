@@ -24,6 +24,8 @@
         .woom-card-styled:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: #0085CA; background-color: #f8fcff; }
         .woom-card-styled h3 { margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }
         .card-meta { display: block; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 700; color: #0085CA; }
+        .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }
+        .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -303,6 +305,8 @@
             </div>
         </a>
         </div>
+
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
     </main>
 
     <script>
