@@ -13,12 +13,18 @@
         body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }
         .home-btn { display: inline-flex; align-items: center; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }
         .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
+        
+        .search-container { width: 100%; max-width: 600px; margin: 0 auto 1.5rem auto; position: relative; }
+        .search-input { width: 100%; padding: 0.85rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 120, 140, 0.08); }
+        .search-input:focus { box-shadow: 0 6px 18px rgba(0, 120, 140, 0.2); border-color: #1D1160; }
+        
         .filter-section { margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }
         .filter-section h3 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: #00788C; margin-bottom: 0.85rem; font-weight: 800; }
         .topic-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
         .topic-chip { background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.4rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
         .topic-chip:hover { border-color: #00788C; color: #00788C; }
         .topic-chip.active { background: #00788C; color: #fff; border-color: #00788C; }
+        
         .woom-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
         .woom-card-styled { text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #0085CA; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }
         .woom-card-styled:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: #0085CA; background-color: #f8fcff; }
@@ -31,11 +37,16 @@
 <body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="/" class="home-btn">← Home</a>
-        <header style="text-align: center; margin-bottom: 2rem;">
+        <header style="text-align: center; margin-bottom: 1.5rem;">
             <p style="color: #0085CA; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Browse all WOOM episodes chronologically or filter by topic</p>
+            <p style="color: #666; font-size: 1.05rem;">Search episodes or filter by segment topic</p>
         </header>
+
+        <!-- FREE FORM SEARCH BAR -->
+        <div class="search-container">
+            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
+        </div>
 
         <div class="filter-section">
             <h3>Filter By Segment Topic</h3>
@@ -46,259 +57,1919 @@
 
         <div class="woom-grid" id="woom-grid">
             
-        <a href="woom/change-ownership-and-the-cost-of-going-out.html" class="woom-card-styled" data-topics="Movies & Cinema|Social Norms & Etiquette|Technology & Internet Culture|Money & Class">
+        <a href="woom/change-ownership-and-the-cost-of-going-out.html" class="woom-card-styled" data-topics="Movies & Cinema|Social Norms & Etiquette|Technology & Internet Culture|Money & Class" data-search="change, ownership, and the cost of going out movies & cinema social norms & etiquette technology & internet culture money & class  
+   show notes &amp; highlights 
+   topics covered 
+   
+     mahershala ali’s stalled blade project and whether talented actors should choose franchise money over artistic freedom. 
+     the “one for me, one for you” career strategy and whether marvel commitments swallow actors’ careers. 
+     what jordan and darius are watching, including once upon a time, snowfall, sports, and tyler perry’s latest sequel. 
+     why viewers should feel free to quit a television show when it stops being rewarding. 
+     the difference between change and evolution, and why cultural correction often becomes overcorrection. 
+     job-interview etiquette, workplace vibes, social norms, and why bringing iced coffee can signal poor judgment. 
+     chesterton’s fence and the danger of removing traditions or friction before understanding their purpose. 
+     sports gambling, fantasy football, and how betting can replace love of the game with anxiety over outcomes. 
+     the difference between aging naturally and performing premature “washed” culture. 
+     the return of physical media, ownership, sound quality, nostalgia, and decision fatigue. 
+     why streaming weakened album listening, deep cuts, and the experience of letting art grow on an audience. 
+     why relationship discourse dominates black online culture and whether televised dating panels reflect real life. 
+     remote work, downtown raleigh, third places, expensive nightlife, and the social cost of suburban isolation. 
+   
+   best questions 
+   
+     does long-term franchise work limit a talented actor’s career more than it helps? 
+     what is the difference between changing and evolving? 
+     which social norms were more important than people realized? 
+     has legal mobile gambling damaged the experience of watching sports? 
+     why are younger adults so eager to identify as washed? 
+     why are people paying a premium for physical media again? 
+     what do you prefer to own physically, and what works better digitally? 
+     why does relationship discourse dominate black online culture? 
+     if downtown spending has recovered, why does downtown still feel dead? 
+     have third places disappeared, or have people simply been priced out of them? 
+   
+   best observations 
+   
+     all evolution requires change, but not every change represents meaningful evolution. 
+     society often solves the last problem by overcorrecting into a new one. 
+     many social norms functioned as healthy friction, even when their purpose was not obvious. 
+     making gambling instantly available changed sports fandom from cheering for teams to sweating individual bets. 
+     physical media turns entertainment back into an event and encourages people to finish the work they selected. 
+     streaming reduced the amount consumers spend on music, so artists increasingly rely on touring for income. 
+     online dating content often rewards people who perform for the camera instead of representing ordinary dating behavior. 
+     remote work can affect nightlife indirectly by breaking the daily habit of spending time downtown. 
+     suburban gathering spots preserve social activity but reduce spontaneity, bar hopping, and contact with people outside an existing circle. 
+     third places become less useful as community spaces when bowling, movies, arcades, and nightlife become premium experiences. 
+     major themes 
+     artistic integrity 
+     career trade-offs 
+     change vs. evolution 
+     social norms 
+     cultural overcorrection 
+     healthy friction 
+     sports gambling 
+     aging and identity 
+     physical media 
+     ownership 
+     streaming economics 
+     music culture 
+     relationship discourse 
+     remote work 
+     downtown life 
+     third places 
+     community 
+     cost of living 
+   
+   best debate 
+   should society remove old norms and friction in the name of freedom and convenience? jordan argued that change can become an overcorrection when people react too strongly to a prior problem. darius used chesterton’s fence, mobile gambling, workplace etiquette, remote work, and downtown decline to argue that some old barriers quietly supported healthier behavior and stronger communities. both agreed that progress requires understanding what a norm was doing before eliminating it. 
+   
+     major themes 
+     
+    
+     
+   
+ ">
             <div class="card-content">
                 <h3>Change, Ownership, and the Cost of Going Out</h3>
                 <span class="card-meta">October 09, 2026</span>
             </div>
         </a>
-        <a href="woom/what-are-people-pretending-to-like.html" class="woom-card-styled" data-topics="Food & Lifestyle|Aging & Personal Growth|Technology & Internet Culture|Creativity & Art">
+        <a href="woom/what-are-people-pretending-to-like.html" class="woom-card-styled" data-topics="Food & Lifestyle|Aging & Personal Growth|Technology & Internet Culture|Creativity & Art" data-search="what are people pretending to like food & lifestyle aging & personal growth technology & internet culture creativity & art  
+   show notes &amp; highlights 
+   topics covered 
+   
+     favorite four-course meals, dessert rankings, and why apple crumble deserves more respect. 
+     strange personal habits and rituals people rarely admit out loud. 
+     comfort movies, driving with no destination, and pre-event visualization. 
+     creating fictional sports storylines and madden fan fiction. 
+     things people pretend to like, including adversity, sushi, chopsticks, grind culture, and certain forms of artistic prestige. 
+     whether people genuinely enjoy struggling or simply enjoy the story that comes afterward. 
+     the difference between ignorance and stupidity. 
+     bad advice that sounds good but produces terrible outcomes. 
+     &quot;live life to the fullest&quot; versus making smart long-term decisions. 
+     what is genuinely better today than it has ever been. 
+     modern technology, access to information, food variety, and consumer convenience. 
+   
+   best questions 
+   
+     what strange habit or ritual do you do that you rarely admit to other people? 
+     what is something people only pretend to like? 
+     do people actually value adversity, or do they only value surviving it? 
+     what is the worst advice you&#39;ve ever received? 
+     what common piece of wisdom sounds good but falls apart in practice? 
+     what is better today than it was for previous generations? 
+   
+   best observations 
+   
+     most people do not enjoy adversity itself; they enjoy the growth, lessons, or stories that come after it. 
+     comfort routines often exist because they provide stability during stressful periods of life. 
+     prestige and popularity can pressure people into claiming they enjoy things they actually don&#39;t. 
+     ignorance can be corrected with information, but poor judgment is much harder to fix. 
+     bad decisions often compound in ways that are invisible until years later. 
+     modern life has dramatically improved access to information, education, food, and technology for curious people. 
+   
+   best debate 
+   do people pretend to like adversity?
+
+jordan argued that adversity is often romanticized and that many people claim to appreciate hardship only after surviving it. darius agreed that struggle itself is unpleasant and pointed out that some storms never end, making the common &quot;everything happens for a reason&quot; narrative far less comforting than people pretend. 
+   
+     major themes 
+     
+       personal habits 
+       self-awareness 
+       comfort routines 
+       adversity 
+       personal growth 
+       bad advice 
+       decision making 
+       modern technology 
+       education 
+       information access 
+       food culture 
+       everyday philosophy 
+     
+   
+ ">
             <div class="card-content">
                 <h3>What Are People Pretending to Like</h3>
                 <span class="card-meta">October 02, 2026</span>
             </div>
         </a>
-        <a href="woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled" data-topics="Relationships & Family|Friendship & Community|Creativity & Art|Technology & Internet Culture">
+        <a href="woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled" data-topics="Relationships & Family|Friendship & Community|Creativity & Art|Technology & Internet Culture" data-search="grab the baton: cookouts, childhood chaos & creative discipline relationships & family friendship & community creativity & art technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     dababy&#39;s charlotte food truck, ig restaurant culture, and whether any food is worth a three-hour wait 
+     funny childhood decisions that probably terrified their parents 
+     running away as a joke, dangerous sledding, trampoline stunts, stair surfing, and neighborhood mischief 
+     family traditions that are disappearing and who is responsible for preserving them 
+     millennials inheriting the responsibilities once handled by parents, grandparents, aunts, and uncles 
+     analysis paralysis versus taking action and building momentum through consistency 
+     podcasting, audience-building, and becoming part of someone&#39;s routine 
+     posting content online, social media anxiety, and worrying about public judgment 
+     whether hobbies should become businesses or sources of income 
+     influencer culture, authenticity, and the dangers of turning everything into content 
+   
+   best questions 
+   
+     is there any restaurant worth standing in line three hours to eat at? 
+     what is the funniest thing you did as a child that terrified your parents? 
+     which family traditions are actually worth preserving? 
+     why do talented people get stuck while less-talented people succeed? 
+     should hobbies be monetized? 
+     at what point does content creation stop being fun and start becoming work? 
+   
+   best observations 
+   
+     many traditions disappear not because older generations stop caring, but because younger generations never pick up the baton. 
+     consistency often beats talent because people become part of their audience&#39;s routine. 
+     most creators are terrible judges of what audiences will actually connect with. 
+     an unfinished project seen by people is usually more valuable than a perfect project that never leaves the hard drive. 
+     social media rewards authenticity but simultaneously pressures creators toward performance. 
+     many hobbies become less enjoyable when every moment is optimized for engagement and monetization. 
+   
+   best debate 
+   should hobbies make money? jordan argued that there is nothing wrong with earning money from something you already love doing and that monetization can be a blessing when it happens naturally. darius countered that commercialization can slowly drain enjoyment from a hobby and pointed to influencers who clearly no longer enjoy the content they create but continue because it has become their job. 
+   
+     major themes 
+     
+       childhood memories 
+       family traditions 
+       adulthood 
+       community responsibility 
+       consistency 
+       creativity 
+       podcasting 
+       social media 
+       content creation 
+       monetization 
+       influencer culture 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
                 <span class="card-meta">September 08, 2026</span>
             </div>
         </a>
-        <a href="woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled" data-topics="Relationships & Family|Friendship & Community|Creativity & Art|Technology & Internet Culture">
+        <a href="woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="woom-card-styled" data-topics="Relationships & Family|Friendship & Community|Creativity & Art|Technology & Internet Culture" data-search="grab the baton: cookouts, childhood chaos & creative discipline relationships & family friendship & community creativity & art technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     dababy&#39;s charlotte food truck, ig restaurant culture, and whether any food is worth a three-hour wait 
+     funny childhood decisions that probably terrified their parents 
+     running away as a joke, dangerous sledding, trampoline stunts, stair surfing, and neighborhood mischief 
+     family traditions that are disappearing and who is responsible for preserving them 
+     millennials inheriting the responsibilities once handled by parents, grandparents, aunts, and uncles 
+     analysis paralysis versus taking action and building momentum through consistency 
+     podcasting, audience-building, and becoming part of someone&#39;s routine 
+     posting content online, social media anxiety, and worrying about public judgment 
+     whether hobbies should become businesses or sources of income 
+     influencer culture, authenticity, and the dangers of turning everything into content 
+   
+   best questions 
+   
+     is there any restaurant worth standing in line three hours to eat at? 
+     what is the funniest thing you did as a child that terrified your parents? 
+     which family traditions are actually worth preserving? 
+     why do talented people get stuck while less-talented people succeed? 
+     should hobbies be monetized? 
+     at what point does content creation stop being fun and start becoming work? 
+   
+   best observations 
+   
+     many traditions disappear not because older generations stop caring, but because younger generations never pick up the baton. 
+     consistency often beats talent because people become part of their audience&#39;s routine. 
+     most creators are terrible judges of what audiences will actually connect with. 
+     an unfinished project seen by people is usually more valuable than a perfect project that never leaves the hard drive. 
+     social media rewards authenticity but simultaneously pressures creators toward performance. 
+     many hobbies become less enjoyable when every moment is optimized for engagement and monetization. 
+   
+   best debate 
+   should hobbies make money? jordan argued that there is nothing wrong with earning money from something you already love doing and that monetization can be a blessing when it happens naturally. darius countered that commercialization can slowly drain enjoyment from a hobby and pointed to influencers who clearly no longer enjoy the content they create but continue because it has become their job. 
+   
+     major themes 
+     
+       childhood memories 
+       family traditions 
+       adulthood 
+       community responsibility 
+       consistency 
+       creativity 
+       podcasting 
+       social media 
+       content creation 
+       monetization 
+       influencer culture 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
                 <span class="card-meta">September 08, 2026</span>
             </div>
         </a>
-        <a href="woom/preparation-always-beats-winging-it-woom-090126.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Work & Ambition|Creativity & Art|Technology & Internet Culture">
+        <a href="woom/preparation-always-beats-winging-it-woom-090126.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Work & Ambition|Creativity & Art|Technology & Internet Culture" data-search="preparation always beats winging it (woom 09/01/26) aging & personal growth work & ambition creativity & art technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     madden 27, franchise mode vs. exhibition mode, and learning the new gameplay mechanics 
+     rediscovering video games as an adult hobby and alternative to going out 
+     favorite current games including madden, nhl, spider-man, resident evil, mass effect, gta, and pokémon 
+     tv and sitcom characters everyone loves but they can&#39;t stand 
+     lily from how i met your mother, mike ross from suits, ned stark, moesha, rachel from friends, and others 
+     advice that only makes sense when you&#39;re older 
+     delayed vs. denied, rejection as redirection, and the value of patience 
+     preparation versus &quot;winging it&quot; in work, podcasts, sports, and life 
+     adult responsibilities, sleep, work, parenting, and time management 
+     hidden talents, creative writing, poetry, impressions, athletics, and jeopardy knowledge 
+   
+   best questions 
+   
+     which beloved tv character do you secretly hate? 
+     what advice are you finally old enough to understand? 
+     is preparation more valuable than natural talent? 
+     what childhood hobbies have you rediscovered as an adult? 
+     what hidden talent do you have that most people would never guess? 
+   
+   best observations 
+   
+     video games can be a healthier and cheaper replacement for constantly going out. 
+     most successful content, podcasts, and performances require far more preparation than audiences realize. 
+     many things that look spontaneous are actually carefully planned behind the scenes. 
+     rejection often feels like failure in the moment but can become obvious redirection later. 
+     adult life frequently comes down to choosing between fun, sleep, and responsibility. 
+     small conveniences, like thawing meat or washing dishes, are far more important than kids realize. 
+   
+   best debate 
+   preparation vs. winging it jordan argued that many disappointments and delays ultimately become meaningful redirections, while darius argued that one of the biggest lessons of adulthood is learning that preparation almost always beats improvisation. both agreed that much of what looks effortless in life, entertainment, and content creation is actually the product of serious preparation. 
+   
+     major themes 
+     
+       video games 
+       adulthood 
+       preparation 
+       discipline 
+       delayed gratification 
+       storytelling 
+       television characters 
+       parenting 
+       sleep and recovery 
+       hidden talents 
+       creative hobbies 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Preparation Always Beats Winging It (WOOM 09/01/26)</h3>
                 <span class="card-meta">September 01, 2026</span>
             </div>
         </a>
-        <a href="woom/smartphones-are-the-new-cigarettes-woom-082526.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Aging & Personal Growth|Movies & Cinema|Money & Class">
+        <a href="woom/smartphones-are-the-new-cigarettes-woom-082526.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Aging & Personal Growth|Movies & Cinema|Money & Class" data-search="smartphones are the new cigarettes (woom 08/25/26) technology & internet culture aging & personal growth movies & cinema money & class  
+   show notes &amp; highlights 
+   topics covered 
+   
+     dream homes, luxury amenities, and assembling the perfect house 
+     what makes a compelling protagonist in television and film 
+     competence versus likability in storytelling 
+     characters they disliked despite loving the show 
+     mike ross, michael scott, walter white, and other complicated protagonists 
+     chris hayes’ sirens’ call analogy and the modern attention economy 
+     smartphones as the cigarettes of the modern era 
+     systems for reducing distractions and improving focus 
+     dumb phones, print newspapers, phone-free walks, and reclaiming boredom 
+     whether past cultural moral panics were right all along 
+     what they are looking forward to this fall 
+     small victories, motivation, and maintaining morale 
+   
+   best questions 
+   
+     what makes a good protagonist? 
+     can an unlikable protagonist still carry a great story? 
+     how do you “tie yourself to the mast” when distractions are everywhere? 
+     are smartphones today’s equivalent of cigarettes? 
+     what are you looking forward to over the next few months? 
+     how important are small victories when life is not going according to plan? 
+   
+   best observations 
+   
+     competence can matter more than likability when creating a compelling protagonist. 
+     many stories weaken when the main character avoids meaningful decisions. 
+     smartphones constantly seek attention while turning distraction into revenue. 
+     learning to be bored again may be one of the most valuable skills of the digital age. 
+     some past cultural moral panics contained more truth than people wanted to admit. 
+     progress is easier to sustain when it includes small rewards and milestones. 
+   
+   best debate 
+   are smartphones the cigarettes of the modern era? darius argued that future generations may view constant phone use the way people now view smoking in restaurants and airplanes. jordan agreed that endless stimulation and shortened attention spans are producing consequences society has not fully confronted. 
+   
+     major themes 
+     
+       storytelling 
+       character development 
+       focus and productivity 
+       attention economy 
+       technology 
+       self-improvement 
+       discipline 
+       fitness 
+       fall traditions 
+       goal setting 
+       personal morale 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Smartphones Are the New Cigarettes (WOOM 08/25/26)</h3>
                 <span class="card-meta">August 25, 2026</span>
             </div>
         </a>
-        <a href="woom/has-social-media-made-success-too-public-woom-081826.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Technology & Internet Culture|Work & Ambition|Movies & Cinema">
+        <a href="woom/has-social-media-made-success-too-public-woom-081826.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Technology & Internet Culture|Work & Ambition|Movies & Cinema" data-search="has social media made success too public? (woom 08/18/26) aging & personal growth technology & internet culture work & ambition movies & cinema  
+   show notes &amp; highlights 
+   topics covered 
+   
+     a different world reboot and why modern reboots feel too serious 
+     netflix content, streaming fatigue, and “homework television” 
+     adult tasks that feel performative: ironing, making beds, folding clothes, sorting laundry, and vacuuming 
+     weight changes, clothing sizes, and accepting when clothes no longer fit 
+     organization, personal systems, and building useful infrastructure 
+     whether social media has made success too public 
+     oversharing wins, losses, remote-work habits, and personal drama online 
+     forced contrarianism and why people resist popular entertainment 
+     mainstream versus niche tastes in music, movies, sports, and food 
+     “washed” culture and exaggerated narratives about aging 
+     popular artists they do not understand and the transition to legacy-act status 
+     creative decline and knowing when a franchise should end 
+   
+   best questions 
+   
+     have we made success too public? 
+     which everyday adult responsibilities are unnecessary or performative? 
+     why do people feel pressured to dislike popular things? 
+     who is universally praised in entertainment that you simply do not understand? 
+     when should artists and franchises stop producing new work and protect their legacy? 
+   
+   best observations 
+   
+     many adult tasks continue because they are traditional, not because they create meaningful value. 
+     social media encourages excessive victory laps and excessive public venting. 
+     popular things usually become popular because they genuinely resonate with many people. 
+     being different is not inherently smarter than enjoying mainstream culture. 
+     people often exaggerate aging while ignoring habits that could improve their health and quality of life. 
+   
+   best debate 
+   has social media made success too public? jordan argued that sharing wins can inspire people and demonstrate what is possible. darius argued that excessive visibility creates comparison, invites unwanted attention, and encourages oversharing. 
+   
+     major themes 
+     
+       adulthood 
+       responsibility vs. convenience 
+       social media etiquette 
+       privacy 
+       remote-work culture 
+       mainstream vs. niche interests 
+       entertainment criticism 
+       aging and self-perception 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Has Social Media Made Success Too Public? (WOOM 08/18/26)</h3>
                 <span class="card-meta">August 18, 2026</span>
             </div>
         </a>
-        <a href="woom/getting-older-dating-smarter-and-gatekeeping-culture-woom-081126.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Relationships & Family|Movies & Cinema|Food & Lifestyle">
+        <a href="woom/getting-older-dating-smarter-and-gatekeeping-culture-woom-081126.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Relationships & Family|Movies & Cinema|Food & Lifestyle" data-search="getting older, dating smarter, and gatekeeping culture (woom 08/11/26) aging & personal growth relationships & family movies & cinema food & lifestyle  
+   show notes &amp; highlights 
+   topics covered 
+   
+     building a $15 cozy movie night and whether theater nachos count as nachos 
+     “bad” movies and albums they will defend regardless of critical consensus 
+     the difference between critical quality and entertainment value 
+     what improves and declines with age: perspective, patience, planning, recovery, sleep, and risk tolerance 
+     discernment, acceptance, and knowing when to create distance from people 
+     whether dating becomes better or worse with age 
+     “two americas”: trivia, sports knowledge, hats, literature, stay-at-home parents, and cultural context 
+     gatekeeping popular culture after it reaches a mass audience 
+     fresh ingredients versus emptying the entire spice cabinet into every dish 
+   
+   best questions 
+   
+     which critically disliked movie or album will you defend forever? 
+     what gets better with age, and what gets worse? 
+     does dating improve with age, or does better discernment simply reduce the options? 
+     can culture still be gatekept after it reaches the super bowl and other mass audiences? 
+     which everyday experiences reveal the clearest cultural differences? 
+   
+   best observations 
+   
+     perspective makes old crises look like small portions of a much longer journey. 
+     better discernment can make relationships healthier while shortening tolerance for warning signs. 
+     entertainment does not always need to be prestigious; different moods call for different art. 
+     the internet has weakened context barriers by allowing cultures to observe one another more directly. 
+     planning and long-term decision-making can improve even as sleep, recovery, and appetite for risk decline. 
+   
+   best debate 
+   gatekeeping culture: once a song is performed for a massive mainstream audience, can listeners still object to who embraces it, or does mass exposure make it everyone’s culture? 
+   
+     major themes 
+     
+       movies and music 
+       aging 
+       perspective 
+       discernment 
+       dating 
+       cultural differences 
+       gatekeeping 
+       food opinions 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Getting Older, Dating Smarter, and Gatekeeping Culture (WOOM 08/11/26)</h3>
                 <span class="card-meta">August 11, 2026</span>
             </div>
         </a>
-        <a href="woom/dress-codes-date-gifts-and-the-cost-of-balance-woom-080426.html" class="woom-card-styled" data-topics="Social Norms & Etiquette|Aging & Personal Growth|Relationships & Family|Movies & Cinema">
+        <a href="woom/dress-codes-date-gifts-and-the-cost-of-balance-woom-080426.html" class="woom-card-styled" data-topics="Social Norms & Etiquette|Aging & Personal Growth|Relationships & Family|Movies & Cinema" data-search="dress codes, date gifts, and the cost of balance (woom 08/04/26) social norms & etiquette aging & personal growth relationships & family movies & cinema  
+   show notes &amp; highlights 
+   topics covered 
+   
+     coffee, toast, and steak preference graphic 
+     tuskegee university dress code and baseline campus decorum 
+     comfort, clothing expectations, and preparation for professional life 
+     work-life balance across work, fitness, reading, writing, and the podcast 
+     decision fatigue, streaming overload, and reclaiming leisure time 
+     third-date gifts and reciprocity in dating 
+     classic movies they have never completed 
+     spider-man review and the value of communal theater experiences 
+     movie and television spoiler etiquette 
+     favorite movie lines and quotes 
+   
+   best questions 
+   
+     is a full work-life balance possible while excelling at work and personal goals? 
+     when does a reasonable dress code become unnecessary policing? 
+     should a person bring a gift on the third date to show appreciation and interest? 
+     how long should the internet protect audiences from movie spoilers? 
+     which acclaimed movies have you somehow never seen? 
+   
+   best observations 
+   
+     being an adult creates unlimited choices, but those choices can make discipline and rest harder. 
+     comfort does not have to be the highest priority in every public or professional setting. 
+     less television and scrolling may create time, but demanding leisure still carries a cognitive cost. 
+     weekends can function as both a reward and a soft reset into the next week. 
+     older classics can lose some of their original impact when once-revolutionary effects become familiar. 
+   
+   best debate 
+   tuskegee dress code: both supported basic classroom standards such as avoiding sleepwear, bonnets, and durags, while agreeing that extending the same rules to the cafeteria goes too far. 
+   
+     major themes 
+     
+       food preferences 
+       decorum 
+       adulthood 
+       work-life balance 
+       dating reciprocity 
+       movies 
+       internet etiquette 
+       personal discipline 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Dress Codes, Date Gifts, and the Cost of Balance (WOOM 08/04/26)</h3>
                 <span class="card-meta">August 04, 2026</span>
             </div>
         </a>
-        <a href="woom/why-music-biopics-keep-missing-the-point-woom-072126.html" class="woom-card-styled" data-topics="Movies & Cinema|Music & Hip-Hop|Creativity & Art">
+        <a href="woom/why-music-biopics-keep-missing-the-point-woom-072126.html" class="woom-card-styled" data-topics="Movies & Cinema|Music & Hip-Hop|Creativity & Art" data-search="why music biopics keep missing the point (woom 07/21/26) movies & cinema music & hip-hop creativity & art  
+   show notes &amp; highlights 
+   topics covered 
+   
+     music biopics and fatigue with glorified sing-alongs 
+     snoop biopic announcement 
+     how much truth biopics owe the audience 
+     celebrity mythmaking 
+   
+   best questions 
+   
+     do we need more music biopics? 
+     should biopics be allowed to function as sing-alongs if audiences enjoy them? 
+     what does a biopic owe besides nostalgia? 
+   
+   best observations 
+   
+     many music biopics feel like extended music videos instead of honest character studies. 
+     a good biopic needs more than songs people already love. 
+     estate-approved stories often protect the myth more than they reveal the person. 
+   
+   best debate 
+   biopic value: the tension is between crowd-pleasing nostalgia and honest storytelling. 
+   
+     major themes 
+     
+       movies 
+       music 
+       biopics 
+       celebrity 
+       storytelling 
+       nostalgia 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Why Music Biopics Keep Missing the Point (WOOM 07/21/26)</h3>
                 <span class="card-meta">July 21, 2026</span>
             </div>
         </a>
-        <a href="woom/can-the-starving-artist-still-survive-woom-070726.html" class="woom-card-styled" data-topics="Creativity & Art|Money & Class|Work & Ambition|Music & Hip-Hop">
+        <a href="woom/can-the-starving-artist-still-survive-woom-070726.html" class="woom-card-styled" data-topics="Creativity & Art|Money & Class|Work & Ambition|Music & Hip-Hop" data-search="can the starving artist still survive? (woom 07/07/26) creativity & art money & class work & ambition music & hip-hop  
+   show notes &amp; highlights 
+   topics covered 
+   
+     chasing creative dreams in an expensive economy 
+     starving artist life then vs now 
+     whether hobbies should be monetized 
+     young miami / india arie and music standards 
+     problematic rap content and loss of innuendo 
+     jalen brown and the burden of being “smart” in sports spaces 
+   
+   best questions 
+   
+     can people still realistically chase creative dreams today? 
+     has modern art suffered because everything has to be monetized? 
+     is the criticism of explicit music different when the older critic has a point? 
+   
+   best observations 
+   
+     doing it for the love of the game is harder when basic survival costs more. 
+     the internet shows how many talented people are stuck doing regular jobs because talent alone does not create time or money. 
+     monetizing a hobby can quickly kill the thing that made it a hobby. 
+   
+   best debate 
+   chasing dreams: jordan emphasizes how work drains creative energy; darius adds that some earlier “artist life” required poverty and discomfort people may not accept now. 
+   
+     major themes 
+     
+       creativity 
+       economics 
+       work 
+       art 
+       hip-hop 
+       public criticism 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Can the Starving Artist Still Survive? (WOOM 07/07/26)</h3>
                 <span class="card-meta">July 07, 2026</span>
             </div>
         </a>
-        <a href="woom/when-wings-cost-too-much-just-say-no-woom-062326.html" class="woom-card-styled" data-topics="Sports & Athletics|Money & Class|Food & Lifestyle|Technology & Internet Culture">
+        <a href="woom/when-wings-cost-too-much-just-say-no-woom-062326.html" class="woom-card-styled" data-topics="Sports & Athletics|Money & Class|Food & Lifestyle|Technology & Internet Culture" data-search="when wings cost too much, just say no (woom 06/23/26) sports & athletics money & class food & lifestyle technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     restaurant chicken wing prices 
+     saying no to inflated prices 
+     athlete podcasts and likeability 
+     cost of everyday food and consumer refusal 
+   
+   best questions 
+   
+     have podcasts made professional athletes less likable? 
+     at what price do you just stop buying wings? 
+     when should consumers simply refuse to participate? 
+   
+   best observations 
+   
+     at some point, the response to inflated prices has to be refusing to participate. 
+     access to athletes can make them more human but also less likable. 
+     consumer culture changes when people normalize saying no. 
+   
+   best debate 
+   athlete podcasts: more access can create more connection, but it can also expose personalities people were better off not hearing from. 
+   
+     major themes 
+     
+       sports 
+       money 
+       consumer habits 
+       podcast culture 
+       food 
+     
+   
+ ">
             <div class="card-content">
                 <h3>When Wings Cost Too Much, Just Say No (WOOM 06/23/26)</h3>
                 <span class="card-meta">June 23, 2026</span>
             </div>
         </a>
-        <a href="woom/who-deserves-a-piece-of-the-windfall-woom-060926.html" class="woom-card-styled" data-topics="Money & Class|Sports & Athletics|Music & Hip-Hop|Technology & Internet Culture">
+        <a href="woom/who-deserves-a-piece-of-the-windfall-woom-060926.html" class="woom-card-styled" data-topics="Money & Class|Sports & Athletics|Music & Hip-Hop|Technology & Internet Culture" data-search="who deserves a piece of the windfall? (woom 06/09/26) money & class sports & athletics music & hip-hop technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     nba finals ticket prices and who can afford major events 
+     finals predictions and sports pressure 
+     new shows and current viewing 
+     vince staples, vivian green, and music discovery 
+     lizzo and artist fanbase decline 
+     reading multiple books and watching multiple shows 
+     obsession movie profitability and whether crews deserve bonuses 
+     fictional character ai comparisons 
+     espn ai image and ai as tool or threat 
+   
+   best questions 
+   
+     why are people surprised that nba finals tickets are expensive in a rich city with limited seats? 
+     what happens when an artist’s superstar run ends? 
+     do you read multiple books at once? 
+     if a tiny indie movie makes a fortune, should the crew get a kickback? 
+     are people pretending ai can be ignored? 
+   
+   best observations 
+   
+     at a certain price, not selling a ticket becomes financially irresponsible. 
+     some artists have a run, build a set, and then settle into a smaller but sustainable career. 
+     ai can start a creative process, but it does not know when art is done. 
+   
+   best debate 
+   obsession profit sharing: both agree there may be no legal obligation, but morally a massive windfall should probably be shared with the people who helped make the project. 
+   
+     major themes 
+     
+       money 
+       sports 
+       music 
+       art 
+       ai 
+       fairness 
+       media consumption 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Who Deserves a Piece of the Windfall? (WOOM 06/09/26)</h3>
                 <span class="card-meta">June 09, 2026</span>
             </div>
         </a>
-        <a href="woom/midlife-crises-afros-and-digital-footprints-woom-060226.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Relationships & Family|Technology & Internet Culture">
+        <a href="woom/midlife-crises-afros-and-digital-footprints-woom-060226.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Relationships & Family|Technology & Internet Culture" data-search="midlife crises, afros, and digital footprints (woom 06/02/26) aging & personal growth relationships & family technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     midlife crisis and growing an afro 
+     public image, aging, and self-presentation 
+     black celebrities with broad approval 
+     drake-related digital footprint jokes 
+   
+   best questions 
+   
+     what is an acceptable midlife crisis? 
+     which black entertainers have near-universal approval? 
+     how much does your digital footprint affect dating? 
+   
+   best observations 
+   
+     midlife crises can be low-stakes attempts to reclaim style, identity, or novelty. 
+     digital footprints can make people question compatibility before the relationship starts. 
+     universal approval is rare because fame usually creates backlash. 
+   
+   best debate 
+   midlife crisis style: the episode frames aging and self-presentation through comedy rather than heavy debate. 
+   
+     major themes 
+     
+       aging 
+       identity 
+       celebrity 
+       dating 
+       public image 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Midlife Crises, Afros, and Digital Footprints (WOOM 06/02/26)</h3>
                 <span class="card-meta">June 02, 2026</span>
             </div>
         </a>
-        <a href="woom/stardom-sacrifice-and-the-rapper-voltron-woom-052626.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Sports & Athletics|Creativity & Art|Movies & Cinema">
+        <a href="woom/stardom-sacrifice-and-the-rapper-voltron-woom-052626.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Sports & Athletics|Creativity & Art|Movies & Cinema" data-search="stardom, sacrifice, and the rapper voltron (woom 05/26/26) music & hip-hop sports & athletics creativity & art movies & cinema  
+   show notes &amp; highlights 
+   topics covered 
+   
+     lost recording apology and creative rite of passage 
+     rapper voltron and combining artist skills 
+     great rappers who do not make good music 
+     draymond green vs charles barkley 
+     bass player in stadium act vs lead singer in theater act 
+     political messaging in art 
+     movie props and keepsakes 
+     video games currently being played 
+   
+   best questions 
+   
+     would you rather be the bass player in a stadium act or the lead singer in a theater act? 
+     what rapper would you improve by giving them another artist’s skill? 
+     has art always been political? 
+     what movie prop would you keep? 
+   
+   best observations 
+   
+     being a great rapper and making great music are different skill sets. 
+     people say they value winning and sacrifice, but their revealed preference is often stardom. 
+     political messaging works best when the movie is good first. 
+   
+   best debate 
+   draymond vs barkley: darius values the player who sacrifices ego for winning; jordan understands why people still gravitate toward the star with the name on the door. 
+   
+     major themes 
+     
+       sports 
+       status 
+       music 
+       art 
+       politics 
+       movies 
+       creativity 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Stardom, Sacrifice, and the Rapper Voltron (WOOM 05/26/26)</h3>
                 <span class="card-meta">May 26, 2026</span>
             </div>
         </a>
-        <a href="woom/delete-the-smartphone-release-the-art-woom-050626.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Creativity & Art|Movies & Cinema|Sports & Athletics">
+        <a href="woom/delete-the-smartphone-release-the-art-woom-050626.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Creativity & Art|Movies & Cinema|Sports & Athletics" data-search="delete the smartphone, release the art (woom 05/06/26) technology & internet culture creativity & art movies & cinema sports & athletics  
+   show notes &amp; highlights 
+   topics covered 
+   
+     dating apps and why the incentives are broken 
+     chain restaurants and international fast-food exceptions 
+     which technology should be deleted forever 
+     art, legacy, critics, and the fear of releasing work 
+     good-bad movies and critic vs fan expectations 
+     historic sporting events worth time traveling for 
+   
+   best questions 
+   
+     if you could delete one technological advancement forever, what would it be? 
+     what is the point of making art if nobody ever sees it? 
+     if you could attend one sporting event in history, what would it be? 
+   
+   best observations 
+   
+     smartphones are framed as a net negative because the internet moved from the room into the pocket. 
+     do not let your art die with you. your work can outlive your actual life. 
+     critics and fans serve different functions, and a bad critical score does not always erase fan enjoyment. 
+   
+   best debate 
+   technology deletion: jordan chooses consumer pickup trucks because of road behavior and safety; darius chooses smartphones because of attention, information overload, and the social cost of pocket internet. 
+   
+     major themes 
+     
+       technology 
+       creativity 
+       legacy 
+       sports 
+       media criticism 
+       nostalgia 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Delete the Smartphone, Release the Art (WOOM 05/06/26)</h3>
                 <span class="card-meta">May 06, 2026</span>
             </div>
         </a>
-        <a href="woom/take-yes-for-an-answer-woom-042826.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Movies & Cinema|Technology & Internet Culture|Relationships & Family">
+        <a href="woom/take-yes-for-an-answer-woom-042826.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Movies & Cinema|Technology & Internet Culture|Relationships & Family" data-search="take yes for an answer (woom 04/28/26) music & hip-hop movies & cinema technology & internet culture relationships & family  
+   show notes &amp; highlights 
+   topics covered 
+   
+     ps2 memory cards and named ncaa rosters 
+     michael jackson biopic reaction 
+     songs whose meanings were missed as kids 
+     artists who cannot make good albums 
+     celebrity causes and whether good causes must be controversial 
+     literacy, schooling, phones, and delayed gratification 
+     wedding must-haves and bachelor party ideas 
+   
+   best questions 
+   
+     do good causes have to be controversial to be worthy? 
+     what songs did you misunderstand as a kid? 
+     which artists have talent but cannot make a good album? 
+     what do you actually care about at your wedding? 
+   
+   best observations 
+   
+     take yes for an answer when someone supports a good cause. 
+     removing phones from schools can create space for reading, even if it does not solve every social problem. 
+     people often need art to tell them what to think instead of trusting them to interpret. 
+   
+   best debate 
+   celebrity causes: jordan asks whether safe causes are judged as less meaningful; darius argues that people should accept good support without demanding every celebrity solve every issue. 
+   
+     major themes 
+     
+       music 
+       celebrity 
+       education 
+       literacy 
+       weddings 
+       causes 
+       media interpretation 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Take Yes for an Answer (WOOM 04/28/26)</h3>
                 <span class="card-meta">April 28, 2026</span>
             </div>
         </a>
-        <a href="woom/the-price-of-community-is-convenience-woom-041426.html" class="woom-card-styled" data-topics="Friendship & Community|Technology & Internet Culture|Sports & Athletics|Food & Lifestyle">
+        <a href="woom/the-price-of-community-is-convenience-woom-041426.html" class="woom-card-styled" data-topics="Friendship & Community|Technology & Internet Culture|Sports & Athletics|Food & Lifestyle" data-search="the price of community is convenience (woom 04/14/26) friendship & community technology & internet culture sports & athletics food & lifestyle  
+   show notes &amp; highlights 
+   topics covered 
+   
+     subscription cancellation and learned helplessness 
+     friday feeling: haircut vs first drink 
+     food white people cook better than black people 
+     sports superstitions 
+     ai in everyday life 
+     community, friendship, and the cost of showing up 
+   
+   best questions 
+   
+     what is the better friday feeling: fresh haircut or first drink? 
+     what dish do white people cook better than black people? 
+     what are your sports superstitions? 
+     how are you using ai in day-to-day life? 
+     what does community cost? 
+   
+   best observations 
+   
+     people used to figure things out instead of waiting for systems to save them. 
+     the price of community is convenience. 
+     you do not realize how much you miss your friends until you see your friends. 
+   
+   best debate 
+   convenience vs capability: cancellation friction and ai tools create a conversation about whether modern life makes people less willing to figure things out. 
+   
+     major themes 
+     
+       community 
+       ai 
+       sports 
+       food 
+       friendship 
+       adult life 
+       convenience 
+     
+   
+ ">
             <div class="card-content">
                 <h3>The Price of Community Is Convenience (WOOM 04/14/26)</h3>
                 <span class="card-meta">April 14, 2026</span>
             </div>
         </a>
-        <a href="woom/rewatchability-elitism-and-getting-older-woom-040726.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Money & Class|Movies & Cinema|Friendship & Community">
+        <a href="woom/rewatchability-elitism-and-getting-older-woom-040726.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Money & Class|Movies & Cinema|Friendship & Community" data-search="rewatchability, elitism, and getting older (woom 04/07/26) aging & personal growth money & class movies & cinema friendship & community  
+   show notes &amp; highlights 
+   topics covered 
+   
+     celebrity activism and whether entertainers should stay in their lane 
+     jay-z interviews and public intellectual expectations 
+     most elitist opinions 
+     public transportation, low-income housing, and public order 
+     audiobooks vs reading 
+     prince vs michael jackson as a musical taste test 
+     aging and the shock of becoming the older adult 
+     rewatchability in all-time movie rankings 
+   
+   best questions 
+   
+     what is your most elitist opinion? 
+     when ranking movies all time, does rewatchability matter? 
+     are audiobooks the same as reading? 
+   
+   best observations 
+   
+     entertainers should not automatically be treated as public intellectuals. 
+     there is no pathway to broader public transportation acceptance without public order. 
+     rewatchability has levels: intentional rewatch, background rewatch, and emotionally powerful one-and-done films. 
+   
+   best debate 
+   rewatchability: jordan says it absolutely matters for classic status; darius allows that some great movies are one-and-done but separates different kinds of rewatch value. 
+   
+     major themes 
+     
+       taste 
+       class 
+       movies 
+       aging 
+       education 
+       public order 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Rewatchability, Elitism, and Getting Older (WOOM 04/07/26)</h3>
                 <span class="card-meta">April 07, 2026</span>
             </div>
         </a>
-        <a href="woom/are-ai-book-summaries-cheating-woom-033126.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Money & Class|Aging & Personal Growth">
+        <a href="woom/are-ai-book-summaries-cheating-woom-033126.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Money & Class|Aging & Personal Growth" data-search="are ai book summaries cheating? (woom 03/31/26) technology & internet culture money & class aging & personal growth  
+   show notes &amp; highlights 
+   topics covered 
+   
+     ai book recaps and whether summaries count as cheating 
+     last meal before a poetry retreat 
+     beer ranking prompt 
+     things ruined by becoming a rich person’s hobby 
+     adult disappointment 
+     executive dysfunction and time management 
+     political survey question about deterrence and society 
+   
+   best questions 
+   
+     is using ai to summarize a nonfiction book cheating if you bought the book? 
+     what things were ruined because they became a rich person’s hobby? 
+     is certainty of punishment a better deterrent than severity? 
+   
+   best observations 
+   
+     some nonfiction books should have been articles, and summaries can be a practical way to absorb the useful information. 
+     the first beer of the weekend is treated like a ritual ending the work week. 
+     making a hobby expensive changes who gets to participate in it. 
+   
+   best debate 
+   ai book recaps: darius frames summaries as a more efficient form of information transfer; jordan compares the practice to study aids as long as the person does not claim to have read the full book. 
+   
+     major themes 
+     
+       ai 
+       reading 
+       class 
+       hobbies 
+       adulthood 
+       time management 
+       crime/policy 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Are AI Book Summaries Cheating? (WOOM 03/31/26)</h3>
                 <span class="card-meta">March 31, 2026</span>
             </div>
         </a>
-        <a href="woom/when-legends-refuse-to-leave-the-stage-woom-032426.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Money & Class|Relationships & Family|Sports & Athletics">
+        <a href="woom/when-legends-refuse-to-leave-the-stage-woom-032426.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Money & Class|Relationships & Family|Sports & Athletics" data-search="when legends refuse to leave the stage (woom 03/24/26) aging & personal growth money & class relationships & family sports & athletics  
+   show notes &amp; highlights 
+   topics covered 
+   
+     concert ticket prices and the contradiction between broke discourse and luxury spending 
+     when legends should walk away 
+     aging gracefully in sports, music, and acting 
+     joint bank accounts in marriage 
+     new shows and comfort viewing 
+   
+   best questions 
+   
+     when should greats walk away? 
+     should married couples have joint bank accounts? 
+     is aging gracefully about leaving or accepting a new role? 
+   
+   best observations 
+   
+     the problem is not aging. the problem is refusing to accept the role that age now requires. 
+     joint finances are framed as a trust and hard-conversation issue rather than just a budgeting setup. 
+     legends can keep going if they stop pretending it is still their peak. 
+   
+   best debate 
+   aging greats: jordan weighs the value of leaving near the top; darius is fine with legends continuing if they accept age-appropriate roles. 
+   
+     major themes 
+     
+       aging 
+       legacy 
+       marriage 
+       money 
+       celebrity 
+       sports 
+     
+   
+ ">
             <div class="card-content">
                 <h3>When Legends Refuse to Leave the Stage (WOOM 03/24/26)</h3>
                 <span class="card-meta">March 24, 2026</span>
             </div>
         </a>
-        <a href="woom/let-people-enjoy-things-woom-031726.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Social Norms & Etiquette|Movies & Cinema">
+        <a href="woom/let-people-enjoy-things-woom-031726.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Social Norms & Etiquette|Movies & Cinema" data-search="let people enjoy things (woom 03/17/26) technology & internet culture social norms & etiquette movies & cinema  
+   show notes &amp; highlights 
+   topics covered 
+   
+     let people enjoy things 
+     anime kids and childhood bullying discourse 
+     michael b. jordan stories and kindness 
+     bullying, roasting, and character building 
+     nerd culture winning mainstream culture 
+   
+   best questions 
+   
+     when should you just let people enjoy things? 
+     at what point do childhood grievances need to be retired? 
+     is helpful roasting different from bullying? 
+   
+   best observations 
+   
+     sometimes there is no benefit in telling someone the thing they love is trash. 
+     nerd culture won so thoroughly that some old grievances need updating. 
+     when actual smart people speak, they often know how to make others comfortable with the intelligence. 
+   
+   best debate 
+   bullying/roasting: the conversation plays with whether social pressure builds character or simply becomes people carrying old wounds into adulthood. 
+   
+     major themes 
+     
+       taste 
+       internet culture 
+       nerd culture 
+       bullying 
+       social intelligence 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Let People Enjoy Things (WOOM 03/17/26)</h3>
                 <span class="card-meta">March 17, 2026</span>
             </div>
         </a>
-        <a href="woom/availability-is-the-best-ability-woom-030326.html" class="woom-card-styled" data-topics="Sports & Athletics|Movies & Cinema">
+        <a href="woom/availability-is-the-best-ability-woom-030326.html" class="woom-card-styled" data-topics="Sports & Athletics|Movies & Cinema" data-search="availability is the best ability (woom 03/03/26) sports & athletics movies & cinema  
+   show notes &amp; highlights 
+   topics covered 
+   
+     voting in singing competitions 
+     naacp awards and michael b. jordan 
+     awards respect from peers 
+     oscar predictions and sinners discussion 
+     nba award eligibility and 65-game rule 
+   
+   best questions 
+   
+     does peer recognition matter more than public recognition? 
+     should availability determine award eligibility? 
+     can an award rule be fair even when it produces a painful edge case? 
+   
+   best observations 
+   
+     peer recognition hits differently because it reflects how the room of workers sees the work. 
+     if regular-season games matter, availability has to matter too. 
+     the real opposition to games-played rules often reveals that people think some regular-season games are meaningless. 
+   
+   best debate 
+   nba 65-game rule: jordan worries about weird award outcomes; darius defends the hard line because players and media know the rules before the season. 
+   
+     major themes 
+     
+       awards 
+       sports 
+       rules 
+       availability 
+       movies 
+       recognition 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Availability Is the Best Ability (WOOM 03/03/26)</h3>
                 <span class="card-meta">March 03, 2026</span>
             </div>
         </a>
-        <a href="woom/family-ties-video-games-and-social-accountability-woom-022426.html" class="woom-card-styled" data-topics="Relationships & Family|Social Norms & Etiquette|Technology & Internet Culture">
+        <a href="woom/family-ties-video-games-and-social-accountability-woom-022426.html" class="woom-card-styled" data-topics="Relationships & Family|Social Norms & Etiquette|Technology & Internet Culture" data-search="family ties, video games, and social accountability (woom 02/24/26) relationships & family social norms & etiquette technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     which sister-in-law affair is harder to explain 
+     bafta slur controversy involving michael b. jordan and delroy lindo 
+     disability, accountability, and public disruption 
+     video games in relationships 
+     being close to a future spouse’s family 
+   
+   best questions 
+   
+     which is worse: your wife’s sister or your brother’s wife? 
+     is it important to be close to your future spouse’s family? 
+     what accommodations are reasonable when a condition disrupts everyone else? 
+   
+   best observations 
+   
+     the wife’s sister scenario creates wider family damage because it ruins the spouse relationship and sibling relationship at once. 
+     being close to a spouse’s family matters more with age because marriage joins families, not just individuals. 
+     a high-trust society depends on enforcing social norms when the bottom end of behavior disrupts everyone else. 
+   
+   best debate 
+   video games with a partner: jordan is pro if the partner is into it; darius prefers separate hobbies and likes video games as personal space. 
+   
+     major themes 
+     
+       family 
+       relationships 
+       accountability 
+       social norms 
+       gaming 
+       public behavior 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Family Ties, Video Games, and Social Accountability (WOOM 02/24/26)</h3>
                 <span class="card-meta">February 24, 2026</span>
             </div>
         </a>
-        <a href="woom/valentines-ghosting-and-hobbies-that-matter-woom-021726.html" class="woom-card-styled" data-topics="Relationships & Family|Creativity & Art|Aging & Personal Growth|Technology & Internet Culture">
+        <a href="woom/valentines-ghosting-and-hobbies-that-matter-woom-021726.html" class="woom-card-styled" data-topics="Relationships & Family|Creativity & Art|Aging & Personal Growth|Technology & Internet Culture" data-search="valentine’s ghosting and hobbies that matter (woom 02/17/26) relationships & family creativity & art aging & personal growth technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     valentine’s day ghosting vs snow weekend ghosting 
+     valentine’s gifts for men 
+     new hobbies and skills 
+     guitar, writing, video editing, coding, and substack 
+     getting thoughts off twitter and into owned creative spaces 
+   
+   best questions 
+   
+     what is worse: getting ghosted over valentine’s day weekend or a snowed-in weekend? 
+     should men expect valentine’s day gifts? 
+     what new skill or hobby do you want to pick up this year? 
+   
+   best observations 
+   
+     a thoughtful gesture matters more than an expensive gift. 
+     writing long-form thoughts can help move ideas away from social media dependency. 
+     hobbies become identity markers when they are tied to personal growth instead of output. 
+   
+   best debate 
+   valentine’s day vs snow weekend ghosting: jordan argues snowed-in silence removes excuses; darius argues valentine’s silence is clearer evidence of someone else being prioritized. 
+   
+     major themes 
+     
+       relationships 
+       dating 
+       hobbies 
+       creativity 
+       writing 
+       personal growth 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Valentine’s Ghosting and Hobbies That Matter (WOOM 02/17/26)</h3>
                 <span class="card-meta">February 17, 2026</span>
             </div>
         </a>
-        <a href="woom/who-keeps-grandmas-house-woom-021026.html" class="woom-card-styled" data-topics="Relationships & Family|Money & Class">
+        <a href="woom/who-keeps-grandmas-house-woom-021026.html" class="woom-card-styled" data-topics="Relationships & Family|Money & Class" data-search="who keeps grandma’s house? (woom 02/10/26) relationships & family money & class  
+   show notes &amp; highlights 
+   topics covered 
+   
+     pregaming boundaries 
+     grandma’s house and whether families should keep property after death 
+     legacy, taxes, and upkeep 
+     family memory vs financial practicality 
+   
+   best questions 
+   
+     should families keep grandma’s house after she dies? 
+     when does sentiment become a financial burden? 
+     what is a family anchor worth if nobody can maintain it? 
+   
+   best observations 
+   
+     memories do not always require ownership, but ownership can preserve a physical family anchor. 
+     a house can be both a symbol of legacy and a real bill someone has to pay. 
+     family decisions often become emotional before they become practical. 
+   
+   best debate 
+   grandma’s house: jordan leans toward keeping it if possible because of family memory; darius stresses maintenance, taxes, and the reality that someone has to carry the cost. 
+   
+     major themes 
+     
+       family 
+       legacy 
+       money 
+       property 
+       memory 
+       practicality 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Who Keeps Grandma’s House? (WOOM 02/10/26)</h3>
                 <span class="card-meta">February 10, 2026</span>
             </div>
         </a>
-        <a href="woom/does-the-biggest-album-deserve-the-award-woom-020326.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Creativity & Art">
+        <a href="woom/does-the-biggest-album-deserve-the-award-woom-020326.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Creativity & Art" data-search="does the biggest album deserve the award? (woom 02/03/26) music & hip-hop creativity & art  
+   show notes &amp; highlights 
+   topics covered 
+   
+     grammy reactions and kendrick lamar 
+     album of the year logic 
+     rap categories and cultural conversation pieces 
+     music quality vs cultural impact 
+   
+   best questions 
+   
+     should the biggest conversation piece win even if another project is technically better? 
+     what makes an album feel like the album of the year? 
+     how much should cultural impact matter in award voting? 
+   
+   best observations 
+   
+     award conversations often reward the project that defined the year, not just the project with the best songs. 
+     a good rap year makes category arguments harder because quality and impact split in different directions. 
+     music debates work when they separate personal favorite from public significance. 
+   
+   best debate 
+   awards logic: the core tension is cultural impact vs technical excellence, especially when one album dominates the conversation. 
+   
+     major themes 
+     
+       music 
+       awards 
+       hip-hop 
+       cultural impact 
+       criticism 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Does the Biggest Album Deserve the Award? (WOOM 02/03/26)</h3>
                 <span class="card-meta">February 03, 2026</span>
             </div>
         </a>
-        <a href="woom/the-snowed-in-ghosting-test-woom-012726.html" class="woom-card-styled" data-topics="Relationships & Family|Aging & Personal Growth">
+        <a href="woom/the-snowed-in-ghosting-test-woom-012726.html" class="woom-card-styled" data-topics="Relationships & Family|Aging & Personal Growth" data-search="the snowed-in ghosting test (woom 01/27/26) relationships & family aging & personal growth  
+   show notes &amp; highlights 
+   topics covered 
+   
+     snow weekend ghosting and relationship priorities 
+     dating rotation awareness 
+     parenthood and responsibility 
+     family, attachment, and adult relationship expectations 
+   
+   best questions 
+   
+     what does disappearing during a snowed-in weekend tell you about where you stand? 
+     how much communication should casual dating require? 
+     when does dating ambiguity become disrespect? 
+   
+   best observations 
+   
+     a weekend with built-in excuses removed can reveal where someone actually stands in the rotation. 
+     people often want relationship benefits without relationship clarity. 
+     small disappearances can answer questions people are afraid to ask directly. 
+   
+   best debate 
+   ghosting weekend: snowed-in silence vs holiday silence becomes a proxy for priority, clarity, and whether someone is actually invested. 
+   
+     major themes 
+     
+       dating 
+       relationships 
+       communication 
+       priorities 
+       attachment 
+     
+   
+ ">
             <div class="card-content">
                 <h3>The Snowed-In Ghosting Test (WOOM 01/27/26)</h3>
                 <span class="card-meta">January 27, 2026</span>
             </div>
         </a>
-        <a href="woom/when-convenience-kills-community-woom-012026.html" class="woom-card-styled" data-topics="Friendship & Community|Social Norms & Etiquette|Technology & Internet Culture|Work & Ambition">
+        <a href="woom/when-convenience-kills-community-woom-012026.html" class="woom-card-styled" data-topics="Friendship & Community|Social Norms & Etiquette|Technology & Internet Culture|Work & Ambition" data-search="when convenience kills community (woom 01/20/26) friendship & community social norms & etiquette technology & internet culture work & ambition  
+   show notes &amp; highlights 
+   topics covered 
+   
+     snow day activities 
+     reliability as a success trait 
+     antisocial things that feel pro-social 
+     self-checkout and club sections 
+     efficiency vs community 
+   
+   best questions 
+   
+     are successful people successful because they are reliable? 
+     what things are antisocial but feel pro-social? 
+     does every convenience make life better? 
+   
+   best observations 
+   
+     reliable people tend to be successful people. 
+     everything does not have to be optimized for efficiency. 
+     convenience can quietly remove the small social interactions that make community feel real. 
+   
+   best debate 
+   efficiency vs community: some innovations save time, but they can also remove contact, friction, and the social glue of shared spaces. 
+   
+     major themes 
+     
+       success 
+       reliability 
+       community 
+       technology 
+       social norms 
+       efficiency 
+     
+   
+ ">
             <div class="card-content">
                 <h3>When Convenience Kills Community (WOOM 01/20/26)</h3>
                 <span class="card-meta">January 20, 2026</span>
             </div>
         </a>
-        <a href="woom/stop-networking-up-and-start-networking-across-woom-011326.html" class="woom-card-styled" data-topics="Friendship & Community|Work & Ambition|Creativity & Art|Social Norms & Etiquette">
+        <a href="woom/stop-networking-up-and-start-networking-across-woom-011326.html" class="woom-card-styled" data-topics="Friendship & Community|Work & Ambition|Creativity & Art|Social Norms & Etiquette" data-search="stop networking up and start networking across (woom 01/13/26) friendship & community work & ambition creativity & art social norms & etiquette  
+   show notes &amp; highlights 
+   topics covered 
+   
+     grammar correction and social etiquette 
+     eclectic tastes 
+     friendship and success 
+     horizontal vs vertical networking 
+     talent clusters and creative ecosystems 
+   
+   best questions 
+   
+     what happens to friendship when success arrives? 
+     do people network vertically when they should network horizontally? 
+     how much does your peer group shape your success? 
+   
+   best observations 
+   
+     people often network vertically when they should network horizontally. 
+     talent clusters. iron sharpens iron. 
+     friendship can be tested more by success than failure. 
+   
+   best debate 
+   success and friendship: the core tension is whether ambition strengthens friendships through shared growth or strains them through envy, distance, and comparison. 
+   
+     major themes 
+     
+       friendship 
+       success 
+       networking 
+       creativity 
+       ambition 
+       peer groups 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Stop Networking Up and Start Networking Across (WOOM 01/13/26)</h3>
                 <span class="card-meta">January 13, 2026</span>
             </div>
         </a>
-        <a href="woom/how-to-find-your-rhythm-after-a-break-woom-010626.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Work & Ambition|Creativity & Art">
+        <a href="woom/how-to-find-your-rhythm-after-a-break-woom-010626.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Work & Ambition|Creativity & Art" data-search="how to find your rhythm after a break (woom 01/06/26) aging & personal growth work & ambition creativity & art  
+   show notes &amp; highlights 
+   topics covered 
+   
+     new year return from break 
+     holiday recap 
+     creative consistency after time off 
+     getting back into podcast rhythm 
+   
+   best questions 
+   
+     how do you restart creatively after a break? 
+     what does a holiday reset do to your work rhythm? 
+     how much of consistency is just returning after interruption? 
+   
+   best observations 
+   
+     the first episode after a break is mostly about reestablishing rhythm. 
+     creative consistency depends on returning even when the routine has been interrupted. 
+     a new year episode naturally functions as a reset point for the archive. 
+   
+   best debate 
+   this is more reset/check-in than debate, useful mainly as a marker for restarting the woom rhythm. 
+   
+     major themes 
+     
+       reset 
+       consistency 
+       holidays 
+       podcast process 
+       work rhythm 
+     
+   
+ ">
             <div class="card-content">
                 <h3>How to Find Your Rhythm After a Break (WOOM 01/06/26)</h3>
                 <span class="card-meta">January 06, 2026</span>
             </div>
         </a>
-        <a href="woom/stop-posting-the-pedicure-worker-woom-120925.html" class="woom-card-styled" data-topics="Social Norms & Etiquette|Money & Class|Technology & Internet Culture|Work & Ambition">
+        <a href="woom/stop-posting-the-pedicure-worker-woom-120925.html" class="woom-card-styled" data-topics="Social Norms & Etiquette|Money & Class|Technology & Internet Culture|Work & Ambition" data-search="stop posting the pedicure worker (woom 12/09/25) social norms & etiquette money & class technology & internet culture work & ambition  
+   show notes &amp; highlights 
+   topics covered 
+   
+     pedicure posts and class discomfort 
+     service workers being photographed 
+     social media performance of luxury/service 
+     family and holiday culture 
+   
+   best questions 
+   
+     is it off-putting to post service workers doing personal care labor? 
+     when does documenting a treat become classless? 
+     how should people share luxury or self-care without objectifying workers? 
+   
+   best observations 
+   
+     some “self-care” posts accidentally frame service workers as props. 
+     the after-photo is usually less uncomfortable than showing the worker doing the labor. 
+     a small social media habit can reveal class, privacy, and dignity issues. 
+   
+   best debate 
+   pedicure posting: darius finds the labor photo off-putting; jordan agrees that the after-photo is cleaner and less exploitative. 
+   
+     major themes 
+     
+       class 
+       social media 
+       service work 
+       etiquette 
+       self-presentation 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Stop Posting the Pedicure Worker (WOOM 12/09/25)</h3>
                 <span class="card-meta">December 09, 2025</span>
             </div>
         </a>
-        <a href="woom/how-much-shame-is-the-content-worth-woom-120225.html" class="woom-card-styled" data-topics="Food & Lifestyle|Relationships & Family|Money & Class|Technology & Internet Culture">
+        <a href="woom/how-much-shame-is-the-content-worth-woom-120225.html" class="woom-card-styled" data-topics="Food & Lifestyle|Relationships & Family|Money & Class|Technology & Internet Culture" data-search="how much shame is the content worth? (woom 12/02/25) food & lifestyle relationships & family money & class technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     grooving gorilla / public cringe content 
+     thanksgiving recap and family games 
+     thanksgiving leftovers timeline 
+     holiday food and class assumptions 
+     content creation shame in public 
+   
+   best questions 
+   
+     how long should thanksgiving leftovers last? 
+     how much public shame would you tolerate for money? 
+     when does content creation become too cringe? 
+   
+   best observations 
+   
+     creating content in public requires losing some shame, but not all shame. 
+     thanksgiving leftover rules reveal family habits and class assumptions. 
+     holiday rituals are part food, part memory, part logistics. 
+   
+   best debate 
+   thanksgiving leftovers: jordan is more flexible over several days; darius wants a faster repurpose-and-reset timeline. 
+   
+     major themes 
+     
+       family 
+       holidays 
+       food 
+       content culture 
+       shame 
+       tradition 
+     
+   
+ ">
             <div class="card-content">
                 <h3>How Much Shame Is the Content Worth? (WOOM 12/02/25)</h3>
                 <span class="card-meta">December 02, 2025</span>
             </div>
         </a>
-        <a href="woom/grown-men-cant-say-ouch-woom-111825.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Social Norms & Etiquette">
+        <a href="woom/grown-men-cant-say-ouch-woom-111825.html" class="woom-card-styled" data-topics="Aging & Personal Growth|Social Norms & Etiquette" data-search="grown men can’t say “ouch”? (woom 11/18/25) aging & personal growth social norms & etiquette  
+   show notes &amp; highlights 
+   topics covered 
+   
+     grown men saying ouch 
+     everyday masculinity rules 
+     language, pain, and public performance 
+     small social norms that reveal age and gender expectations 
+   
+   best questions 
+   
+     what words are adults no longer allowed to say in public? 
+     which tiny social rules do people enforce without admitting it? 
+     how much of masculinity is just performance under pressure? 
+   
+   best observations 
+   
+     tiny public behaviors can trigger large unwritten social rules. 
+     masculinity often shows up in silly rituals around pain, language, and restraint. 
+   
+   best debate 
+   the “ouch” bit is mostly comic, but it opens a recurring woom lane: small behaviors that reveal larger social scripts. 
+   
+     major themes 
+     
+       masculinity 
+       social norms 
+       aging 
+       comedy 
+       everyday behavior 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Grown Men Can’t Say “Ouch”? (WOOM 11/18/25)</h3>
                 <span class="card-meta">November 18, 2025</span>
             </div>
         </a>
-        <a href="woom/perfectionism-is-fear-with-better-branding-woom-111125.html" class="woom-card-styled" data-topics="Creativity & Art|Aging & Personal Growth|Relationships & Family|Social Norms & Etiquette">
+        <a href="woom/perfectionism-is-fear-with-better-branding-woom-111125.html" class="woom-card-styled" data-topics="Creativity & Art|Aging & Personal Growth|Relationships & Family|Social Norms & Etiquette" data-search="perfectionism is fear with better branding (woom 11/11/25) creativity & art aging & personal growth relationships & family social norms & etiquette  
+   show notes &amp; highlights 
+   topics covered 
+   
+     family birthday shoutouts and family history 
+     public proposals 
+     starving artist vs kobe mentality 
+     perfectionism and fear of failure 
+     creative repetition and releasing work 
+     sydney sweeney / political media discourse 
+   
+   best questions 
+   
+     should proposals happen in public? 
+     is perfectionism really fear of failure? 
+     what would you create if you were not afraid of the response? 
+   
+   best observations 
+   
+     perfectionism can be fear of failure with better branding. 
+     the starving artist keeps tweaking; the kobe model is repetition, release, and improvement. 
+     once art is released, the artist no longer controls how people receive it. 
+   
+   best debate 
+   public proposals: romantic spectacle vs pressure campaign. the core issue is whether the moment belongs to both people or traps one person in public. 
+   
+     major themes 
+     
+       creativity 
+       fear 
+       public pressure 
+       relationships 
+       media 
+       family 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Perfectionism Is Fear with Better Branding (WOOM 11/11/25)</h3>
                 <span class="card-meta">November 11, 2025</span>
             </div>
         </a>
-        <a href="woom/when-love-memory-and-identity-change-woom-110425.html" class="woom-card-styled" data-topics="Relationships & Family|Aging & Personal Growth|Technology & Internet Culture">
+        <a href="woom/when-love-memory-and-identity-change-woom-110425.html" class="woom-card-styled" data-topics="Relationships & Family|Aging & Personal Growth|Technology & Internet Culture" data-search="when love, memory, and identity change (woom 11/04/25) relationships & family aging & personal growth technology & internet culture  
+   show notes &amp; highlights 
+   topics covered 
+   
+     halloween costume and public comparison 
+     cost of dates and why no cheap dates remain 
+     traumatic brain injury and marriage obligation 
+     location sharing in relationships 
+     affection, validation, and romantic attachment 
+   
+   best questions 
+   
+     if your spouse suffered a traumatic brain injury and became a completely different person, are you obligated to stay? 
+     is location sharing healthy in a relationship? 
+     can you convince someone to like you? 
+   
+   best observations 
+   
+     you cannot convince somebody to like you. 
+     some obligations change when the person you married is no longer meaningfully the same person. 
+     location sharing can be framed as safety or surveillance depending on the relationship dynamic. 
+   
+   best debate 
+   traumatic brain injury spouse question: jordan wrestles with the loyalty obligation; darius is more willing to say the original relationship may effectively be gone. 
+   
+     major themes 
+     
+       marriage 
+       relationships 
+       obligation 
+       privacy 
+       dating 
+       identity 
+     
+   
+ ">
             <div class="card-content">
                 <h3>When Love, Memory, and Identity Change (WOOM 11/04/25)</h3>
                 <span class="card-meta">November 04, 2025</span>
             </div>
         </a>
-        <a href="woom/can-legacy-acts-still-carry-the-tour-woom-102825.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Aging & Personal Growth">
+        <a href="woom/can-legacy-acts-still-carry-the-tour-woom-102825.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Aging & Personal Growth" data-search="can legacy acts still carry the tour? (woom 10/28/25) music & hip-hop aging & personal growth  
+   show notes &amp; highlights 
+   topics covered 
+   
+     hurricane concerns for jamaica 
+     new edition / boyz ii men / toni braxton tour 
+     legacy acts and who may drop out 
+     concert touring, aging performers, and nostalgia 
+   
+   best questions 
+   
+     do legacy tours depend more on nostalgia or actual performance stamina? 
+     which artists can still carry a tour deep into their careers? 
+     when does a lineup become more fragile than exciting? 
+   
+   best observations 
+   
+     legacy tours are partly about music and partly about whether the performers can still deliver. 
+     nostalgia buys goodwill, but it does not erase stamina and age concerns. 
+     a stacked older lineup creates excitement and anxiety at the same time. 
+   
+   best debate 
+   legacy tour reliability: anticipation is high, but the real question becomes who can sustain the dates and still perform well. 
+   
+     major themes 
+     
+       music 
+       legacy 
+       touring 
+       aging 
+       nostalgia 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Can Legacy Acts Still Carry the Tour? (WOOM 10/28/25)</h3>
                 <span class="card-meta">October 28, 2025</span>
             </div>
         </a>
-        <a href="woom/page-stage-and-finding-your-creative-rhythm-woom-102125.html" class="woom-card-styled" data-topics="Creativity & Art|Aging & Personal Growth|Work & Ambition">
+        <a href="woom/page-stage-and-finding-your-creative-rhythm-woom-102125.html" class="woom-card-styled" data-topics="Creativity & Art|Aging & Personal Growth|Work & Ambition" data-search="page, stage, and finding your creative rhythm (woom 10/21/25) creativity & art aging & personal growth work & ambition  
+   show notes &amp; highlights 
+   topics covered 
+   
+     kelly rowland performance clip 
+     camera quality and podcast setup 
+     poetry process and rebuilding creative routine 
+     stage vs page poetry 
+     open mics and performance confidence 
+   
+   best questions 
+   
+     how do you rebuild a creative routine after falling out of it? 
+     is poetry different on the page than on stage? 
+     what does performance add to writing? 
+   
+   best observations 
+   
+     stage poetry and page poetry are related but not identical skills. 
+     creative routine often requires returning before confidence is fully back. 
+     performance gives writing a second life through timing, voice, and audience energy. 
+   
+   best debate 
+   page vs stage: the conversation separates writing quality from performance skill and treats both as craft lanes. 
+   
+     major themes 
+     
+       poetry 
+       creativity 
+       performance 
+       writing 
+       routine 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Page, Stage, and Finding Your Creative Rhythm (WOOM 10/21/25)</h3>
                 <span class="card-meta">October 21, 2025</span>
             </div>
         </a>
-        <a href="woom/when-is-a-concert-worth-the-hassle-woom-101525.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Friendship & Community|Money & Class">
+        <a href="woom/when-is-a-concert-worth-the-hassle-woom-101525.html" class="woom-card-styled" data-topics="Music & Hip-Hop|Friendship & Community|Money & Class" data-search="when is a concert worth the hassle? (woom 10/15/25) music & hip-hop friendship & community money & class  
+   show notes &amp; highlights 
+   topics covered 
+   
+     breezy bowl concert experience 
+     long live shows and traffic 
+     audience energy and nostalgia acts 
+     concert value and performance expectations 
+   
+   best questions 
+   
+     what makes a concert worth the hassle? 
+     does nostalgia make a long show better or just easier to tolerate? 
+     how much does crowd and traffic affect the memory of a concert? 
+   
+   best observations 
+   
+     a great concert can overcome logistical pain if the performance delivers. 
+     nostalgia tours work when the artist still understands the audience’s emotional memory. 
+     live events are remembered as much by the trip around the show as the show itself. 
+   
+   best debate 
+   concert value: performance quality can justify inconvenience, but logistics still shape the final memory. 
+   
+     major themes 
+     
+       music 
+       nostalgia 
+       live events 
+       value 
+       performance 
+     
+   
+ ">
             <div class="card-content">
                 <h3>When Is a Concert Worth the Hassle? (WOOM 10/15/25)</h3>
                 <span class="card-meta">October 15, 2025</span>
             </div>
         </a>
-        <a href="woom/adult-friendship-takes-work-woom-100725.html" class="woom-card-styled" data-topics="Friendship & Community|Aging & Personal Growth|Social Norms & Etiquette">
+        <a href="woom/adult-friendship-takes-work-woom-100725.html" class="woom-card-styled" data-topics="Friendship & Community|Aging & Personal Growth|Social Norms & Etiquette" data-search="adult friendship takes work (woom 10/07/25) friendship & community aging & personal growth social norms & etiquette  
+   show notes &amp; highlights 
+   topics covered 
+   
+     coconut tree trick question 
+     making friends as an adult 
+     third spaces and adult community 
+     going out alone 
+     church, barbershops, book clubs, gyms, and social muscles 
+   
+   best questions 
+   
+     how do adults make friends? 
+     what institutions still create community? 
+     is going out alone a skill people need to relearn? 
+   
+   best observations 
+   
+     adult friendship takes intentionality because school and college no longer create automatic proximity. 
+     third spaces matter because they give people repeated low-pressure contact. 
+     if you want community, you have to participate in it. 
+   
+   best debate 
+   adult friendship: the conversation centers on whether people lack opportunity, courage, institutions, or repeated practice. 
+   
+     major themes 
+     
+       friendship 
+       community 
+       adulthood 
+       third spaces 
+       social skills 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Adult Friendship Takes Work (WOOM 10/07/25)</h3>
                 <span class="card-meta">October 07, 2025</span>
             </div>
         </a>
-        <a href="woom/can-you-love-the-art-and-reject-the-artist-woom-093025.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Movies & Cinema|Social Norms & Etiquette">
+        <a href="woom/can-you-love-the-art-and-reject-the-artist-woom-093025.html" class="woom-card-styled" data-topics="Technology & Internet Culture|Movies & Cinema|Social Norms & Etiquette" data-search="can you love the art and reject the artist? (woom 09/30/25) technology & internet culture movies & cinema social norms & etiquette  
+   show notes &amp; highlights 
+   topics covered 
+   
+     j.k. rowling and emma watson discussion 
+     holding conflicting realities about artists and collaborators 
+     celebrity accountability and fandom history 
+     public disagreement without full disowning 
+   
+   best questions 
+   
+     can you love what someone created and strongly disagree with who they became? 
+     is there room to hold two realities about a person’s impact? 
+     when does nuance become playing both sides? 
+   
+   best observations 
+   
+     public figures tied to childhood art create harder separation questions than ordinary celebrities. 
+     nuance gets punished online because both sides often demand total agreement. 
+     fandom history can make disavowal emotionally complicated even when disagreement is clear. 
+   
+   best debate 
+   emma watson approach: holding gratitude and disagreement at the same time gets criticized by both sides, which makes it a good case study in internet nuance. 
+   
+     major themes 
+     
+       fandom 
+       accountability 
+       nuance 
+       pop culture 
+       public disagreement 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Can You Love the Art and Reject the Artist? (WOOM 09/30/25)</h3>
                 <span class="card-meta">September 30, 2025</span>
             </div>
         </a>
-        <a href="woom/pto-birthdays-and-terrible-friend-advice-woom-092325.html" class="woom-card-styled" data-topics="Work & Ambition|Aging & Personal Growth|Friendship & Community">
+        <a href="woom/pto-birthdays-and-terrible-friend-advice-woom-092325.html" class="woom-card-styled" data-topics="Work & Ambition|Aging & Personal Growth|Friendship & Community" data-search="pto, birthdays, and terrible friend advice (woom 09/23/25) work & ambition aging & personal growth friendship & community  
+   show notes &amp; highlights 
+   topics covered 
+   
+     jordan birthday weekend recap 
+     pto and bad workplace advice 
+     calling in sick after denied pto 
+     adult birthday expectations 
+     work vs personal life 
+   
+   best questions 
+   
+     should you call in sick after pto gets denied? 
+     how should adults celebrate birthdays when work gets in the way? 
+     what is bad friend advice that sounds good in the moment? 
+   
+   best observations 
+   
+     do not call in sick immediately after denied pto if the absence is obvious. 
+     adult birthdays often reveal the tension between celebration and responsibility. 
+     friends can give emotionally satisfying but professionally terrible advice. 
+   
+   best debate 
+   pto advice: the practical side wins because obvious retaliation against work scheduling can create consequences. 
+   
+     major themes 
+     
+       work 
+       adulthood 
+       birthdays 
+       friendship 
+       responsibility 
+     
+   
+ ">
             <div class="card-content">
                 <h3>PTO, Birthdays, and Terrible Friend Advice (WOOM 09/23/25)</h3>
                 <span class="card-meta">September 23, 2025</span>
             </div>
         </a>
-        <a href="woom/weddings-side-quests-and-group-trip-chaos-woom-090925.html" class="woom-card-styled" data-topics="Friendship & Community|Relationships & Family">
+        <a href="woom/weddings-side-quests-and-group-trip-chaos-woom-090925.html" class="woom-card-styled" data-topics="Friendship & Community|Relationships & Family" data-search="weddings, side quests, and group trip chaos (woom 09/09/25) friendship & community relationships & family  
+   show notes &amp; highlights 
+   topics covered 
+   
+     wedding weekend recap 
+     traveling for weddings 
+     group trips, lounges, and friend dynamics 
+     social energy and event logistics 
+   
+   best questions 
+   
+     what makes a wedding weekend actually fun? 
+     how much effort should guests put into destination wedding logistics? 
+     when does the group activity become the real event? 
+   
+   best observations 
+   
+     wedding weekends are often remembered by the side quests as much as the ceremony. 
+     group travel reveals who plans, who adapts, and who causes friction. 
+     a good wedding archive note should capture the social ecosystem, not just the event. 
+   
+   best debate 
+   this conversation is less debate-heavy and more experiential, centered on how weddings create temporary communities and stress tests for friend groups. 
+   
+     major themes 
+     
+       friendship 
+       weddings 
+       travel 
+       social energy 
+       event culture 
+     
+   
+ ">
             <div class="card-content">
                 <h3>Weddings, Side Quests, and Group Trip Chaos (WOOM 09/09/25)</h3>
                 <span class="card-meta">September 09, 2025</span>
@@ -310,22 +1981,31 @@
     </main>
 
     <script>
+        var currentTopic = 'all';
+
         function filterTopic(selectedTopic, btnElement) {
+            currentTopic = selectedTopic;
             var chips = document.querySelectorAll('.topic-chip');
             chips.forEach(function(c) { c.classList.remove('active'); });
             btnElement.classList.add('active');
+            filterArchive();
+        }
 
+        function filterArchive() {
+            var searchQuery = document.getElementById('archive-search').value.toLowerCase().strip ? document.getElementById('archive-search').value.toLowerCase().strip() : document.getElementById('archive-search').value.toLowerCase().trim();
             var cards = document.querySelectorAll('.woom-card-styled');
+
             cards.forEach(function(card) {
-                if (selectedTopic === 'all') {
+                var cardTopics = card.getAttribute('data-topics') || '';
+                var searchMeta = card.getAttribute('data-search') || '';
+
+                var matchesTopic = (currentTopic === 'all') || (cardTopics.indexOf(currentTopic) !== -1);
+                var matchesSearch = (searchQuery === '') || (searchMeta.indexOf(searchQuery) !== -1);
+
+                if (matchesTopic && matchesSearch) {
                     card.style.display = 'flex';
                 } else {
-                    var cardTopics = card.getAttribute('data-topics') || '';
-                    if (cardTopics.indexOf(selectedTopic) !== -1) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                    card.style.display = 'none';
                 }
             });
         }

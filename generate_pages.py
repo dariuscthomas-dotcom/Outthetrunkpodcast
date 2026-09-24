@@ -166,6 +166,9 @@ def format_transcript(raw_text):
         
     return "".join(formatted_p)
 
+def strip_html_tags(text):
+    return re.sub(r'<[^>]+>', ' ', str(text))
+
 lock_index_navigation()
 
 # ---------------------------------------------------------
@@ -404,7 +407,7 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH TOPIC FILTERS
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH SEARCH & TOPIC FILTERS
 # ---------------------------------------------------------
 print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
@@ -472,11 +475,13 @@ if os.path.exists(WOOM_EXCEL):
         else:
             date_str = ""
 
-        # Step 1: Grab values directly from Column F (topics)
         raw_topics = str(row.get(topics_col, "")).strip() if topics_col and pd.notna(row.get(topics_col)) else ""
         episode_topics = [t.strip() for t in raw_topics.split(",") if t.strip()] if raw_topics and raw_topics.lower() != "nan" else []
 
-        show_notes_html = str(row.get(notes_col, "")).strip() if notes_col and pd.notna(row.get(notes_col)) else "<p>Show notes available in full podcast audio.</p>"
+        raw_notes = str(row.get(notes_col, "")).strip() if notes_col and pd.notna(row.get(notes_col)) else ""
+        clean_notes = strip_html_tags(raw_notes)
+
+        show_notes_html = raw_notes if raw_notes else "<p>Show notes available in full podcast audio.</p>"
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get(yt_col)) if yt_col else None
@@ -533,9 +538,8 @@ if os.path.exists(WOOM_EXCEL):
         with open(os.path.join(WOOM_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(html_content)
 
-        woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics})
+        woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics, 'clean_notes': clean_notes})
 
-    # Step 2: Render the 12 Streamlined Topic Filter Chips
     topic_chips = ['<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes</button>']
     for t in MASTER_TOPICS:
         topic_chips.append(f'<button class="topic-chip" onclick="filterTopic(\'{t}\', this)">{t}</button>')
@@ -544,8 +548,10 @@ if os.path.exists(WOOM_EXCEL):
     for item in woom_list:
         date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
         data_topics = "|".join(item['topics'])
+        # Store clean search text inside data-search attribute
+        search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
         cards_woom += f'''
-        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}">
+        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}">
             <div class="card-content">
                 <h3>{item['clean_title']}</h3>
                 {date_meta}
@@ -567,12 +573,18 @@ if os.path.exists(WOOM_EXCEL):
         body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
+        
+        .search-container {{ width: 100%; max-width: 600px; margin: 0 auto 1.5rem auto; position: relative; }}
+        .search-input {{ width: 100%; padding: 0.85rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 120, 140, 0.08); }}
+        .search-input:focus {{ box-shadow: 0 6px 18px rgba(0, 120, 140, 0.2); border-color: #1D1160; }}
+        
         .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
         .filter-section h3 {{ font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: #00788C; margin-bottom: 0.85rem; font-weight: 800; }}
         .topic-chips {{ display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }}
         .topic-chip {{ background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.4rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }}
         .topic-chip:hover {{ border-color: #00788C; color: #00788C; }}
         .topic-chip.active {{ background: #00788C; color: #fff; border-color: #00788C; }}
+        
         .woom-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }}
         .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
@@ -585,11 +597,16 @@ if os.path.exists(WOOM_EXCEL):
 <body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="/" class="home-btn">← Home</a>
-        <header style="text-align: center; margin-bottom: 2rem;">
+        <header style="text-align: center; margin-bottom: 1.5rem;">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Browse all WOOM episodes chronologically or filter by topic</p>
+            <p style="color: #666; font-size: 1.05rem;">Search episodes or filter by segment topic</p>
         </header>
+
+        <!-- FREE FORM SEARCH BAR -->
+        <div class="search-container">
+            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
+        </div>
 
         <div class="filter-section">
             <h3>Filter By Segment Topic</h3>
@@ -606,22 +623,31 @@ if os.path.exists(WOOM_EXCEL):
     </main>
 
     <script>
+        var currentTopic = 'all';
+
         function filterTopic(selectedTopic, btnElement) {{
+            currentTopic = selectedTopic;
             var chips = document.querySelectorAll('.topic-chip');
             chips.forEach(function(c) {{ c.classList.remove('active'); }});
             btnElement.classList.add('active');
+            filterArchive();
+        }}
 
+        function filterArchive() {{
+            var searchQuery = document.getElementById('archive-search').value.toLowerCase().strip ? document.getElementById('archive-search').value.toLowerCase().strip() : document.getElementById('archive-search').value.toLowerCase().trim();
             var cards = document.querySelectorAll('.woom-card-styled');
+
             cards.forEach(function(card) {{
-                if (selectedTopic === 'all') {{
+                var cardTopics = card.getAttribute('data-topics') || '';
+                var searchMeta = card.getAttribute('data-search') || '';
+
+                var matchesTopic = (currentTopic === 'all') || (cardTopics.indexOf(currentTopic) !== -1);
+                var matchesSearch = (searchQuery === '') || (searchMeta.indexOf(searchQuery) !== -1);
+
+                if (matchesTopic && matchesSearch) {{
                     card.style.display = 'flex';
                 }} else {{
-                    var cardTopics = card.getAttribute('data-topics') || '';
-                    if (cardTopics.indexOf(selectedTopic) !== -1) {{
-                        card.style.display = 'flex';
-                    }} else {{
-                        card.style.display = 'none';
-                    }}
+                    card.style.display = 'none';
                 }}
             }});
         }}
@@ -631,4 +657,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Updated to 12-category topic taxonomy.")
+print("Build complete! Search bar added to WOOM Archive.")
