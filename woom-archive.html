@@ -13,26 +13,22 @@
         body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }
         .home-btn { display: inline-flex; align-items: center; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }
         .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
-        
         .filter-section { margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }
         .filter-section h3 { font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: #00788C; margin-bottom: 0.85rem; font-weight: 800; }
         .topic-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
         .topic-chip { background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.4rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }
         .topic-chip:hover { border-color: #00788C; color: #00788C; }
         .topic-chip.active { background: #00788C; color: #fff; border-color: #00788C; }
-
         .woom-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
         .woom-card-styled { text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #0085CA; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }
         .woom-card-styled:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: #0085CA; background-color: #f8fcff; }
         .woom-card-styled h3 { margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }
         .card-meta { display: block; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 700; color: #0085CA; }
-        .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }
-        .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
     </style>
 </head>
-<body id="top">
+<body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <a .html" class="home-btn">← Home</a>
+        <a href="/" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 2rem;">
             <p style="color: #0085CA; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
@@ -307,8 +303,6 @@
             </div>
         </a>
         </div>
-
-        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 
     <script>
@@ -323,7 +317,7 @@
                     card.style.display = 'flex';
                 } else {
                     var cardTopics = card.getAttribute('data-topics') || '';
-                    if (cardTopics.Of(selectedTopic) !== -1) {
+                    if (cardTopics.indexOf(selectedTopic) !== -1) {
                         card.style.display = 'flex';
                     } else {
                         card.style.display = 'none';

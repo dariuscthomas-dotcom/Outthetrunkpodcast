@@ -10,14 +10,13 @@ WOOM_DIR = "woom"
 
 MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
-_PATH = ".html"
+INDEX_PATH = "index.html"
 
 ACCENT_COLOR = "#0085CA"
 
 os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
-# Master 18 Macro Topics from PDF Strategy
 MASTER_TOPICS = [
     "Aging & Adulthood", "Social Norms & Etiquette", "Class & Money", "Community & Public Life",
     "Relationships & Dating", "Marriage & Family", "Friendship & Social Circles",
@@ -26,15 +25,16 @@ MASTER_TOPICS = [
     "Technology & Internet Culture", "Sports & Athletics", "Food & Food Culture", "Nostalgia & Hobbies"
 ]
 
-def lock__navigation():
-    if not os.path.exists(_PATH):
+def lock_index_navigation():
+    if not os.path.exists(INDEX_PATH):
         return
 
-    with open(_PATH, "r", encoding="utf-8") as f:
+    with open(INDEX_PATH, "r", encoding="utf-8") as f:
         content = f.read()
 
+    # Removes #top anchor and links directly to root domain /
     master_header = """<header class="site-header" id="top" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 1rem 1.5rem;">
-    <a class="brand" href="#top" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.5rem;">
+    <a class="brand" href="/" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.5rem;">
       <span class="brand-text">Out The Trunk</span>
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
@@ -56,7 +56,7 @@ def lock__navigation():
         flags=re.DOTALL
     )
 
-    with open(_PATH, "w", encoding="utf-8") as f:
+    with open(INDEX_PATH, "w", encoding="utf-8") as f:
         f.write(updated_content)
 
 def normalize_title(title):
@@ -159,7 +159,7 @@ def format_transcript(raw_text):
         
     return "".join(formatted_p)
 
-lock__navigation()
+lock_index_navigation()
 
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
@@ -240,14 +240,12 @@ if os.path.exists(MOVIES_EXCEL):
         .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
         .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
         .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
-<body id="top">
+<body>
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
         <div class="subpage-nav">
-            <a href="../" class="home-btn">← Home</a>
+            <a href="/" class="home-btn">← Home</a>
             <a href="../movies-archive.html" class="home-btn">Movie Archive</a>
         </div>
         <header class="hero-header">
@@ -272,7 +270,6 @@ if os.path.exists(MOVIES_EXCEL):
             <h2>Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
-        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 </body>
 </html>"""
@@ -342,11 +339,9 @@ if os.path.exists(MOVIES_EXCEL):
         .movie-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         .movie-card-styled h3 {{ margin: 0; font-size: 1.05rem; font-weight: 600; }}
         .card-meta {{ display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
-<body id="top">
+<body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="/" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
@@ -367,8 +362,6 @@ if os.path.exists(MOVIES_EXCEL):
         <div id="view-rating" style="display: none;">
             {rating_sections_html}
         </div>
-
-        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 
     <script>
@@ -465,7 +458,6 @@ if os.path.exists(WOOM_EXCEL):
         else:
             date_str = ""
 
-        # Read topics assigned in Excel
         raw_topics = str(row.get(topics_col, "")).strip() if topics_col and pd.notna(row.get(topics_col)) else ""
         episode_topics = [t.strip() for t in raw_topics.split(",") if t.strip()] if raw_topics and raw_topics.lower() != "nan" else []
 
@@ -499,14 +491,12 @@ if os.path.exists(WOOM_EXCEL):
         .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
         .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
         .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
-<body id="top">
+<body>
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
         <div class="subpage-nav">
-            <a href="../.html" class="home-btn">← Home</a>
+            <a href="/" class="home-btn">← Home</a>
             <a href="../woom-archive.html" class="home-btn">WOOM Archive</a>
         </div>
         <header class="hero-header">
@@ -519,7 +509,6 @@ if os.path.exists(WOOM_EXCEL):
             <h2>Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
-        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 </body>
 </html>"""
@@ -528,12 +517,10 @@ if os.path.exists(WOOM_EXCEL):
 
         woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics})
 
-    # Build Filter Chips for Master Topics
     topic_chips = ['<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes</button>']
     for t in MASTER_TOPICS:
         topic_chips.append(f'<button class="topic-chip" onclick="filterTopic(\'{t}\', this)">{t}</button>')
 
-    # Build WOOM Archive Cards
     cards_woom = ""
     for item in woom_list:
         date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
@@ -561,26 +548,22 @@ if os.path.exists(WOOM_EXCEL):
         body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
-        
         .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
         .filter-section h3 {{ font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: #00788C; margin-bottom: 0.85rem; font-weight: 800; }}
         .topic-chips {{ display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }}
         .topic-chip {{ background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.4rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }}
         .topic-chip:hover {{ border-color: #00788C; color: #00788C; }}
         .topic-chip.active {{ background: #00788C; color: #fff; border-color: #00788C; }}
-
         .woom-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }}
         .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         .woom-card-styled h3 {{ margin: 0; font-size: 1.1rem; font-weight: 600; line-height: 1.35; }}
         .card-meta {{ display: block; margin-top: 0.4rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff !important; text-decoration: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); transition: all 0.2s; z-: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
-<body id="top">
+<body>
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <a .html" class="home-btn">← Home</a>
+        <a href="/" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 2rem;">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
@@ -597,8 +580,6 @@ if os.path.exists(WOOM_EXCEL):
         <div class="woom-grid" id="woom-grid">
             {cards_woom}
         </div>
-
-        <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
 
     <script>
@@ -613,7 +594,7 @@ if os.path.exists(WOOM_EXCEL):
                     card.style.display = 'flex';
                 }} else {{
                     var cardTopics = card.getAttribute('data-topics') || '';
-                    if (cardTopics.Of(selectedTopic) !== -1) {{
+                    if (cardTopics.indexOf(selectedTopic) !== -1) {{
                         card.style.display = 'flex';
                     }} else {{
                         card.style.display = 'none';
@@ -627,4 +608,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Ready for WOOM topic tagging.")
+print("Build complete!")
