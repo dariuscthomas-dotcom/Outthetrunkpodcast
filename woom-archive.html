@@ -10,14 +10,17 @@
     <link rel="stylesheet" href="styles.css">
     <style>
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }
+        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }
         .home-btn { display: inline-flex; align-items: center; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }
         .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
         
-        .search-container { width: 100%; max-width: 750px; margin: 0 auto 1.75rem auto; position: relative; }
+        .search-container { width: 100%; max-width: 750px; margin: 0 auto 1rem auto; position: relative; text-align: center; }
         .search-input { width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 6px 16px rgba(0, 120, 140, 0.12); }
         .search-input:focus { box-shadow: 0 8px 24px rgba(0, 120, 140, 0.25); border-color: #1D1160; }
         
+        .clear-filter-btn { display: none; margin-top: 0.75rem; background: #eef6fc; color: #00788C; border: 1px solid #00788C; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }
+        .clear-filter-btn:hover { background: #00788C; color: #fff; }
+
         .results-count { text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }
 
         .filter-section { margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }
@@ -31,19 +34,31 @@
         .woom-card-styled { text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #0085CA; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }
         .woom-card-styled:hover { transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: #0085CA; background-color: #f8fcff; }
         
-        /* Dominant Title Styling (+15% Size & Extra Bold) */
         .woom-card-styled h3 { margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }
-        
         .card-meta { display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: #0085CA; }
-        
-        /* Subtle Supporting Gray Tags */
         .card-topics { display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }
+
+        .no-results-msg { display: none; text-align: center; padding: 3rem 1rem; color: #666; font-size: 1.1rem; grid-column: 1 / -1; }
 
         .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }
         .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
     </style>
 </head>
 <body>
+    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+            <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <span>Out The Trunk</span>
+        </a>
+        <nav style="display: flex; gap: 1rem; align-items: center;">
+            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
+            <a href="woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-bottom: 2px solid #00788C;">WOOM Archive</a>
+            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
+            <a href="movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
+            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        </nav>
+    </header>
+
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="/" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
@@ -54,6 +69,7 @@
 
         <div class="search-container">
             <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
+            <button id="clear-btn" class="clear-filter-btn" onclick="clearFilters()">Clear Search & Filters</button>
         </div>
 
         <div id="results-banner" class="results-count">Showing 43 Episodes</div>
@@ -2028,6 +2044,9 @@ jordan argued that adversity is often romanticized and that many people claim to
                 <span class="card-topics">Friendship & Community • Relationships & Family</span>
             </div>
         </a>
+            <div id="no-results" class="no-results-msg">
+                No episodes matched that search. Try a broader search term or choose <strong>All Episodes</strong>.
+            </div>
         </div>
 
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
@@ -2044,11 +2063,30 @@ jordan argued that adversity is often romanticized and that many people claim to
             filterArchive();
         }
 
+        function clearFilters() {
+            document.getElementById('archive-search').value = '';
+            currentTopic = 'all';
+            var chips = document.querySelectorAll('.topic-chip');
+            chips.forEach(function(c, idx) {
+                if (idx === 0) { c.classList.add('active'); }
+                else { c.classList.remove('active'); }
+            });
+            filterArchive();
+        }
+
         function filterArchive() {
             var searchInput = document.getElementById('archive-search');
             var searchQuery = searchInput.value.toLowerCase().trim();
             var cards = document.querySelectorAll('.woom-card-styled');
+            var clearBtn = document.getElementById('clear-btn');
+            var noResults = document.getElementById('no-results');
             var visibleCount = 0;
+
+            if (searchQuery !== '' || currentTopic !== 'all') {
+                clearBtn.style.display = 'inline-block';
+            } else {
+                clearBtn.style.display = 'none';
+            }
 
             cards.forEach(function(card) {
                 var cardTopics = card.getAttribute('data-topics') || '';
@@ -2066,7 +2104,21 @@ jordan argued that adversity is often romanticized and that many people claim to
             });
 
             var banner = document.getElementById('results-banner');
-            banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's');
+            if (searchQuery !== '' && currentTopic !== 'all') {
+                banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's') + ' for "' + searchQuery + '" in ' + currentTopic;
+            } else if (searchQuery !== '') {
+                banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's') + ' for "' + searchQuery + '"';
+            } else if (currentTopic !== 'all') {
+                banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's') + ' in ' + currentTopic;
+            } else {
+                banner.textContent = 'Showing ' + visibleCount + ' Episodes';
+            }
+
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+            } else {
+                noResults.style.display = 'none';
+            }
         }
     </script>
 </body>

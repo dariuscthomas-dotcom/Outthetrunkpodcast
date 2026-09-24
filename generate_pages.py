@@ -40,8 +40,9 @@ def lock_index_navigation():
     with open(INDEX_PATH, "r", encoding="utf-8") as f:
         content = f.read()
 
-    master_header = """<header class="site-header" id="top" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 1rem 1.5rem;">
-    <a class="brand" href="/" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.5rem;">
+    master_header = """<header class="site-header" id="top" style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+    <a class="brand" href="/" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+      <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
       <span class="brand-text">Out The Trunk</span>
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
@@ -96,6 +97,8 @@ def clean_slug(title):
 
 def render_stars(rating_val):
     try:
+        if pd.isna(rating_val) or str(rating_val).strip().lower() in ["nan", "n/a", ""]:
+            return "☆☆☆☆☆"
         val = float(rating_val)
         full_stars = int(val)
         half_star = (val - full_stars) >= 0.5
@@ -110,15 +113,17 @@ def render_stars(rating_val):
 
 def format_rating_badge(val):
     if pd.isna(val) or str(val).strip().lower() in ["nan", "n/a", ""]:
-        return "N/A"
+        return "Not Rated"
     try:
         num = float(val)
-        return f"{int(num)}/5" if num.is_integer() else f"{num}/5"
+        return f"{int(num)}/5" if num.is_integer() else f"{num:.1f}/5"
     except ValueError:
-        return "N/A"
+        return "Not Rated"
 
 def calculate_avg_num(jordan_val, darius_val):
     try:
+        if pd.isna(jordan_val) or pd.isna(darius_val):
+            return None
         j = float(jordan_val)
         d = float(darius_val)
         return (j + d) / 2.0
@@ -236,7 +241,7 @@ if os.path.exists(MOVIES_EXCEL):
     <link rel="stylesheet" href="../styles.css">
     <style>
         html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
+        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
         .subpage-nav {{ display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }}
         .home-btn {{ display: inline-flex; align-items: center; gap: 0.4rem; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
@@ -255,6 +260,20 @@ if os.path.exists(MOVIES_EXCEL):
     </style>
 </head>
 <body>
+    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <span>Out The Trunk</span>
+        </a>
+        <nav style="display: flex; gap: 1rem; align-items: center;">
+            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
+            <a href="../woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
+            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
+            <a href="../movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
+            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        </nav>
+    </header>
+
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
         <div class="subpage-nav">
             <a href="/" class="home-btn">← Home</a>
@@ -304,8 +323,8 @@ if os.path.exists(MOVIES_EXCEL):
 
     for g in all_groups:
         if g in grouped_movies:
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else ''}</div></a>''' for item in grouped_movies[g]])
-            sections_html += f'''<section id="group-{g}" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header">{g}</h2><div class="movie-grid">{cards}</div></section>'''
+            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else '<span class="card-meta">Not Rated</span>'}</div></a>''' for item in grouped_movies[g]])
+            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header">{g}</h2><div class="movie-grid">{cards}</div></section>'''
 
     rating_tiers = [
         (5.0, 5.0, "5 Stars (Masterpieces)"),
@@ -320,7 +339,7 @@ if os.path.exists(MOVIES_EXCEL):
         tier_movies = [m for m in movie_list if m['avg_num'] is not None and min_r <= m['avg_num'] <= max_r]
         if tier_movies:
             tier_movies.sort(key=lambda x: x['avg_num'], reverse=True)
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
+            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
             rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header">{tier_label}</h2><div class="movie-grid">{cards}</div></section>'''
 
     movie_archive_html = f"""<!DOCTYPE html>
@@ -335,17 +354,22 @@ if os.path.exists(MOVIES_EXCEL):
     <link rel="stylesheet" href="styles.css">
     <style>
         html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
+        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
         .toggle-container {{ display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }}
         .toggle-btn {{ background: #fff; border: 2px solid #00788C; color: #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }}
         .toggle-btn.active {{ background: #00788C; color: #fff; }}
+        
+        .search-container {{ width: 100%; max-width: 650px; margin: 0 auto 1.5rem auto; position: relative; }}
+        .search-input {{ width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 120, 140, 0.08); }}
+        .search-input:focus {{ box-shadow: 0 6px 18px rgba(0, 120, 140, 0.2); border-color: #1D1160; }}
+
         .az-navigation {{ text-align: center; margin-bottom: 2.5rem; line-height: 2.2; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #eaeaea; }}
         .nav-btn {{ display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }}
         .active-btn {{ background-color: {ACCENT_COLOR}; color: #fff !important; border: 1px solid {ACCENT_COLOR}; text-decoration: none; }}
         .active-btn:hover {{ background-color: #006dae; transform: translateY(-2px); }}
-        .disabled-btn {{ border: 1px solid #eaeaea; color: #d1d1d1; background-color: #fafafa; }}
+        .disabled-btn {{ border: 1px solid #eaeaea; color: #d1d1d1; background-color: #fafafa; pointer-events: none; opacity: 0.5; }}
         .group-header {{ font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111; }}
         .movie-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }}
         .movie-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
@@ -357,12 +381,31 @@ if os.path.exists(MOVIES_EXCEL):
     </style>
 </head>
 <body>
+    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+            <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <span>Out The Trunk</span>
+        </a>
+        <nav style="display: flex; gap: 1rem; align-items: center;">
+            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
+            <a href="woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
+            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
+            <a href="movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-bottom: 2px solid #00788C;">Movie Archive</a>
+            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        </nav>
+    </header>
+
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="/" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Browse all movie reviews and show notes</p>
+            <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
         </header>
+
+        <!-- MOVIE SEARCH BAR -->
+        <div class="search-container">
+            <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()">
+        </div>
 
         <div class="toggle-container">
             <button id="btn-title" class="toggle-btn active" onclick="showView('title')">Browse by Title (A–Z)</button>
@@ -400,6 +443,31 @@ if os.path.exists(MOVIES_EXCEL):
                 btnRating.classList.remove('active');
             }}
         }}
+
+        function filterMovies() {{
+            var query = document.getElementById('movie-search').value.toLowerCase().trim();
+            var cards = document.querySelectorAll('.movie-card-styled');
+
+            cards.forEach(function(card) {{
+                var title = card.getAttribute('data-title') || '';
+                if (query === '' || title.indexOf(query) !== -1) {{
+                    card.style.display = 'flex';
+                }} else {{
+                    card.style.display = 'none';
+                }}
+            }});
+
+            // Hide empty letter section headers when searching
+            var sectionGroups = document.querySelectorAll('.movie-section-group');
+            sectionGroups.forEach(function(sec) {{
+                var visibleCards = sec.querySelectorAll('.movie-card-styled[style*="display: flex"]');
+                if (query !== '' && visibleCards.length === 0) {{
+                    sec.style.display = 'none';
+                }} else {{
+                    sec.style.display = 'block';
+                }}
+            }});
+        }}
     </script>
 </body>
 </html>"""
@@ -407,7 +475,7 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH ENHANCED TITLE HIERARCHY
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE
 # ---------------------------------------------------------
 print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
@@ -506,7 +574,7 @@ if os.path.exists(WOOM_EXCEL):
     <link rel="stylesheet" href="../styles.css">
     <style>
         html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
+        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
         .subpage-nav {{ display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }}
         .home-btn {{ display: inline-flex; align-items: center; gap: 0.4rem; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
@@ -521,6 +589,20 @@ if os.path.exists(WOOM_EXCEL):
     </style>
 </head>
 <body>
+    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <span>Out The Trunk</span>
+        </a>
+        <nav style="display: flex; gap: 1rem; align-items: center;">
+            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
+            <a href="../woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
+            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
+            <a href="../movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
+            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        </nav>
+    </header>
+
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
         <div class="subpage-nav">
             <a href="/" class="home-btn">← Home</a>
@@ -556,9 +638,7 @@ if os.path.exists(WOOM_EXCEL):
         date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
         data_topics = "|".join(item['topics'])
         
-        # Subtly sized tags with low contrast color
         topics_line = f'<span class="card-topics">{" • ".join(item["topics"])}</span>' if item['topics'] else ""
-        
         search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
         
         cards_woom += f'''
@@ -582,14 +662,17 @@ if os.path.exists(WOOM_EXCEL):
     <link rel="stylesheet" href="styles.css">
     <style>
         html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
+        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
         
-        .search-container {{ width: 100%; max-width: 750px; margin: 0 auto 1.75rem auto; position: relative; }}
+        .search-container {{ width: 100%; max-width: 750px; margin: 0 auto 1rem auto; position: relative; text-align: center; }}
         .search-input {{ width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 6px 16px rgba(0, 120, 140, 0.12); }}
         .search-input:focus {{ box-shadow: 0 8px 24px rgba(0, 120, 140, 0.25); border-color: #1D1160; }}
         
+        .clear-filter-btn {{ display: none; margin-top: 0.75rem; background: #eef6fc; color: #00788C; border: 1px solid #00788C; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }}
+        .clear-filter-btn:hover {{ background: #00788C; color: #fff; }}
+
         .results-count {{ text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }}
 
         .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
@@ -603,19 +686,31 @@ if os.path.exists(WOOM_EXCEL):
         .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
         
-        /* Dominant Title Styling (+15% Size & Extra Bold) */
         .woom-card-styled h3 {{ margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }}
-        
         .card-meta {{ display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        
-        /* Subtle Supporting Gray Tags */
         .card-topics {{ display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }}
+
+        .no-results-msg {{ display: none; text-align: center; padding: 3rem 1rem; color: #666; font-size: 1.1rem; grid-column: 1 / -1; }}
 
         .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
         .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
     </style>
 </head>
 <body>
+    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+            <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <span>Out The Trunk</span>
+        </a>
+        <nav style="display: flex; gap: 1rem; align-items: center;">
+            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
+            <a href="woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-bottom: 2px solid #00788C;">WOOM Archive</a>
+            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
+            <a href="movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
+            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        </nav>
+    </header>
+
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="/" class="home-btn">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
@@ -626,6 +721,7 @@ if os.path.exists(WOOM_EXCEL):
 
         <div class="search-container">
             <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
+            <button id="clear-btn" class="clear-filter-btn" onclick="clearFilters()">Clear Search & Filters</button>
         </div>
 
         <div id="results-banner" class="results-count">Showing {total_episodes} Episodes</div>
@@ -639,6 +735,9 @@ if os.path.exists(WOOM_EXCEL):
 
         <div class="woom-grid" id="woom-grid">
             {cards_woom}
+            <div id="no-results" class="no-results-msg">
+                No episodes matched that search. Try a broader search term or choose <strong>All Episodes</strong>.
+            </div>
         </div>
 
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
@@ -655,11 +754,30 @@ if os.path.exists(WOOM_EXCEL):
             filterArchive();
         }}
 
+        function clearFilters() {{
+            document.getElementById('archive-search').value = '';
+            currentTopic = 'all';
+            var chips = document.querySelectorAll('.topic-chip');
+            chips.forEach(function(c, idx) {{
+                if (idx === 0) {{ c.classList.add('active'); }}
+                else {{ c.classList.remove('active'); }}
+            }});
+            filterArchive();
+        }}
+
         function filterArchive() {{
             var searchInput = document.getElementById('archive-search');
             var searchQuery = searchInput.value.toLowerCase().trim();
             var cards = document.querySelectorAll('.woom-card-styled');
+            var clearBtn = document.getElementById('clear-btn');
+            var noResults = document.getElementById('no-results');
             var visibleCount = 0;
+
+            if (searchQuery !== '' || currentTopic !== 'all') {{
+                clearBtn.style.display = 'inline-block';
+            }} else {{
+                clearBtn.style.display = 'none';
+            }}
 
             cards.forEach(function(card) {{
                 var cardTopics = card.getAttribute('data-topics') || '';
@@ -677,7 +795,21 @@ if os.path.exists(WOOM_EXCEL):
             }});
 
             var banner = document.getElementById('results-banner');
-            banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's');
+            if (searchQuery !== '' && currentTopic !== 'all') {{
+                banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's') + ' for "' + searchQuery + '" in ' + currentTopic;
+            }} else if (searchQuery !== '') {{
+                banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's') + ' for "' + searchQuery + '"';
+            }} else if (currentTopic !== 'all') {{
+                banner.textContent = 'Showing ' + visibleCount + ' Episode' + (visibleCount === 1 ? '' : 's') + ' in ' + currentTopic;
+            }} else {{
+                banner.textContent = 'Showing ' + visibleCount + ' Episodes';
+            }}
+
+            if (visibleCount === 0) {{
+                noResults.style.display = 'block';
+            }} else {{
+                noResults.style.display = 'none';
+            }}
         }}
     </script>
 </body>
@@ -685,4 +817,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Title size increased and visual contrast hierarchy optimized.")
+print("Build complete! Movie rating safety added, unified headers integrated, and Movie search live.")

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../styles.css">
     <style>
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }
+        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }
         .subpage-nav { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
         .home-btn { display: inline-flex; align-items: center; gap: 0.4rem; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; }
         .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
@@ -25,6 +25,20 @@
     </style>
 </head>
 <body>
+    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
+        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <span>Out The Trunk</span>
+        </a>
+        <nav style="display: flex; gap: 1rem; align-items: center;">
+            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
+            <a href="../woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
+            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
+            <a href="../movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
+            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        </nav>
+    </header>
+
     <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
         <div class="subpage-nav">
             <a href="/" class="home-btn">← Home</a>
