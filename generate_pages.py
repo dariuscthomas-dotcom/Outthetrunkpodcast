@@ -17,12 +17,20 @@ ACCENT_COLOR = "#0085CA"
 os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
+# Streamlined 12-Category Taxonomy
 MASTER_TOPICS = [
-    "Aging & Adulthood", "Social Norms & Etiquette", "Class & Money", "Community & Public Life",
-    "Relationships & Dating", "Marriage & Family", "Friendship & Social Circles",
-    "Movies & Cinema", "Music & Hip-Hop", "Pop Culture & Celebrity", "Media Criticism & Fandom",
-    "Creativity & Art", "Work & Ambition", "Personal Growth & Discipline",
-    "Technology & Internet Culture", "Sports & Athletics", "Food & Food Culture", "Nostalgia & Hobbies"
+    "Relationships & Family",
+    "Friendship & Community",
+    "Aging & Personal Growth",
+    "Work & Ambition",
+    "Money & Class",
+    "Social Norms & Etiquette",
+    "Technology & Internet Culture",
+    "Movies & Cinema",
+    "Music & Hip-Hop",
+    "Creativity & Art",
+    "Sports & Athletics",
+    "Food & Lifestyle"
 ]
 
 def lock_index_navigation():
@@ -38,13 +46,13 @@ def lock_index_navigation():
     </a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-      <a href="#woom" style="color: #FFFFFF;">WOOM</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('woom').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">WOOM</a>
       <a href="woom-archive.html" style="color: #FFFFFF;">WOOM Archive</a>
-      <a href="#movies" style="color: #FFFFFF;">Movies</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('movies').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Movies</a>
       <a href="movies-archive.html" style="color: #FFFFFF;">Movie Archive</a>
-      <a href="#classic-segments" style="color: #FFFFFF;">Classic Segments</a>
-      <a href="#hosts" style="color: #FFFFFF;">Meet The Hosts</a>
-      <a class="listen-link" href="#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">Listen</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('classic-segments').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Classic Segments</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('hosts').scrollIntoView({behavior: 'smooth'});" style="color: #FFFFFF;">Meet The Hosts</a>
+      <a class="listen-link" href="javascript:void(0)" onclick="document.getElementById('listen').scrollIntoView({behavior: 'smooth'});" style="background-color: #00788C; color: #FFFFFF; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 700;">Listen</a>
     </nav>
   </header>"""
 
@@ -464,6 +472,7 @@ if os.path.exists(WOOM_EXCEL):
         else:
             date_str = ""
 
+        # Step 1: Grab values directly from Column F (topics)
         raw_topics = str(row.get(topics_col, "")).strip() if topics_col and pd.notna(row.get(topics_col)) else ""
         episode_topics = [t.strip() for t in raw_topics.split(",") if t.strip()] if raw_topics and raw_topics.lower() != "nan" else []
 
@@ -526,6 +535,7 @@ if os.path.exists(WOOM_EXCEL):
 
         woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics})
 
+    # Step 2: Render the 12 Streamlined Topic Filter Chips
     topic_chips = ['<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes</button>']
     for t in MASTER_TOPICS:
         topic_chips.append(f'<button class="topic-chip" onclick="filterTopic(\'{t}\', this)">{t}</button>')
@@ -621,4 +631,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Floating 'Back to Top' buttons restored with pure JS scroll.")
+print("Build complete! Updated to 12-category topic taxonomy.")
