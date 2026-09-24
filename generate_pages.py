@@ -2,7 +2,6 @@ import os
 import re
 import pandas as pd
 
-# Paths & Settings
 MOVIES_EXCEL = "Movie Archive Inputs_3.xlsx" if os.path.exists("Movie Archive Inputs_3.xlsx") else "Movie Archive Inputs.xlsx"
 WOOM_EXCEL = "WOOM Archive Inputs_2.xlsx" if os.path.exists("WOOM Archive Inputs_2.xlsx") else "WOOM Archive Inputs.xlsx"
 
@@ -13,15 +12,20 @@ MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
 INDEX_PATH = "index.html"
 
-# Panthers Process Blue Accent
 ACCENT_COLOR = "#0085CA"
 
 os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
 
-# ---------------------------------------------------------
-# MASTER HEADER LOCK
-# ---------------------------------------------------------
+# Master 18 Macro Topics from PDF Strategy
+MASTER_TOPICS = [
+    "Aging & Adulthood", "Social Norms & Etiquette", "Class & Money", "Community & Public Life",
+    "Relationships & Dating", "Marriage & Family", "Friendship & Social Circles",
+    "Movies & Cinema", "Music & Hip-Hop", "Pop Culture & Celebrity", "Media Criticism & Fandom",
+    "Creativity & Art", "Work & Ambition", "Personal Growth & Discipline",
+    "Technology & Internet Culture", "Sports & Athletics", "Food & Food Culture", "Nostalgia & Hobbies"
+]
+
 def lock_index_navigation():
     if not os.path.exists(INDEX_PATH):
         return
@@ -33,9 +37,7 @@ def lock_index_navigation():
     <a class="brand" href="#top" aria-label="Out The Trunk home" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.5rem;">
       <span class="brand-text">Out The Trunk</span>
     </a>
-    
     <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" onclick="var nav=document.getElementById('site-nav'); if(nav.style.display==='flex'){nav.style.display='none';}else{nav.style.display='flex';}" style="color: #FFFFFF; background-color: #00788C; border: 2px solid #00788C; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 800; font-size: 0.9rem; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;">MENU</button>
-    
     <nav id="site-nav" class="site-nav" aria-label="Main navigation">
       <a href="#woom" style="color: #FFFFFF;">WOOM</a>
       <a href="woom-archive.html" style="color: #FFFFFF;">WOOM Archive</a>
@@ -56,10 +58,6 @@ def lock_index_navigation():
 
     with open(INDEX_PATH, "w", encoding="utf-8") as f:
         f.write(updated_content)
-
-# ---------------------------------------------------------
-# HELPER FUNCTIONS
-# ---------------------------------------------------------
 
 def normalize_title(title):
     title = str(title).strip()
@@ -164,7 +162,7 @@ def format_transcript(raw_text):
 lock_index_navigation()
 
 # ---------------------------------------------------------
-# 1. BUILD MOVIE PAGES & MOVIE ARCHIVE (TITLE & RATING VIEWS)
+# 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
 # ---------------------------------------------------------
 print("Processing Movie Archive...")
 if os.path.exists(MOVIES_EXCEL):
@@ -285,7 +283,6 @@ if os.path.exists(MOVIES_EXCEL):
 
     movie_list.sort(key=lambda x: x['sort_key'])
 
-    # 1. BUILD A-Z TITLE SECTIONS
     all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
     active_groups = set(m['letter_group'] for m in movie_list)
     nav_buttons = [f'<a href="#group-{g}" class="nav-btn active-btn">{g}</a>' if g in active_groups else f'<span class="nav-btn disabled-btn">{g}</span>' for g in all_groups]
@@ -300,7 +297,6 @@ if os.path.exists(MOVIES_EXCEL):
             cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else ''}</div></a>''' for item in grouped_movies[g]])
             sections_html += f'''<section id="group-{g}" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header">{g}</h2><div class="movie-grid">{cards}</div></section>'''
 
-    # 2. BUILD RATING SECTIONS (5 Stars down to 1 Star)
     rating_tiers = [
         (5.0, 5.0, "5 Stars (Masterpieces)"),
         (4.0, 4.9, "4 Stars (Highly Recommended)"),
@@ -313,7 +309,6 @@ if os.path.exists(MOVIES_EXCEL):
     for min_r, max_r, tier_label in rating_tiers:
         tier_movies = [m for m in movie_list if m['avg_num'] is not None and min_r <= m['avg_num'] <= max_r]
         if tier_movies:
-            # Sort highest rating first
             tier_movies.sort(key=lambda x: x['avg_num'], reverse=True)
             cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
             rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header">{tier_label}</h2><div class="movie-grid">{cards}</div></section>'''
@@ -333,12 +328,9 @@ if os.path.exists(MOVIES_EXCEL):
         body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
-        
-        /* View Toggle Switch */
         .toggle-container {{ display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }}
         .toggle-btn {{ background: #fff; border: 2px solid #00788C; color: #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }}
         .toggle-btn.active {{ background: #00788C; color: #fff; }}
-
         .az-navigation {{ text-align: center; margin-bottom: 2.5rem; line-height: 2.2; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #eaeaea; }}
         .nav-btn {{ display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }}
         .active-btn {{ background-color: {ACCENT_COLOR}; color: #fff !important; border: 1px solid {ACCENT_COLOR}; text-decoration: none; }}
@@ -362,19 +354,16 @@ if os.path.exists(MOVIES_EXCEL):
             <p style="color: #666; font-size: 1.05rem;">Browse all movie reviews and show notes</p>
         </header>
 
-        <!-- BROWSE TOGGLE BUTTONS -->
         <div class="toggle-container">
             <button id="btn-title" class="toggle-btn active" onclick="showView('title')">Browse by Title (A–Z)</button>
             <button id="btn-rating" class="toggle-btn" onclick="showView('rating')">Browse by Rating (★)</button>
         </div>
 
-        <!-- VIEW 1: TITLE (A-Z) -->
         <div id="view-title">
             <nav class="az-navigation">{"".join(nav_buttons)}</nav>
             {sections_html}
         </div>
 
-        <!-- VIEW 2: RATING -->
         <div id="view-rating" style="display: none;">
             {rating_sections_html}
         </div>
@@ -408,12 +397,11 @@ if os.path.exists(MOVIES_EXCEL):
         f.write(movie_archive_html)
 
 # ---------------------------------------------------------
-# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE
+# 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE WITH TOPIC FILTERS
 # ---------------------------------------------------------
 print("Processing WOOM Archive & Transcripts...")
 if os.path.exists(WOOM_EXCEL):
     xls_w = pd.ExcelFile(WOOM_EXCEL)
-    
     sheet_w_main = xls_w.sheet_names[0]
     df_w_main = pd.read_excel(xls_w, sheet_name=sheet_w_main)
     df_w_main.columns = [str(c).strip().lower() for c in df_w_main.columns]
@@ -450,6 +438,12 @@ if os.path.exists(WOOM_EXCEL):
             notes_col = candidate
             break
 
+    topics_col = None
+    for candidate in ['topics', 'tags', 'categories', 'topic_tags']:
+        if candidate in df_woom.columns:
+            topics_col = candidate
+            break
+
     if date_col:
         df_woom['parsed_date'] = pd.to_datetime(df_woom[date_col], errors='coerce')
         df_woom = df_woom.sort_values(by='parsed_date', ascending=False)
@@ -470,6 +464,10 @@ if os.path.exists(WOOM_EXCEL):
             date_str = str(row.get(date_col)).strip()
         else:
             date_str = ""
+
+        # Read topics assigned in Excel
+        raw_topics = str(row.get(topics_col, "")).strip() if topics_col and pd.notna(row.get(topics_col)) else ""
+        episode_topics = [t.strip() for t in raw_topics.split(",") if t.strip()] if raw_topics and raw_topics.lower() != "nan" else []
 
         show_notes_html = str(row.get(notes_col, "")).strip() if notes_col and pd.notna(row.get(notes_col)) else "<p>Show notes available in full podcast audio.</p>"
         formatted_transcript = format_transcript(row.get("transcript"))
@@ -528,14 +526,20 @@ if os.path.exists(WOOM_EXCEL):
         with open(os.path.join(WOOM_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(html_content)
 
-        woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug})
+        woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics})
+
+    # Build Filter Chips for Master Topics
+    topic_chips = ['<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes</button>']
+    for t in MASTER_TOPICS:
+        topic_chips.append(f'<button class="topic-chip" onclick="filterTopic(\'{t}\', this)">{t}</button>')
 
     # Build WOOM Archive Cards
     cards_woom = ""
     for item in woom_list:
         date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
+        data_topics = "|".join(item['topics'])
         cards_woom += f'''
-        <a href="woom/{item['slug']}.html" class="woom-card-styled">
+        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}">
             <div class="card-content">
                 <h3>{item['clean_title']}</h3>
                 {date_meta}
@@ -557,6 +561,14 @@ if os.path.exists(WOOM_EXCEL):
         body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; }}
         .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
         .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
+        
+        .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
+        .filter-section h3 {{ font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; color: #00788C; margin-bottom: 0.85rem; font-weight: 800; }}
+        .topic-chips {{ display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }}
+        .topic-chip {{ background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.4rem 0.85rem; border-radius: 20px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: all 0.2s; }}
+        .topic-chip:hover {{ border-color: #00788C; color: #00788C; }}
+        .topic-chip.active {{ background: #00788C; color: #fff; border-color: #00788C; }}
+
         .woom-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }}
         .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
         .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
@@ -569,21 +581,50 @@ if os.path.exists(WOOM_EXCEL):
 <body id="top">
     <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
         <a href="index.html" class="home-btn">← Home</a>
-        <header style="text-align: center; margin-bottom: 2.5rem;">
+        <header style="text-align: center; margin-bottom: 2rem;">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Browse all WOOM episodes chronologically by recorded date</p>
+            <p style="color: #666; font-size: 1.05rem;">Browse all WOOM episodes chronologically or filter by topic</p>
         </header>
 
-        <div class="woom-grid">
+        <div class="filter-section">
+            <h3>Filter By Segment Topic</h3>
+            <div class="topic-chips">
+                {"".join(topic_chips)}
+            </div>
+        </div>
+
+        <div class="woom-grid" id="woom-grid">
             {cards_woom}
         </div>
 
         <a href="#top" class="back-to-top">↑ Back to Top</a>
     </main>
+
+    <script>
+        function filterTopic(selectedTopic, btnElement) {{
+            var chips = document.querySelectorAll('.topic-chip');
+            chips.forEach(function(c) {{ c.classList.remove('active'); }});
+            btnElement.classList.add('active');
+
+            var cards = document.querySelectorAll('.woom-card-styled');
+            cards.forEach(function(card) {{
+                if (selectedTopic === 'all') {{
+                    card.style.display = 'flex';
+                }} else {{
+                    var cardTopics = card.getAttribute('data-topics') || '';
+                    if (cardTopics.indexOf(selectedTopic) !== -1) {{
+                        card.style.display = 'flex';
+                    }} else {{
+                        card.style.display = 'none';
+                    }}
+                }}
+            }});
+        }}
+    </script>
 </body>
 </html>"""
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Added rating filter toggle to Movie Archive.")
+print("Build complete! Ready for WOOM topic tagging.")
