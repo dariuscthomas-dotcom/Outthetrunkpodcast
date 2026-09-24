@@ -201,66 +201,47 @@ if os.path.exists(MOVIES_EXCEL):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
-        .subpage-nav {{ display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }}
-        .home-btn {{ display: inline-flex; align-items: center; gap: 0.4rem; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; }}
-        .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
-        .hero-header {{ text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }}
-        .hero-video-container {{ margin-bottom: 2rem; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }}
-        .hero-video-container iframe {{ position: absolute; top:0; left:0; width:100%; height:100%; border:0; }}
-        .ratings-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem; }}
-        .rating-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center; }}
-        .star-display {{ color: {ACCENT_COLOR}; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 0.25rem; }}
-        .rating-num {{ font-size: 1.25rem; font-weight: 700; color: #111; }}
-        .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
-        .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
-        .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
-    </style>
 </head>
 <body>
-    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+    <header class="site-header">
+        <a href="/" class="brand">
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
-            <span>Out The Trunk</span>
+            <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav style="display: flex; gap: 1rem; align-items: center;">
-            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
-            <a href="../woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
-            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
-            <a href="../movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
-            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        <nav>
+            <a href="/#woom">WOOM</a>
+            <a href="../woom-archive.html">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="../movies-archive.html">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
-    <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
-        <div class="subpage-nav">
-            <a href="/" class="home-btn">← Home</a>
-            <a href="../movies-archive.html" class="home-btn">Movie Archive</a>
+    <main class="container" style="max-width: 850px;">
+        <div class="subpage-nav" style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <a href="/" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">← Home</a>
+            <a href="../movies-archive.html" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">Movie Archive</a>
         </div>
-        <header class="hero-header">
+        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             <p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{display_title}</h1>
         </header>
         {embed_html}
-        <section class="ratings-grid">
-            <div class="rating-card">
-                <h3>Jordan's Rating</h3>
-                <div class="star-display">{j_stars}</div>
-                <div class="rating-num">{j_badge}</div>
+        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+            <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Jordan's Rating</h3>
+                <div style="color: {ACCENT_COLOR}; font-size: 1.5rem; letter-spacing: 2px;">{j_stars}</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: #111; margin-top: 0.25rem;">{j_badge}</div>
             </div>
-            <div class="rating-card">
-                <h3>Darius's Rating</h3>
-                <div class="star-display">{d_stars}</div>
-                <div class="rating-num">{d_badge}</div>
+            <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Darius's Rating</h3>
+                <div style="color: {ACCENT_COLOR}; font-size: 1.5rem; letter-spacing: 2px;">{d_stars}</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: #111; margin-top: 0.25rem;">{d_badge}</div>
             </div>
         </section>
-        <section class="modern-card">{show_notes_html}</section>
-        <section class="modern-card">
-            <h2>Full Episode Transcript</h2>
+        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">{show_notes_html}</section>
+        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.35rem; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
@@ -276,7 +257,7 @@ if os.path.exists(MOVIES_EXCEL):
 
     all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
     active_groups = set(m['letter_group'] for m in movie_list)
-    nav_buttons = [f'<a href="#group-{g}" class="nav-btn active-btn">{g}</a>' if g in active_groups else f'<span class="nav-btn disabled-btn">{g}</span>' for g in all_groups]
+    nav_buttons = [f'<a href="#group-{g}" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: {ACCENT_COLOR}; color: #fff; text-decoration: none;">{g}</a>' if g in active_groups else f'<span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">{g}</span>' for g in all_groups]
 
     sections_html = ""
     grouped_movies = {}
@@ -285,8 +266,8 @@ if os.path.exists(MOVIES_EXCEL):
 
     for g in all_groups:
         if g in grouped_movies:
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else '<span class="card-meta">Not Rated</span>'}</div></a>''' for item in grouped_movies[g]])
-            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header">{g}</h2><div class="movie-grid">{cards}</div></section>'''
+            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else '<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #888;">Not Rated</span>'}</div></a>''' for item in grouped_movies[g]])
+            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{g}</h2><div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
 
     rating_tiers = [
         (5.0, 5.0, "5 Stars (Masterpieces)"),
@@ -301,8 +282,8 @@ if os.path.exists(MOVIES_EXCEL):
         tier_movies = [m for m in movie_list if m['avg_num'] is not None and min_r <= m['avg_num'] <= max_r]
         if tier_movies:
             tier_movies.sort(key=lambda x: x['avg_num'], reverse=True)
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
-            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header">{tier_label}</h2><div class="movie-grid">{cards}</div></section>'''
+            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
+            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{tier_label}</h2><div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
 
     movie_archive_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -314,67 +295,40 @@ if os.path.exists(MOVIES_EXCEL):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
-        .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
-        .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
-        .toggle-container {{ display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }}
-        .toggle-btn {{ background: #fff; border: 2px solid #00788C; color: #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }}
-        .toggle-btn.active {{ background: #00788C; color: #fff; }}
-        
-        .search-container {{ width: 100%; max-width: 650px; margin: 0 auto 1.5rem auto; position: relative; }}
-        .search-input {{ width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 4px 12px rgba(0, 120, 140, 0.08); }}
-        .search-input:focus {{ box-shadow: 0 6px 18px rgba(0, 120, 140, 0.2); border-color: #1D1160; }}
-
-        .az-navigation {{ text-align: center; margin-bottom: 2.5rem; line-height: 2.2; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #eaeaea; }}
-        .nav-btn {{ display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; transition: all 0.2s; }}
-        .active-btn {{ background-color: {ACCENT_COLOR}; color: #fff !important; border: 1px solid {ACCENT_COLOR}; text-decoration: none; }}
-        .active-btn:hover {{ background-color: #006dae; transform: translateY(-2px); }}
-        .disabled-btn {{ border: 1px solid #eaeaea; color: #d1d1d1; background-color: #fafafa; pointer-events: none; opacity: 0.5; }}
-        .group-header {{ font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem; color: #111; }}
-        .movie-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }}
-        .movie-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
-        .movie-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
-        .movie-card-styled h3 {{ margin: 0; font-size: 1.05rem; font-weight: 600; }}
-        .card-meta {{ display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
-    </style>
 </head>
 <body>
-    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+    <header class="site-header">
+        <a href="/" class="brand">
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
-            <span>Out The Trunk</span>
+            <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav style="display: flex; gap: 1rem; align-items: center;">
-            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
-            <a href="woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
-            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
-            <a href="movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-bottom: 2px solid #00788C;">Movie Archive</a>
-            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        <nav>
+            <a href="/#woom">WOOM</a>
+            <a href="woom-archive.html">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="movies-archive.html" style="border-bottom: 2px solid #00788C;">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
-    <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <a href="/" class="home-btn">← Home</a>
+    <main class="container">
+        <a href="/" class="home-btn" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
             <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
         </header>
 
-        <div class="search-container">
-            <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()">
+        <div class="search-container" style="width: 100%; max-width: 650px; margin: 0 auto 1.5rem auto;">
+            <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()" style="width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; outline: none;">
         </div>
 
-        <div class="toggle-container">
-            <button id="btn-title" class="toggle-btn active" onclick="showView('title')">Browse by Title (A–Z)</button>
-            <button id="btn-rating" class="toggle-btn" onclick="showView('rating')">Browse by Rating (★)</button>
+        <div class="toggle-container" style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem;">
+            <button id="btn-title" class="toggle-btn active" onclick="showView('title')" style="background: #00788C; color: #fff; border: 2px solid #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; cursor: pointer;">Browse by Title (A–Z)</button>
+            <button id="btn-rating" class="toggle-btn" onclick="showView('rating')" style="background: #fff; color: #00788C; border: 2px solid #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; cursor: pointer;">Browse by Rating (★)</button>
         </div>
 
         <div id="view-title">
-            <nav class="az-navigation">{"".join(nav_buttons)}</nav>
+            <nav style="text-align: center; margin-bottom: 2.5rem; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #eaeaea;">{"".join(nav_buttons)}</nav>
             {sections_html}
         </div>
 
@@ -395,13 +349,13 @@ if os.path.exists(MOVIES_EXCEL):
             if (viewType === 'rating') {{
                 viewTitle.style.display = 'none';
                 viewRating.style.display = 'block';
-                btnTitle.classList.remove('active');
-                btnRating.classList.add('active');
+                btnTitle.style.background = '#fff'; btnTitle.style.color = '#00788C';
+                btnRating.style.background = '#00788C'; btnRating.style.color = '#fff';
             }} else {{
                 viewTitle.style.display = 'block';
                 viewRating.style.display = 'none';
-                btnTitle.classList.add('active');
-                btnRating.classList.remove('active');
+                btnTitle.style.background = '#00788C'; btnTitle.style.color = '#fff';
+                btnRating.style.background = '#fff'; btnRating.style.color = '#00788C';
             }}
         }}
 
@@ -532,50 +486,35 @@ if os.path.exists(WOOM_EXCEL):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
-        .subpage-nav {{ display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }}
-        .home-btn {{ display: inline-flex; align-items: center; gap: 0.4rem; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; }}
-        .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
-        .hero-header {{ text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }}
-        .hero-video-container {{ margin-bottom: 2rem; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }}
-        .hero-video-container iframe {{ position: absolute; top:0; left:0; width:100%; height:100%; border:0; }}
-        .modern-card {{ background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }}
-        .modern-card h2 {{ font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }}
-        .modern-card h3 {{ font-size: 1.1rem; color: {ACCENT_COLOR}; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }}
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
-    </style>
 </head>
 <body>
-    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+    <header class="site-header">
+        <a href="/" class="brand">
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
-            <span>Out The Trunk</span>
+            <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav style="display: flex; gap: 1rem; align-items: center;">
-            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
-            <a href="../woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
-            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
-            <a href="../movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
-            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        <nav>
+            <a href="/#woom">WOOM</a>
+            <a href="../woom-archive.html">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="../movies-archive.html">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
-    <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
-        <div class="subpage-nav">
-            <a href="/" class="home-btn">← Home</a>
-            <a href="../woom-archive.html" class="home-btn">WOOM Archive</a>
+    <main class="container" style="max-width: 850px;">
+        <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <a href="/" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">← Home</a>
+            <a href="../woom-archive.html" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">WOOM Archive</a>
         </div>
-        <header class="hero-header">
+        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             {date_badge_html}
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title}</h1>
         </header>
         {embed_html}
-        <section class="modern-card">{show_notes_html}</section>
-        <section class="modern-card">
-            <h2>Full Episode Transcript</h2>
+        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">{show_notes_html}</section>
+        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.35rem; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
@@ -595,16 +534,16 @@ if os.path.exists(WOOM_EXCEL):
 
     cards_woom = ""
     for item in woom_list:
-        date_meta = f'<span class="card-meta">{item["date_str"]}</span>' if item['date_str'] else ""
+        date_meta = f'<span class="card-meta" style="display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR};">{item["date_str"]}</span>' if item['date_str'] else ""
         data_topics = "|".join(item['topics'])
         
-        topics_line = f'<span class="card-topics">{" • ".join(item["topics"])}</span>' if item['topics'] else ""
+        topics_line = f'<span class="card-topics" style="display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500;">{" • ".join(item["topics"])}</span>' if item['topics'] else ""
         search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
         
         cards_woom += f'''
-        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}">
+        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center;">
             <div class="card-content">
-                <h3>{item['clean_title']}</h3>
+                <h3 style="margin: 0; font-size: 1.28rem; font-weight: 800; color: #111827;">{item['clean_title']}</h3>
                 {date_meta}
                 {topics_line}
             </div>
@@ -620,82 +559,47 @@ if os.path.exists(WOOM_EXCEL):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <style>
-        html {{ scroll-behavior: smooth; }}
-        body {{ font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }}
-        .home-btn {{ display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; margin-bottom: 1.5rem; }}
-        .home-btn:hover {{ background: #f0f8ff; transform: translateX(-3px); border-color: {ACCENT_COLOR}; }}
-        
-        .search-container {{ width: 100%; max-width: 750px; margin: 0 auto 1rem auto; position: relative; text-align: center; }}
-        .search-input {{ width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; box-sizing: border-box; outline: none; transition: all 0.2s; box-shadow: 0 6px 16px rgba(0, 120, 140, 0.12); }}
-        .search-input:focus {{ box-shadow: 0 8px 24px rgba(0, 120, 140, 0.25); border-color: #1D1160; }}
-        
-        .clear-filter-btn {{ display: none; margin-top: 0.75rem; background: #eef6fc; color: #00788C; border: 1px solid #00788C; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; }}
-        .clear-filter-btn:hover {{ background: #00788C; color: #fff; }}
-
-        .results-count {{ text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px; }}
-
-        .filter-section {{ margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea; }}
-        .filter-section h3 {{ font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #666; margin-bottom: 0.75rem; font-weight: 800; }}
-        .topic-chips {{ display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; }}
-        .topic-chip {{ background: #f3f5f7; border: 1px solid #d1d5db; color: #1d1160; padding: 0.35rem 0.75rem; border-radius: 20px; font-weight: 700; font-size: 0.8rem; cursor: pointer; transition: all 0.2s; }}
-        .topic-chip:hover {{ border-color: #00788C; color: #00788C; }}
-        .topic-chip.active {{ background: #00788C; color: #fff; border-color: #00788C; }}
-        
-        .woom-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }}
-        .woom-card-styled {{ text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 3px 8px rgba(0,0,0,0.03); transition: all 0.2s; }}
-        .woom-card-styled:hover {{ transform: translateY(-4px); box-shadow: 0 8px 16px rgba(0, 133, 202, 0.15); border-color: {ACCENT_COLOR}; background-color: #f8fcff; }}
-        
-        .woom-card-styled h3 {{ margin: 0; font-size: 1.28rem; font-weight: 800; line-height: 1.3; color: #111827; letter-spacing: -0.2px; }}
-        .card-meta {{ display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR}; }}
-        .card-topics {{ display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500; line-height: 1.35; }}
-
-        .no-results-msg {{ display: none; text-align: center; padding: 3rem 1rem; color: #666; font-size: 1.1rem; grid-column: 1 / -1; }}
-
-        .back-to-top {{ position: fixed; bottom: 25px; right: 25px; background: {ACCENT_COLOR}; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }}
-        .back-to-top:hover {{ background: #006dae; transform: translateY(-3px); }}
-    </style>
 </head>
 <body>
-    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+    <header class="site-header">
+        <a href="/" class="brand">
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
-            <span>Out The Trunk</span>
+            <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav style="display: flex; gap: 1rem; align-items: center;">
-            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
-            <a href="woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem; border-bottom: 2px solid #00788C;">WOOM Archive</a>
-            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
-            <a href="movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
-            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        <nav>
+            <a href="/#woom">WOOM</a>
+            <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="movies-archive.html">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
-    <main class="container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
-        <a href="/" class="home-btn">← Home</a>
+    <main class="container">
+        <a href="/" class="home-btn" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
             <p style="color: #666; font-size: 1.05rem;">Search topics, questions, and episodes or browse by theme</p>
         </header>
 
-        <div class="search-container">
-            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()">
-            <button id="clear-btn" class="clear-filter-btn" onclick="clearFilters()">Clear Search & Filters</button>
+        <div class="search-container" style="width: 100%; max-width: 750px; margin: 0 auto 1rem auto; text-align: center;">
+            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()" style="width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; outline: none;">
+            <button id="clear-btn" style="display: none; margin-top: 0.75rem; background: #eef6fc; color: #00788C; border: 1px solid #00788C; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 700; cursor: pointer;" onclick="clearFilters()">Clear Search & Filters</button>
         </div>
 
-        <div id="results-banner" class="results-count">Showing {total_episodes} Episodes</div>
+        <div id="results-banner" style="text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;">Showing {total_episodes} Episodes</div>
 
-        <div class="filter-section">
-            <h3>Filter by Topic</h3>
-            <div class="topic-chips">
+        <div style="margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea;">
+            <h3 style="font-size: 0.85rem; text-transform: uppercase; color: #666; margin-bottom: 0.75rem; font-weight: 800;">Filter by Topic</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center;">
                 {"".join(topic_chips)}
             </div>
         </div>
 
-        <div class="woom-grid" id="woom-grid">
+        <div class="woom-grid" id="woom-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;">
             {cards_woom}
-            <div id="no-results" class="no-results-msg">
+            <div id="no-results" style="display: none; text-align: center; padding: 3rem 1rem; color: #666; grid-column: 1 / -1;">
                 No episodes matched that search. Try a broader search term or choose <strong>All Episodes</strong>.
             </div>
         </div>

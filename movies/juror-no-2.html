@@ -8,64 +8,45 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
-    <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background-color: #fcfcfc; color: #222; margin: 0; padding: 0; }
-        .subpage-nav { display: flex; gap: 0.75rem; margin-bottom: 1.5rem; }
-        .home-btn { display: inline-flex; align-items: center; gap: 0.4rem; color: #0085CA; text-decoration: none; font-weight: 700; font-size: 0.95rem; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; transition: all 0.2s; }
-        .home-btn:hover { background: #f0f8ff; transform: translateX(-3px); border-color: #0085CA; }
-        .hero-header { text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-        .hero-video-container { margin-bottom: 2rem; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-        .hero-video-container iframe { position: absolute; top:0; left:0; width:100%; height:100%; border:0; }
-        .ratings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 2rem; }
-        .rating-card { background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center; }
-        .star-display { color: #0085CA; font-size: 1.5rem; letter-spacing: 2px; margin-bottom: 0.25rem; }
-        .rating-num { font-size: 1.25rem; font-weight: 700; color: #111; }
-        .modern-card { background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; line-height: 1.6; }
-        .modern-card h2 { font-size: 1.35rem; font-weight: 700; margin-top: 0; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem; color: #111; }
-        .modern-card h3 { font-size: 1.1rem; color: #0085CA; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }
-        .back-to-top { position: fixed; bottom: 25px; right: 25px; background: #0085CA; color: #fff; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(0, 133, 202, 0.4); cursor: pointer; transition: all 0.2s; z-index: 1000; }
-        .back-to-top:hover { background: #006dae; transform: translateY(-3px); }
-    </style>
 </head>
 <body>
-    <header style="background-color: #1D1160; border-bottom: 3px solid #00788C; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: space-between;">
-        <a href="/" style="text-decoration: none; color: #FFFFFF; font-weight: 900; font-size: 1.4rem; display: flex; align-items: center; gap: 0.75rem;">
+    <header class="site-header">
+        <a href="/" class="brand">
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
-            <span>Out The Trunk</span>
+            <span class="brand-text">Out The Trunk</span>
         </a>
-        <nav style="display: flex; gap: 1rem; align-items: center;">
-            <a href="/#woom" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM</a>
-            <a href="../woom-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">WOOM Archive</a>
-            <a href="/#movies" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movies</a>
-            <a href="../movies-archive.html" style="color: #FFFFFF; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Movie Archive</a>
-            <a href="/#listen" style="background-color: #00788C; color: #FFFFFF; padding: 0.4rem 0.85rem; border-radius: 6px; text-decoration: none; font-weight: 700; font-size: 0.85rem;">Listen</a>
+        <nav>
+            <a href="/#woom">WOOM</a>
+            <a href="../woom-archive.html">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="../movies-archive.html">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
-    <main class="container" style="max-width: 850px; margin: 0 auto; padding: 2rem 1rem;">
-        <div class="subpage-nav">
-            <a href="/" class="home-btn">← Home</a>
-            <a href="../movies-archive.html" class="home-btn">Movie Archive</a>
+    <main class="container" style="max-width: 850px;">
+        <div class="subpage-nav" style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <a href="/" class="home-btn" style="color: #0085CA; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">← Home</a>
+            <a href="../movies-archive.html" class="home-btn" style="color: #0085CA; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">Movie Archive</a>
         </div>
-        <header class="hero-header">
+        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             <p style="color: #0085CA; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">Juror No. 2 (2024)</h1>
         </header>
-        <div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2 (2024)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
-        <section class="ratings-grid">
-            <div class="rating-card">
-                <h3>Jordan's Rating</h3>
-                <div class="star-display">☆☆☆☆☆</div>
-                <div class="rating-num">Not Rated</div>
+        <div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2 (2024)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+            <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Jordan's Rating</h3>
+                <div style="color: #0085CA; font-size: 1.5rem; letter-spacing: 2px;">☆☆☆☆☆</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: #111; margin-top: 0.25rem;">Not Rated</div>
             </div>
-            <div class="rating-card">
-                <h3>Darius's Rating</h3>
-                <div class="star-display">☆☆☆☆☆</div>
-                <div class="rating-num">Not Rated</div>
+            <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
+                <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Darius's Rating</h3>
+                <div style="color: #0085CA; font-size: 1.5rem; letter-spacing: 2px;">☆☆☆☆☆</div>
+                <div style="font-size: 1.25rem; font-weight: 700; color: #111; margin-top: 0.25rem;">Not Rated</div>
             </div>
         </section>
-        <section class="modern-card"><section class="show-notes-highlights">
+        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;"><section class="show-notes-highlights">
   <h2>Show Notes &amp; Highlights</h2>
   <h3>Episode Rundown</h3>
   <h3>Front Half / Episode Segments</h3>
@@ -91,8 +72,8 @@
     </ul>
   </div>
 </section></section>
-        <section class="modern-card">
-            <h2>Full Episode Transcript</h2>
+        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">
+            <h2 style="font-size: 1.35rem; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
             <div style="margin-top: 1rem;"><p style='color: #666;'>Transcript coming soon.</p></div>
         </section>
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
