@@ -49,14 +49,10 @@ body {
   color: #FFFFFF !important;
 }
 
-/* NAVIGATION CONTAINERS */
-.nav-container {
-  display: block;
-}
-
+/* DESKTOP NAVIGATION */
 .site-nav {
   display: flex;
-  gap: 1rem;
+  gap: 1.25rem;
   align-items: center;
 }
 
@@ -64,25 +60,22 @@ body {
   color: #FFFFFF !important;
   text-decoration: none;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   transition: opacity 0.2s ease;
+  white-space: nowrap;
 }
 
 .site-nav a:hover {
   opacity: 0.85;
 }
 
-.listen-link {
-  background-color: #00788C;
-  color: #FFFFFF !important;
-  padding: 0.4rem 0.85rem;
-  border-radius: 6px;
-  font-weight: 700;
+/* MOBILE TOGGLE (HIDDEN ON DESKTOP) */
+.menu-toggle-checkbox {
+  display: none;
 }
 
-/* MENU TOGGLE SUMMARY BUTTON DEFAULTS */
-summary.nav-toggle {
-  display: none; /* Hidden on desktop */
+.nav-toggle-btn {
+  display: none;
   color: #FFFFFF;
   background-color: #00788C;
   border: 2px solid #00788C;
@@ -93,16 +86,7 @@ summary.nav-toggle {
   cursor: pointer;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  list-style: none;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Hide default disclosure arrows across Safari/Chrome/Firefox */
-summary.nav-toggle::-webkit-details-marker,
-summary.nav-toggle::marker {
-  display: none !important;
-  content: "";
 }
 
 /* UTILITY LAYOUT CONTAINERS */
@@ -154,51 +138,21 @@ summary.nav-toggle::marker {
 }
 
 /* ==========================================
-   DESKTOP OVERRIDE FOR HTML5 DETAILS
+   MOBILE RESPONSIVE BREAKPOINT
    ========================================== */
-@media screen and (min-width: 769px) {
-  /* Force the nav inside details to ALWAYS display on desktop regardless of open attribute */
-  details.nav-container {
-    display: block !important;
-  }
-  
-  details.nav-container .site-nav {
-    display: flex !important;
-  }
-  
-  /* Prevent closed details tag from hiding content on desktop */
-  details.nav-container:not([open]) .site-nav {
-    display: flex !important;
-  }
-}
-
-/* ==========================================
-   MOBILE NATIVE DETAILS NAVIGATION
-   ========================================== */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .site-header {
     flex-wrap: wrap;
     padding: 0.75rem 1rem;
   }
 
-  details.nav-container {
-    width: 100%;
-    display: block;
-    text-align: right;
-  }
-
-  summary.nav-toggle {
+  .nav-toggle-btn {
     display: inline-block;
   }
 
-  /* Force hide menu content when details is closed on mobile */
-  details.nav-container:not([open]) .site-nav {
-    display: none !important;
-  }
-
-  /* Opened state menu inside details */
+  /* Hide navigation bar by default on mobile */
   .site-nav {
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     gap: 0.85rem;
@@ -207,6 +161,11 @@ summary.nav-toggle::marker {
     margin-top: 0.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
+  }
+
+  /* Show navigation when checkbox is checked */
+  .menu-toggle-checkbox:checked ~ .site-nav {
+    display: flex;
   }
 
   .site-nav a {

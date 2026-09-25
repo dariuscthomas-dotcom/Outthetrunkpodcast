@@ -22,18 +22,19 @@
       <span class="brand-text">Out The Trunk</span>
     </a>
     
-    <details class="nav-container" id="nav-details">
-      <summary class="nav-toggle">MENU</summary>
-      <nav id="site-nav" class="site-nav" aria-label="Main navigation">
-        <a href="#woom" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM</a>
-        <a href="woom-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM Archive</a>
-        <a href="#movies" onclick="document.getElementById('nav-details').removeAttribute('open');">Movies</a>
-        <a href="movies-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">Movie Archive</a>
-        <a href="#classic-segments" onclick="document.getElementById('nav-details').removeAttribute('open');">Classic Segments</a>
-        <a href="#hosts" onclick="document.getElementById('nav-details').removeAttribute('open');">Meet The Hosts</a>
-        <a class="listen-link" href="#listen" onclick="document.getElementById('nav-details').removeAttribute('open');">Listen</a>
-      </nav>
-    </details>
+    <!-- Mobile Hamburger Checkbox Toggle (CSS Only) -->
+    <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
+    <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="#movies" onclick="document.getElementById('menu-toggle').checked = false;">Movies</a>
+      <a href="movies-archive.html">Movie Archive</a>
+      <a href="#woom" onclick="document.getElementById('menu-toggle').checked = false;">WOOM</a>
+      <a href="woom-archive.html">WOOM Archive</a>
+      <a href="#classic-segments" onclick="document.getElementById('menu-toggle').checked = false;">Classic Episodes</a>
+      <a href="#listen" onclick="document.getElementById('menu-toggle').checked = false;">Listen Now</a>
+      <a href="#hosts" onclick="document.getElementById('menu-toggle').checked = false;">Meet The Hosts</a>
+    </nav>
   </header>
 
   <main>
