@@ -154,6 +154,15 @@ summary.nav-toggle::marker {
 }
 
 /* ==========================================
+   DESKTOP NAVIGATION OVERRIDE
+   ========================================== */
+@media screen and (min-width: 769px) {
+  details.nav-container .site-nav {
+    display: flex !important;
+  }
+}
+
+/* ==========================================
    MOBILE NATIVE DETAILS NAVIGATION
    ========================================== */
 @media screen and (max-width: 768px) {
