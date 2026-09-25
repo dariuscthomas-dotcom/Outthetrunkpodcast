@@ -49,7 +49,7 @@ body {
   color: #FFFFFF !important;
 }
 
-/* DESKTOP NAVIGATION DEFAULTS */
+/* NAVIGATION CONTAINERS */
 .nav-container {
   display: block;
 }
@@ -154,10 +154,20 @@ summary.nav-toggle::marker {
 }
 
 /* ==========================================
-   DESKTOP NAVIGATION OVERRIDE
+   DESKTOP OVERRIDE FOR HTML5 DETAILS
    ========================================== */
 @media screen and (min-width: 769px) {
+  /* Force the nav inside details to ALWAYS display on desktop regardless of open attribute */
+  details.nav-container {
+    display: block !important;
+  }
+  
   details.nav-container .site-nav {
+    display: flex !important;
+  }
+  
+  /* Prevent closed details tag from hiding content on desktop */
+  details.nav-container:not([open]) .site-nav {
     display: flex !important;
   }
 }
@@ -171,21 +181,17 @@ summary.nav-toggle::marker {
     padding: 0.75rem 1rem;
   }
 
-  .nav-container {
-    width: auto;
-  }
-
   details.nav-container {
     width: 100%;
-    display: block; /* Restores WebKit's native disclosure mechanism */
-    text-align: right; /* Aligns the MENU button to the right side */
+    display: block;
+    text-align: right;
   }
 
   summary.nav-toggle {
     display: inline-block;
   }
 
-  /* Force hide menu content when details is closed */
+  /* Force hide menu content when details is closed on mobile */
   details.nav-container:not([open]) .site-nav {
     display: none !important;
   }
