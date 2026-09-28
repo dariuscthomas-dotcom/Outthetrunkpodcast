@@ -140,11 +140,26 @@ def strip_html_tags(text):
 
 def get_poster_path(raw_title):
     normalized = normalize_title(raw_title)
+    
+    # 1. Try formatted name WITH article (e.g., The_Dark_Knight_Poster.jpg)
     formatted_name = re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_")
     poster_filename = f"{formatted_name}_Poster.jpg"
-    local_path = os.path.join("Movie_Posters", poster_filename)
-    if os.path.exists(local_path):
+    if os.path.exists(os.path.join("Movie_Posters", poster_filename)):
         return f"../Movie_Posters/{poster_filename}"
+        
+    # 2. Try formatted name WITHOUT leading article (e.g., Dark_Knight_Poster.jpg)
+    no_article = re.sub(r"^(The|A|An)\s+", "", normalized, flags=re.IGNORECASE)
+    formatted_no_article = re.sub(r"[^\w\s]", "", no_article).strip().replace(" ", "_")
+    poster_filename_no_art = f"{formatted_no_article}_Poster.jpg"
+    if os.path.exists(os.path.join("Movie_Posters", poster_filename_no_art)):
+        return f"../Movie_Posters/{poster_filename_no_art}"
+        
+    # 3. Try raw title formatted directly (e.g., Dark_Knight_The_Poster.jpg)
+    raw_formatted = re.sub(r"[^\w\s]", "", str(raw_title)).strip().replace(" ", "_")
+    raw_poster_filename = f"{raw_formatted}_Poster.jpg"
+    if os.path.exists(os.path.join("Movie_Posters", raw_poster_filename)):
+        return f"../Movie_Posters/{raw_poster_filename}"
+
     return "../logo.png"
 
 def clean_show_notes(raw_html):
