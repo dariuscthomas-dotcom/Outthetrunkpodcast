@@ -16,7 +16,7 @@ body {
   background-color: #F8FAFC;
   color: #1D1160;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* TOP NAVIGATION HEADER */
@@ -92,9 +92,9 @@ body {
 /* UTILITY LAYOUT CONTAINERS */
 .container {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1300px;
   margin: 0 auto;
-  padding: 2.5rem 1.25rem;
+  padding: 2rem 1.25rem;
 }
 
 /* ==========================================
@@ -104,9 +104,9 @@ body {
   position: relative;
   background-color: #0B0F17;
   color: #FFFFFF;
-  padding: 3.5rem 1.5rem;
+  padding: 3rem 1.5rem;
   overflow: hidden;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   border-bottom: 3px solid #00788C;
 }
 
@@ -127,13 +127,13 @@ body {
 .hero-content-inner {
   position: relative;
   z-index: 2;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   text-align: center;
 }
 
 .hero-content-inner h1 {
-  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(2rem, 4vw, 3rem);
   font-weight: 900;
   color: #FFFFFF;
   margin-top: 0.25rem;
@@ -186,7 +186,7 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.6rem 1.2rem;
+  padding: 0.55rem 1.2rem;
   border-radius: 30px;
   font-weight: 700;
   font-size: 0.88rem;
@@ -219,15 +219,15 @@ body {
    2-COLUMN WIDESCREEN GRID LAYOUT
    ========================================== */
 .movie-page-wrapper {
-  max-width: 1400px;
+  max-width: 1300px;
   width: 92vw;
   margin: 0 auto;
 }
 
 .movie-grid {
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 320px 1fr;
+  gap: 2rem;
   align-items: start;
 }
 
@@ -243,7 +243,7 @@ body {
 .poster-card {
   background: #FFFFFF;
   border-radius: 16px;
-  padding: 12px;
+  padding: 10px;
   border: 1px solid #E2E8F0;
   box-shadow: 0 8px 20px rgba(0,0,0,0.06);
   overflow: hidden;
@@ -261,28 +261,28 @@ body {
 .ratings-card {
   background: #FFFFFF;
   border-radius: 16px;
-  padding: 1.5rem;
+  padding: 1.25rem 1.5rem;
   border: 1px solid #E2E8F0;
   border-top: 5px solid #00788C;
   box-shadow: 0 6px 18px rgba(0,0,0,0.05);
 }
 
 .ratings-card h3 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   color: #1D1160;
-  margin-bottom: 1rem;
+  margin-bottom: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-bottom: 2px solid #F1F5F9;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
 }
 
 .rating-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
 }
 
 .rating-row:last-child {
@@ -297,14 +297,14 @@ body {
 
 .stars {
   color: #00788C;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   letter-spacing: 1px;
 }
 
 .rating-score {
   font-weight: 800;
   color: #1D1160;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 /* Main Stage Content Cards (Right Column) */
@@ -334,17 +334,17 @@ body {
   border: 0;
 }
 
-/* Breakdown Cards */
+/* Unified Main Content Card */
 .content-card {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 2rem 2.25rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.03);
 }
 
-.content-card h2, .content-card h3 {
-  font-size: 1.35rem;
+.content-card h2 {
+  font-size: 1.4rem;
   font-weight: 800;
   color: #1D1160;
   border-bottom: 2px solid #F1F5F9;
@@ -352,14 +352,40 @@ body {
   margin-bottom: 1.25rem;
 }
 
+.content-card h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1D1160;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.content-card h3:first-child {
+  margin-top: 0;
+}
+
+.content-card p {
+  margin-bottom: 1rem;
+  color: #334155;
+}
+
+.content-card ul {
+  margin-bottom: 1.25rem;
+  padding-left: 1.25rem;
+  color: #334155;
+}
+
+.content-card li {
+  margin-bottom: 0.4rem;
+}
+
 /* Callout Insights / Quotes */
 .callout-quote {
-  border-left: 4px solid #1D1160;
-  background: #f8fafc;
-  padding: 12px 16px;
+  border-left: 4px solid #00788C;
+  background: #F8FAFC;
+  padding: 12px 18px;
   border-radius: 0 8px 8px 0;
-  margin: 1rem 0;
-  font-style: italic;
+  margin: 1.25rem 0;
   color: #334155;
 }
 
@@ -368,6 +394,7 @@ body {
   color: #1D1160;
   display: block;
   margin-bottom: 0.25rem;
+  font-size: 0.95rem;
 }
 
 .back-to-top {
@@ -443,5 +470,9 @@ body {
   .poster-card {
     max-width: 280px;
     margin: 0 auto;
+  }
+  
+  .content-card {
+    padding: 1.5rem;
   }
 }

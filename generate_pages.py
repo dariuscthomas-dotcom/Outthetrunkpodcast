@@ -147,35 +147,24 @@ def get_poster_path(raw_title):
         return f"../Movie_Posters/{poster_filename}"
     return "../logo.png"
 
-def format_show_notes(raw_html):
+def clean_show_notes(raw_html):
     if not raw_html or str(raw_html).strip().lower() in ["nan", ""]:
-        return '<div class="content-card"><p>Show notes available in full podcast audio.</p></div>'
+        return "<p>Show notes available in full podcast audio.</p>"
     
     html_str = str(raw_html).strip()
     
-    # Remove duplicate main heading if present
-    html_str = re.sub(r'<h2>\s*Show Notes &amp; Highlights\s*</h2>', '', html_str, flags=re.IGNORECASE)
-    html_str = re.sub(r'<h3>\s*Show Notes &amp; Highlights\s*</h3>', '', html_str, flags=re.IGNORECASE)
+    # Remove duplicate outer heading if present
+    html_str = re.sub(r'<h[23]>\s*Show Notes &amp; Highlights\s*</h[23]>', '', html_str, flags=re.IGNORECASE)
     
-    # Wrap Host Insights into Callout Quotes
+    # Convert Jordan / Darius Insights into styled callout quotes
     html_str = re.sub(
-        r'<p><strong>(Jordan Insight|Darius Insight):?</strong>\s*(.*?)</p>',
+        r'<p>\s*<strong>(Jordan Insight|Darius Insight):?</strong>\s*(.*?)</p>',
         r'<div class="callout-quote"><strong>\1</strong>\2</div>',
         html_str,
         flags=re.DOTALL | re.IGNORECASE
     )
     
-    # Wrap main sections into distinct content cards if <h3> or <h2> are present
-    if re.search(r'<h[23]>', html_str):
-        sections = re.split(r'(?=<h[23]>)', html_str)
-        card_blocks = []
-        for sec in sections:
-            sec_clean = sec.strip()
-            if sec_clean:
-                card_blocks.append(f'<div class="content-card">{sec_clean}</div>')
-        return "".join(card_blocks)
-    
-    return f'<div class="content-card">{html_str}</div>'
+    return html_str
 
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
@@ -225,7 +214,7 @@ if os.path.exists(MOVIES_EXCEL):
         avg_num = calculate_avg_num(row.get('jordan_rating'), row.get('darius_rating'))
         avg_rating = calculate_avg_rating(row.get('jordan_rating'), row.get('darius_rating'))
 
-        formatted_show_notes = format_show_notes(row.get(col_e_m, ""))
+        show_notes_clean = clean_show_notes(row.get(col_e_m, ""))
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get("youtube_link"))
@@ -259,7 +248,7 @@ if os.path.exists(MOVIES_EXCEL):
         </nav>
     </header>
 
-    <!-- FULL-BLEED DYNAMIC HERO BANNER -->
+    <!-- FULL-BLEED HERO BANNER -->
     <section class="movie-hero-banner">
         <div class="hero-backdrop-blur" style="background-image: url('{poster_src}');"></div>
         <div class="hero-content-inner">
@@ -303,10 +292,14 @@ if os.path.exists(MOVIES_EXCEL):
                 </div>
             </aside>
 
-            <!-- Right Column: Video & Structured Breakdown Cards -->
+            <!-- Right Column: Video & Clean Single Content Card -->
             <main class="main-content">
                 {embed_html}
-                {formatted_show_notes}
+                
+                <div class="content-card">
+                    <h2>Show Notes & Highlights</h2>
+                    {show_notes_clean}
+                </div>
 
                 <div class="content-card">
                     <h2>Full Episode Transcript</h2>
@@ -758,4 +751,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Dynamic dark hero section, CTA buttons, and styled breakdown cards built.")
+print("Build complete! Clean single-card content layout generated.")
