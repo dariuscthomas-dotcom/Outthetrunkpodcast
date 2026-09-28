@@ -11,7 +11,7 @@ WOOM_DIR = "woom"
 MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
 
-ACCENT_COLOR = "#0085CA"
+ACCENT_COLOR = "#00788C"
 
 os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
@@ -77,12 +77,12 @@ def render_stars(rating_val):
 
 def format_rating_badge(val):
     if pd.isna(val) or str(val).strip().lower() in ["nan", "n/a", ""]:
-        return "Not Rated"
+        return "N/A"
     try:
         num = float(val)
         return f"{int(num)}/5" if num.is_integer() else f"{num:.1f}/5"
     except ValueError:
-        return "Not Rated"
+        return "N/A"
 
 def calculate_avg_num(jordan_val, darius_val):
     try:
@@ -138,6 +138,16 @@ def format_transcript(raw_text):
 def strip_html_tags(text):
     return re.sub(r'<[^>]+>', ' ', str(text))
 
+# Helper to find local poster image matching movie title
+def get_poster_path(raw_title):
+    normalized = normalize_title(raw_title)
+    formatted_name = re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_")
+    poster_filename = f"{formatted_name}_Poster.jpg"
+    local_path = os.path.join("Movie_Posters", poster_filename)
+    if os.path.exists(local_path):
+        return f"../Movie_Posters/{poster_filename}"
+    return "../logo.png"
+
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
 # ---------------------------------------------------------
@@ -175,8 +185,10 @@ if os.path.exists(MOVIES_EXCEL):
         letter_group = first_char if first_char.isalpha() else "#"
 
         year_val = row.get("movie_year")
-        year_str = str(int(float(year_val))) if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""] else ""
-        display_title = f"{clean_title} ({year_str})" if year_str else clean_title
+        year_str = f"({int(float(year_val))})" if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""] else ""
+        display_title = clean_title
+
+        poster_src = get_poster_path(raw_title)
 
         j_stars = render_stars(row.get('jordan_rating'))
         d_stars = render_stars(row.get('darius_rating'))
@@ -189,14 +201,14 @@ if os.path.exists(MOVIES_EXCEL):
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get("youtube_link"))
-        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{display_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>''' if yt_id else ""
+        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>''' if yt_id else ""
 
         html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{display_title} - Out The Trunk</title>
+    <title>{clean_title} - Out The Trunk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -208,45 +220,70 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <details class="nav-container" id="nav-details">
-            <summary class="nav-toggle">MENU</summary>
-            <nav id="site-nav" class="site-nav">
-                <a href="/#woom" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM</a>
-                <a href="../woom-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM Archive</a>
-                <a href="/#movies" onclick="document.getElementById('nav-details').removeAttribute('open');">Movies</a>
-                <a href="../movies-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">Movie Archive</a>
-                <a href="/#listen" class="listen-link" onclick="document.getElementById('nav-details').removeAttribute('open');">Listen</a>
-            </nav>
-        </details>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
+        <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
+        <nav id="site-nav" class="site-nav">
+            <a href="/#woom">WOOM</a>
+            <a href="../woom-archive.html">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="../movies-archive.html">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
+        </nav>
     </header>
 
-    <main class="container" style="max-width: 850px;">
-        <div class="subpage-nav" style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="/" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">← Home</a>
-            <a href="../movies-archive.html" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">Movie Archive</a>
+    <main class="container">
+        <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
+            <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
+            <a href="../movies-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
         </div>
-        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-            <p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
-            <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{display_title}</h1>
-        </header>
-        {embed_html}
-        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; margin-top: 1.5rem;">
-            <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Jordan's Rating</h3>
-                <div style="color: {ACCENT_COLOR}; font-size: 1.5rem; letter-spacing: 2px;">{j_stars}</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: #111; margin-top: 0.25rem;">{j_badge}</div>
+
+        <div class="movie-page-wrapper">
+            <div class="movie-grid">
+                
+                <!-- Left Column: Sticky Local Poster & Host Ratings -->
+                <aside class="sidebar-sticky">
+                    <div class="poster-card">
+                        <img src="{poster_src}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
+                    </div>
+                    
+                    <div class="ratings-card">
+                        <h3>Host Ratings</h3>
+                        <div class="rating-row">
+                            <span class="host-name">Jordan</span>
+                            <span class="stars">{j_stars}</span>
+                            <strong class="rating-score">{j_badge}</strong>
+                        </div>
+                        <div class="rating-row">
+                            <span class="host-name">Darius</span>
+                            <span class="stars">{d_stars}</span>
+                            <strong class="rating-score">{d_badge}</strong>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Right Column: Header, Video & Structured Show Notes -->
+                <main class="main-content">
+                    <header class="movie-header-card">
+                        <span class="badge-tag">MOVIE REVIEW & SHOW NOTES</span>
+                        <h1>{clean_title} <span class="year">{year_str}</span></h1>
+                    </header>
+
+                    {embed_html}
+
+                    <div class="content-card">
+                        <h2>Show Notes & Highlights</h2>
+                        <div>{show_notes_html}</div>
+                    </div>
+
+                    <div class="content-card">
+                        <h2>Full Episode Transcript</h2>
+                        <div>{formatted_transcript}</div>
+                    </div>
+                </main>
+
             </div>
-            <div style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.5rem; text-align: center;">
-                <h3 style="color: #111; font-size: 1.1rem; margin-bottom: 0.5rem;">Darius's Rating</h3>
-                <div style="color: {ACCENT_COLOR}; font-size: 1.5rem; letter-spacing: 2px;">{d_stars}</div>
-                <div style="font-size: 1.25rem; font-weight: 700; color: #111; margin-top: 0.25rem;">{d_badge}</div>
-            </div>
-        </section>
-        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">{show_notes_html}</section>
-        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">
-            <h2 style="font-size: 1.35rem; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
-            <div style="margin-top: 1rem;">{formatted_transcript}</div>
-        </section>
+        </div>
+
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 </body>
@@ -270,7 +307,7 @@ if os.path.exists(MOVIES_EXCEL):
     for g in all_groups:
         if g in grouped_movies:
             cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else '<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #888;">Not Rated</span>'}</div></a>''' for item in grouped_movies[g]])
-            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{g}</h2><div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
+            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{g}</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
 
     rating_tiers = [
         (5.0, 5.0, "5 Stars (Masterpieces)"),
@@ -286,7 +323,7 @@ if os.path.exists(MOVIES_EXCEL):
         if tier_movies:
             tier_movies.sort(key=lambda x: x['avg_num'], reverse=True)
             cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
-            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{tier_label}</h2><div class="movie-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
+            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{tier_label}</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
 
     movie_archive_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -305,20 +342,19 @@ if os.path.exists(MOVIES_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <details class="nav-container" id="nav-details">
-            <summary class="nav-toggle">MENU</summary>
-            <nav id="site-nav" class="site-nav">
-                <a href="/#woom" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM</a>
-                <a href="woom-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM Archive</a>
-                <a href="/#movies" onclick="document.getElementById('nav-details').removeAttribute('open');">Movies</a>
-                <a href="movies-archive.html" style="border-bottom: 2px solid #00788C;" onclick="document.getElementById('nav-details').removeAttribute('open');">Movie Archive</a>
-                <a href="/#listen" class="listen-link" onclick="document.getElementById('nav-details').removeAttribute('open');">Listen</a>
-            </nav>
-        </details>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
+        <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
+        <nav id="site-nav" class="site-nav">
+            <a href="/#woom">WOOM</a>
+            <a href="woom-archive.html">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="movies-archive.html" style="border-bottom: 2px solid #00788C;">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
+        </nav>
     </header>
 
     <main class="container">
-        <a href="/" class="home-btn" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
+        <a href="/" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
             <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
@@ -499,31 +535,30 @@ if os.path.exists(WOOM_EXCEL):
             <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <details class="nav-container" id="nav-details">
-            <summary class="nav-toggle">MENU</summary>
-            <nav id="site-nav" class="site-nav">
-                <a href="/#woom" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM</a>
-                <a href="../woom-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM Archive</a>
-                <a href="/#movies" onclick="document.getElementById('nav-details').removeAttribute('open');">Movies</a>
-                <a href="../movies-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">Movie Archive</a>
-                <a href="/#listen" class="listen-link" onclick="document.getElementById('nav-details').removeAttribute('open');">Listen</a>
-            </nav>
-        </details>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
+        <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
+        <nav id="site-nav" class="site-nav">
+            <a href="/#woom">WOOM</a>
+            <a href="../woom-archive.html">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="../movies-archive.html">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
+        </nav>
     </header>
 
-    <main class="container" style="max-width: 850px;">
+    <main class="container" style="max-width: 900px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="/" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">← Home</a>
-            <a href="../woom-archive.html" class="home-btn" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea;">WOOM Archive</a>
+            <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
+            <a href="../woom-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">WOOM Archive</a>
         </div>
-        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+        <header style="text-align: center; margin-bottom: 2rem; padding: 1.75rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             {date_badge_html}
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title}</h1>
         </header>
         {embed_html}
-        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem; margin-top: 1.5rem;">{show_notes_html}</section>
-        <section style="background: #fff; border: 1px solid #eaeaea; border-radius: 12px; padding: 1.75rem; margin-bottom: 2rem;">
-            <h2 style="font-size: 1.35rem; font-weight: 700; border-bottom: 2px solid #f0f0f0; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
+        <section style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; margin-top: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">{show_notes_html}</section>
+        <section style="background: #fff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
@@ -575,20 +610,19 @@ if os.path.exists(WOOM_EXCEL):
             <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
-        <details class="nav-container" id="nav-details">
-            <summary class="nav-toggle">MENU</summary>
-            <nav id="site-nav" class="site-nav">
-                <a href="/#woom" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM</a>
-                <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;" onclick="document.getElementById('nav-details').removeAttribute('open');">WOOM Archive</a>
-                <a href="/#movies" onclick="document.getElementById('nav-details').removeAttribute('open');">Movies</a>
-                <a href="movies-archive.html" onclick="document.getElementById('nav-details').removeAttribute('open');">Movie Archive</a>
-                <a href="/#listen" class="listen-link" onclick="document.getElementById('nav-details').removeAttribute('open');">Listen</a>
-            </nav>
-        </details>
+        <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
+        <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
+        <nav id="site-nav" class="site-nav">
+            <a href="/#woom">WOOM</a>
+            <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;">WOOM Archive</a>
+            <a href="/#movies">Movies</a>
+            <a href="movies-archive.html">Movie Archive</a>
+            <a href="/#listen" class="listen-link">Listen</a>
+        </nav>
     </header>
 
     <main class="container">
-        <a href="/" class="home-btn" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
+        <a href="/" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
         <header style="text-align: center; margin-bottom: 1.5rem;">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
             <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
@@ -693,4 +727,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! All archives and subpages updated cleanly with script hooks.")
+print("Build complete! All archives and subpages updated with 2-column local poster layouts.")
