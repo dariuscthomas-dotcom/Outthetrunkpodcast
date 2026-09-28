@@ -159,6 +159,14 @@ def get_poster_path(raw_title):
 
     return "../logo.png"
 
+def clean_show_notes(raw_html):
+    if not raw_html or str(raw_html).strip().lower() in ["nan", ""]:
+        return "<p>Show notes available in full podcast audio.</p>"
+    
+    html_str = str(raw_html).strip()
+    html_str = re.sub(r'<h[23]>\s*Show Notes &amp; Highlights\s*</h[23]>', '', html_str, flags=re.IGNORECASE)
+    return html_str
+
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
 # ---------------------------------------------------------
@@ -207,11 +215,11 @@ if os.path.exists(MOVIES_EXCEL):
         avg_num = calculate_avg_num(row.get('jordan_rating'), row.get('darius_rating'))
         avg_rating = calculate_avg_rating(row.get('jordan_rating'), row.get('darius_rating'))
 
-        show_notes_html = str(row.get(col_e_m, "")).strip() if pd.notna(row.get(col_e_m)) else "<p>Show notes available in full podcast audio.</p>"
+        show_notes_clean = clean_show_notes(row.get(col_e_m, ""))
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get("youtube_link"))
-        embed_html = f'''<div class="subpage-embed-wrapper"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>''' if yt_id else ""
+        embed_html = f'''<div class="video-container" style="margin-bottom: 2rem;"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>''' if yt_id else ""
 
         html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -223,6 +231,65 @@ if os.path.exists(MOVIES_EXCEL):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
+    <style>
+        .movie-grid {{
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }}
+        .sidebar-sticky {{
+            position: sticky;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }}
+        .poster-card {{
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }}
+        .poster-img {{
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }}
+        .ratings-card {{
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid #E2E8F0;
+            border-top: 4px solid #00788C;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }}
+        .ratings-card h3 {{
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 0.85rem;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 0.4rem;
+        }}
+        .rating-row {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.65rem;
+        }}
+        .rating-row:last-child {{ margin-bottom: 0; }}
+        .host-name {{ font-weight: 700; color: #111; font-size: 0.95rem; }}
+        .stars {{ color: #00788C; font-size: 1.1rem; letter-spacing: 1px; }}
+        .rating-score {{ font-weight: 800; color: #111; font-size: 0.95rem; }}
+        
+        @media screen and (max-width: 850px) {{
+            .movie-grid {{ grid-template-columns: 1fr; }}
+            .sidebar-sticky {{ position: static; }}
+        }}
+    </style>
 </head>
 <body>
     <header class="site-header">
@@ -241,41 +308,54 @@ if os.path.exists(MOVIES_EXCEL):
         </nav>
     </header>
 
-    <main class="container" style="max-width: 900px;">
+    <main class="container" style="max-width: 1200px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
             <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
             <a href="../movies-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
         </div>
 
-        <header style="text-align: center; margin-bottom: 2rem; padding: 1.75rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title} <span style="color: #64748B;">{year_str}</span></h1>
         </header>
 
-        {embed_html}
+        <div class="movie-grid">
+            <!-- Left Sidebar: Local Poster & Host Ratings -->
+            <aside class="sidebar-sticky">
+                <div class="poster-card">
+                    <img src="{poster_src}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
+                </div>
+                
+                <div class="ratings-card">
+                    <h3>Host Ratings</h3>
+                    <div class="rating-row">
+                        <span class="host-name">Jordan</span>
+                        <span class="stars">{j_stars}</span>
+                        <strong class="rating-score">{j_badge}</strong>
+                    </div>
+                    <div class="rating-row">
+                        <span class="host-name">Darius</span>
+                        <span class="stars">{d_stars}</span>
+                        <strong class="rating-score">{d_badge}</strong>
+                    </div>
+                </div>
+            </aside>
 
-        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
-            <div style="background: #fff; border: 1px solid #E2E8F0; border-top: 4px solid #00788C; border-radius: 12px; padding: 1.25rem; text-align: center;">
-                <h3 style="color: #111; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 800;">Jordan's Rating</h3>
-                <div style="color: {ACCENT_COLOR}; font-size: 1.3rem; letter-spacing: 1px;">{j_stars}</div>
-                <div style="font-size: 1.1rem; font-weight: 800; color: #111; margin-top: 0.2rem;">{j_badge}</div>
-            </div>
-            <div style="background: #fff; border: 1px solid #E2E8F0; border-top: 4px solid #00788C; border-radius: 12px; padding: 1.25rem; text-align: center;">
-                <h3 style="color: #111; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 800;">Darius's Rating</h3>
-                <div style="color: {ACCENT_COLOR}; font-size: 1.3rem; letter-spacing: 1px;">{d_stars}</div>
-                <div style="font-size: 1.1rem; font-weight: 800; color: #111; margin-top: 0.2rem;">{d_badge}</div>
-            </div>
-        </section>
+            <!-- Right Main Column: Video & Content Cards -->
+            <main class="main-content">
+                {embed_html}
+                
+                <section class="subpage-content-card">
+                    <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Show Notes & Highlights</h2>
+                    <div>{show_notes_clean}</div>
+                </section>
 
-        <section class="subpage-content-card">
-            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Show Notes & Highlights</h2>
-            <div>{show_notes_html}</div>
-        </section>
-
-        <section class="subpage-content-card">
-            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-            <div style="margin-top: 1rem;">{formatted_transcript}</div>
-        </section>
+                <section class="subpage-content-card">
+                    <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
+                    <div>{formatted_transcript}</div>
+                </section>
+            </main>
+        </div>
 
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
@@ -728,4 +808,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! All subpages and archive layouts restored.")
+print("Build complete! Movie subpage poster layout restored.")
