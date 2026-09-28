@@ -6,7 +6,7 @@
     <title>Juror No. 2 - Out The Trunk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -26,66 +26,65 @@
         </nav>
     </header>
 
-    <main class="container">
+    <!-- FULL-BLEED DYNAMIC HERO BANNER -->
+    <section class="movie-hero-banner">
+        <div class="hero-backdrop-blur" style="background-image: url('../logo.png');"></div>
+        <div class="hero-content-inner">
+            <span class="badge-tag">MOVIE REVIEW & SHOW NOTES</span>
+            <h1>Juror No. 2 <span class="year">(2024)</span></h1>
+            
+            <div class="audio-cta-bar">
+                <span class="cta-title">Episode Links & Audio:</span>
+                <a href="https://open.spotify.com/show/1LHZ3w9UOGilWOKkHJAHJO" target="_blank" rel="noopener noreferrer" class="btn-cta spotify">Listen on Spotify</a>
+                <a href="https://podcasts.apple.com/us/podcast/out-the-trunk-with-jordan-and-darius/id1788445057" target="_blank" rel="noopener noreferrer" class="btn-cta apple">Apple Podcasts</a>
+                <a href="https://www.youtube.com/@OutTheTrunkPod" target="_blank" rel="noopener noreferrer" class="btn-cta youtube">YouTube</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="movie-page-wrapper">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
             <a href="/" style="color: #00788C; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
             <a href="../movies-archive.html" style="color: #00788C; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
         </div>
 
-        <div class="movie-page-wrapper">
-            <div class="movie-grid">
+        <div class="movie-grid">
+            <!-- Left Column: Sticky Local Poster & Host Ratings -->
+            <aside class="sidebar-sticky">
+                <div class="poster-card">
+                    <img src="../logo.png" alt="Juror No. 2 Poster" class="poster-img" onerror="this.src='../logo.png';">
+                </div>
                 
-                <!-- Left Column: Sticky Local Poster & Host Ratings -->
-                <aside class="sidebar-sticky">
-                    <div class="poster-card">
-                        <img src="../logo.png" alt="Juror No. 2 Poster" class="poster-img" onerror="this.src='../logo.png';">
+                <div class="ratings-card">
+                    <h3>Host Ratings</h3>
+                    <div class="rating-row">
+                        <span class="host-name">Jordan</span>
+                        <span class="stars">☆☆☆☆☆</span>
+                        <strong class="rating-score">N/A</strong>
                     </div>
-                    
-                    <div class="ratings-card">
-                        <h3>Host Ratings</h3>
-                        <div class="rating-row">
-                            <span class="host-name">Jordan</span>
-                            <span class="stars">☆☆☆☆☆</span>
-                            <strong class="rating-score">N/A</strong>
-                        </div>
-                        <div class="rating-row">
-                            <span class="host-name">Darius</span>
-                            <span class="stars">☆☆☆☆☆</span>
-                            <strong class="rating-score">N/A</strong>
-                        </div>
+                    <div class="rating-row">
+                        <span class="host-name">Darius</span>
+                        <span class="stars">☆☆☆☆☆</span>
+                        <strong class="rating-score">N/A</strong>
                     </div>
-                </aside>
+                </div>
+            </aside>
 
-                <!-- Right Column: Header, Video & Structured Show Notes -->
-                <main class="main-content">
-                    <header class="movie-header-card">
-                        <span class="badge-tag">MOVIE REVIEW & SHOW NOTES</span>
-                        <h1>Juror No. 2 <span class="year">(2024)</span></h1>
-                    </header>
-
-                    <div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-
-                    <div class="content-card">
-                        <h2>Show Notes & Highlights</h2>
-                        <div><section class="show-notes-highlights">
-  <h2>Show Notes &amp; Highlights</h2>
-  <h3>Episode Rundown</h3>
-  <h3>Front Half / Episode Segments</h3>
+            <!-- Right Column: Video & Structured Breakdown Cards -->
+            <main class="main-content">
+                <div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+                <div class="content-card"><section class="show-notes-highlights"></div><div class="content-card"><h3>Episode Rundown</h3></div><div class="content-card"><h3>Front Half / Episode Segments</h3>
   <ul>
     <li>Run down and/or transcript notes preserved in original archive; this page keeps the same original-section layout for OneNote import.</li>
-  </ul>
-  <h3>Movie / Episode Basics</h3>
-  <p><strong>Summary:</strong> Moral-dilemma courtroom premise; movie section in rundown was mostly blank.</p>
-  <h3>Act / Segment Breakdown</h3>
+  </ul></div><div class="content-card"><h3>Movie / Episode Basics</h3>
+  <p><strong>Summary:</strong> Moral-dilemma courtroom premise; movie section in rundown was mostly blank.</p></div><div class="content-card"><h3>Act / Segment Breakdown</h3>
   <ul>
     <li>Act / Segment Breakdown: use original rundown act notes in OneNote as needed; this import preserves the BEFORE/AFTER page structure.</li>
-  </ul>
-  <h3>Episode Highlights</h3>
+  </ul></div><div class="content-card"><h3>Episode Highlights</h3>
   <p><strong>Best Question:</strong> What does justice require when protecting yourself could condemn someone else?</p>
-  <p><strong>Jordan Insight:</strong> Needs transcript pass.</p>
-  <p><strong>Darius Insight:</strong> Needs transcript pass.</p>
-  <div class="major-themes">
-    <h3>Major Themes</h3>
+  <div class="callout-quote"><strong>Jordan Insight</strong>Needs transcript pass.</div>
+  <div class="callout-quote"><strong>Darius Insight</strong>Needs transcript pass.</div>
+  <div class="major-themes"></div><div class="content-card"><h3>Major Themes</h3>
     <ul>
       <li>Justice</li>
       <li>conscience</li>
@@ -93,15 +92,12 @@
     </ul>
   </div>
 </section></div>
-                    </div>
 
-                    <div class="content-card">
-                        <h2>Full Episode Transcript</h2>
-                        <div><p style='color: #666;'>Transcript coming soon.</p></div>
-                    </div>
-                </main>
-
-            </div>
+                <div class="content-card">
+                    <h2>Full Episode Transcript</h2>
+                    <div><p style='color: #666;'>Transcript coming soon.</p></div>
+                </div>
+            </main>
         </div>
 
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
