@@ -141,45 +141,23 @@ def strip_html_tags(text):
 def get_poster_path(raw_title):
     normalized = normalize_title(raw_title)
     
-    # 1. Try formatted name WITH article (e.g., The_Dark_Knight_Poster.jpg)
     formatted_name = re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_")
     poster_filename = f"{formatted_name}_Poster.jpg"
     if os.path.exists(os.path.join("Movie_Posters", poster_filename)):
         return f"../Movie_Posters/{poster_filename}"
         
-    # 2. Try formatted name WITHOUT leading article (e.g., Dark_Knight_Poster.jpg)
     no_article = re.sub(r"^(The|A|An)\s+", "", normalized, flags=re.IGNORECASE)
     formatted_no_article = re.sub(r"[^\w\s]", "", no_article).strip().replace(" ", "_")
     poster_filename_no_art = f"{formatted_no_article}_Poster.jpg"
     if os.path.exists(os.path.join("Movie_Posters", poster_filename_no_art)):
         return f"../Movie_Posters/{poster_filename_no_art}"
         
-    # 3. Try raw title formatted directly (e.g., Dark_Knight_The_Poster.jpg)
     raw_formatted = re.sub(r"[^\w\s]", "", str(raw_title)).strip().replace(" ", "_")
     raw_poster_filename = f"{raw_formatted}_Poster.jpg"
     if os.path.exists(os.path.join("Movie_Posters", raw_poster_filename)):
         return f"../Movie_Posters/{raw_poster_filename}"
 
     return "../logo.png"
-
-def clean_show_notes(raw_html):
-    if not raw_html or str(raw_html).strip().lower() in ["nan", ""]:
-        return "<p>Show notes available in full podcast audio.</p>"
-    
-    html_str = str(raw_html).strip()
-    
-    # Remove duplicate outer heading if present
-    html_str = re.sub(r'<h[23]>\s*Show Notes &amp; Highlights\s*</h[23]>', '', html_str, flags=re.IGNORECASE)
-    
-    # Convert Jordan / Darius Insights into styled callout quotes
-    html_str = re.sub(
-        r'<p>\s*<strong>(Jordan Insight|Darius Insight):?</strong>\s*(.*?)</p>',
-        r'<div class="callout-quote"><strong>\1</strong>\2</div>',
-        html_str,
-        flags=re.DOTALL | re.IGNORECASE
-    )
-    
-    return html_str
 
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
@@ -229,11 +207,11 @@ if os.path.exists(MOVIES_EXCEL):
         avg_num = calculate_avg_num(row.get('jordan_rating'), row.get('darius_rating'))
         avg_rating = calculate_avg_rating(row.get('jordan_rating'), row.get('darius_rating'))
 
-        show_notes_clean = clean_show_notes(row.get(col_e_m, ""))
+        show_notes_html = str(row.get(col_e_m, "")).strip() if pd.notna(row.get(col_e_m)) else "<p>Show notes available in full podcast audio.</p>"
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get("youtube_link"))
-        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>''' if yt_id else ""
+        embed_html = f'''<div class="subpage-embed-wrapper"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>''' if yt_id else ""
 
         html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -263,65 +241,41 @@ if os.path.exists(MOVIES_EXCEL):
         </nav>
     </header>
 
-    <!-- FULL-BLEED HERO BANNER -->
-    <section class="movie-hero-banner">
-        <div class="hero-backdrop-blur" style="background-image: url('{poster_src}');"></div>
-        <div class="hero-content-inner">
-            <span class="badge-tag">MOVIE REVIEW & SHOW NOTES</span>
-            <h1>{clean_title} <span class="year">{year_str}</span></h1>
-            
-            <div class="audio-cta-bar">
-                <span class="cta-title">Episode Links & Audio:</span>
-                <a href="https://open.spotify.com/show/1LHZ3w9UOGilWOKkHJAHJO" target="_blank" rel="noopener noreferrer" class="btn-cta spotify">Listen on Spotify</a>
-                <a href="https://podcasts.apple.com/us/podcast/out-the-trunk-with-jordan-and-darius/id1788445057" target="_blank" rel="noopener noreferrer" class="btn-cta apple">Apple Podcasts</a>
-                <a href="https://www.youtube.com/@OutTheTrunkPod" target="_blank" rel="noopener noreferrer" class="btn-cta youtube">YouTube</a>
-            </div>
-        </div>
-    </section>
-
-    <main class="movie-page-wrapper">
+    <main class="container" style="max-width: 900px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
             <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
             <a href="../movies-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
         </div>
 
-        <div class="movie-grid">
-            <!-- Left Column: Sticky Local Poster & Host Ratings -->
-            <aside class="sidebar-sticky">
-                <div class="poster-card">
-                    <img src="{poster_src}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
-                </div>
-                
-                <div class="ratings-card">
-                    <h3>Host Ratings</h3>
-                    <div class="rating-row">
-                        <span class="host-name">Jordan</span>
-                        <span class="stars">{j_stars}</span>
-                        <strong class="rating-score">{j_badge}</strong>
-                    </div>
-                    <div class="rating-row">
-                        <span class="host-name">Darius</span>
-                        <span class="stars">{d_stars}</span>
-                        <strong class="rating-score">{d_badge}</strong>
-                    </div>
-                </div>
-            </aside>
+        <header style="text-align: center; margin-bottom: 2rem; padding: 1.75rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+            <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
+            <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title} <span style="color: #64748B;">{year_str}</span></h1>
+        </header>
 
-            <!-- Right Column: Video & Clean Single Content Card -->
-            <main class="main-content">
-                {embed_html}
-                
-                <div class="content-card">
-                    <h2>Show Notes & Highlights</h2>
-                    {show_notes_clean}
-                </div>
+        {embed_html}
 
-                <div class="content-card">
-                    <h2>Full Episode Transcript</h2>
-                    <div>{formatted_transcript}</div>
-                </div>
-            </main>
-        </div>
+        <section style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
+            <div style="background: #fff; border: 1px solid #E2E8F0; border-top: 4px solid #00788C; border-radius: 12px; padding: 1.25rem; text-align: center;">
+                <h3 style="color: #111; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 800;">Jordan's Rating</h3>
+                <div style="color: {ACCENT_COLOR}; font-size: 1.3rem; letter-spacing: 1px;">{j_stars}</div>
+                <div style="font-size: 1.1rem; font-weight: 800; color: #111; margin-top: 0.2rem;">{j_badge}</div>
+            </div>
+            <div style="background: #fff; border: 1px solid #E2E8F0; border-top: 4px solid #00788C; border-radius: 12px; padding: 1.25rem; text-align: center;">
+                <h3 style="color: #111; font-size: 1rem; margin-bottom: 0.4rem; font-weight: 800;">Darius's Rating</h3>
+                <div style="color: {ACCENT_COLOR}; font-size: 1.3rem; letter-spacing: 1px;">{d_stars}</div>
+                <div style="font-size: 1.1rem; font-weight: 800; color: #111; margin-top: 0.2rem;">{d_badge}</div>
+            </div>
+        </section>
+
+        <section class="subpage-content-card">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Show Notes & Highlights</h2>
+            <div>{show_notes_html}</div>
+        </section>
+
+        <section class="subpage-content-card">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
+            <div style="margin-top: 1rem;">{formatted_transcript}</div>
+        </section>
 
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
@@ -553,7 +507,7 @@ if os.path.exists(WOOM_EXCEL):
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get(yt_col)) if yt_col else None
-        embed_html = f'''<div class="hero-video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>''' if yt_id else ""
+        embed_html = f'''<div class="subpage-embed-wrapper"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>''' if yt_id else ""
 
         date_badge_html = f'<p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">RECORDED: {date_str.upper()}</p>' if date_str else '<p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">WOOM EPISODE</p>'
 
@@ -565,7 +519,7 @@ if os.path.exists(WOOM_EXCEL):
     <title>{clean_title} - WOOM - Out The Trunk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -590,16 +544,24 @@ if os.path.exists(WOOM_EXCEL):
             <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
             <a href="../woom-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">WOOM Archive</a>
         </div>
+
         <header style="text-align: center; margin-bottom: 2rem; padding: 1.75rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
             {date_badge_html}
             <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title}</h1>
         </header>
+
         {embed_html}
-        <section class="content-card" style="margin-bottom: 2rem; margin-top: 1.5rem;">{show_notes_html}</section>
-        <section class="content-card" style="margin-bottom: 2rem;">
-            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem;">Full Episode Transcript</h2>
+
+        <section class="subpage-content-card">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Show Notes & Highlights</h2>
+            <div>{show_notes_html}</div>
+        </section>
+
+        <section class="subpage-content-card">
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
             <div style="margin-top: 1rem;">{formatted_transcript}</div>
         </section>
+
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
     </main>
 </body>
@@ -766,4 +728,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Clean single-card content layout generated.")
+print("Build complete! All subpages and archive layouts restored.")
