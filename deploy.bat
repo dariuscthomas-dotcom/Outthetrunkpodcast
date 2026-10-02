@@ -15,7 +15,7 @@ echo ===========================================
 echo 2/3 Committing updated files to Git...
 echo ===========================================
 git add .
-git commit -m "Update site layout, fixed links, and refreshed archive pages"
+git commit -m "Fix subpage header routing and poster image relative paths"
 
 echo.
 echo ===========================================

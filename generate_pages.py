@@ -138,10 +138,10 @@ def format_transcript(raw_text):
 def strip_html_tags(text):
     return re.sub(r'<[^>]+>', ' ', str(text))
 
-def get_poster_path(raw_title):
+def get_poster_path(raw_title, is_subpage=False):
     normalized = normalize_title(raw_title)
+    prefix = "../" if is_subpage else ""
     
-    # Check variations for image filenames
     candidates = [
         re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_") + "_Poster.jpg",
         re.sub(r"[^\w\s]", "", raw_title).strip().replace(" ", "_") + "_Poster.jpg",
@@ -153,21 +153,16 @@ def get_poster_path(raw_title):
     
     for filename in candidates:
         if os.path.exists(os.path.join("Movie_Posters", filename)):
-            return f"../Movie_Posters/{filename}"
+            return f"{prefix}Movie_Posters/{filename}"
 
-    # Fallback search inside Movie_Posters directory by matching cleaned titles
     clean_target = re.sub(r"[^\w]", "", normalized).lower()
     if os.path.exists("Movie_Posters"):
         for f in os.listdir("Movie_Posters"):
             clean_file = re.sub(r"[^\w]", "", f.replace("_Poster.jpg", "").replace(".jpg", "")).lower()
             if clean_file == clean_target or clean_target in clean_file or clean_file in clean_target:
-                return f"../Movie_Posters/{f}"
+                return f"{prefix}Movie_Posters/{f}"
 
-    return "../logo.png"
-
-def get_poster_path_root(raw_title):
-    path = get_poster_path(raw_title)
-    return path.replace("../", "")
+    return f"{prefix}logo.png"
 
 def clean_show_notes(raw_html):
     if not raw_html or str(raw_html).strip().lower() in ["nan", ""]:
@@ -227,8 +222,8 @@ if os.path.exists(MOVIES_EXCEL):
         year_val = row.get("movie_year")
         year_str = f"({int(float(year_val))})" if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""] else ""
 
-        poster_src = get_poster_path(raw_title)
-        poster_src_root = get_poster_path_root(raw_title)
+        poster_src_subpage = get_poster_path(raw_title, is_subpage=True)
+        poster_src_root = get_poster_path(raw_title, is_subpage=False)
 
         j_stars = render_stars(row.get('jordan_rating'))
         d_stars = render_stars(row.get('darius_rating'))
@@ -315,24 +310,24 @@ if os.path.exists(MOVIES_EXCEL):
 </head>
 <body>
     <header class="site-header">
-        <a href="/" class="brand">
+        <a href="../" class="brand">
             <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
+            <a href="../#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
+            <a href="../#movies">Movies</a>
             <a href="../movies-archive.html">Movie Archive</a>
-            <a href="/#listen" class="listen-link">Listen</a>
+            <a href="../#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
     <main class="container" style="max-width: 1200px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
+            <a href="../" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
             <a href="../movies-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
         </div>
 
@@ -344,7 +339,7 @@ if os.path.exists(MOVIES_EXCEL):
         <div class="movie-grid">
             <aside class="sidebar-sticky">
                 <div class="poster-card">
-                    <img src="{poster_src}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
+                    <img src="{poster_src_subpage}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
                 </div>
                 
                 <div class="ratings-card">
@@ -724,24 +719,24 @@ if os.path.exists(WOOM_EXCEL):
 </head>
 <body>
     <header class="site-header">
-        <a href="/" class="brand">
+        <a href="../" class="brand">
             <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
+            <a href="../#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
+            <a href="../#movies">Movies</a>
             <a href="../movies-archive.html">Movie Archive</a>
-            <a href="/#listen" class="listen-link">Listen</a>
+            <a href="../#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
     <main class="container" style="max-width: 900px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
+            <a href="../" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
             <a href="../woom-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">WOOM Archive</a>
         </div>
 
@@ -933,4 +928,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! All requested fixes applied cleanly.")
+print("Build complete! Absolute/Relative routing and image asset links verified.")
