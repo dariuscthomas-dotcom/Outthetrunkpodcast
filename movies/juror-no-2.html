@@ -70,24 +70,24 @@
 </head>
 <body>
     <header class="site-header">
-        <a href="../" class="brand">
-            <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
+        <a href="/" class="brand">
+            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
-            <a href="../#woom">WOOM</a>
+            <a href="/#woom">WOOM</a>
             <a href="../woom-archive.html">WOOM Archive</a>
-            <a href="../#movies">Movies</a>
+            <a href="/#movies">Movies</a>
             <a href="../movies-archive.html">Movie Archive</a>
-            <a href="../#listen" class="listen-link">Listen</a>
+            <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
     <main class="container" style="max-width: 1200px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="../" style="color: #00788C; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
+            <a href="/" style="color: #00788C; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
             <a href="../movies-archive.html" style="color: #00788C; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
         </div>
 
@@ -97,6 +97,7 @@
         </header>
 
         <div class="movie-grid">
+            <!-- Left Sidebar: Local Poster & Host Ratings -->
             <aside class="sidebar-sticky">
                 <div class="poster-card">
                     <img src="../logo.png" alt="Juror No. 2 Poster" class="poster-img" onerror="this.src='../logo.png';">
@@ -117,6 +118,7 @@
                 </div>
             </aside>
 
+            <!-- Right Main Column: Video & Content Cards -->
             <main class="main-content">
                 <div class="video-container" style="margin-bottom: 2rem;"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
                 
@@ -137,8 +139,8 @@
   </ul>
   <h3>Episode Highlights</h3>
   <p><strong>Best Question:</strong> What does justice require when protecting yourself could condemn someone else?</p>
-  <div class="insight-box jordan-box"><span class="insight-author">Jordan Insight</span><p>Needs transcript pass.</p></div>
-  <div class="insight-box darius-box"><span class="insight-author">Darius Insight</span><p>Needs transcript pass.</p></div>
+  <p><strong>Jordan Insight:</strong> Needs transcript pass.</p>
+  <p><strong>Darius Insight:</strong> Needs transcript pass.</p>
   <div class="major-themes">
     <h3>Major Themes</h3>
     <ul>
@@ -152,12 +154,7 @@
 
                 <section class="subpage-content-card">
                     <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-                    <details class="transcript-accordion">
-                        <summary>▼ Click to Expand Full Transcript</summary>
-                        <div class="transcript-body">
-                            <p style='color: #666;'>Transcript coming soon.</p>
-                        </div>
-                    </details>
+                    <div><p style='color: #666;'>Transcript coming soon.</p></div>
                 </section>
             </main>
         </div>
