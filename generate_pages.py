@@ -141,21 +141,27 @@ def strip_html_tags(text):
 def get_poster_path(raw_title):
     normalized = normalize_title(raw_title)
     
-    formatted_name = re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_")
-    poster_filename = f"{formatted_name}_Poster.jpg"
-    if os.path.exists(os.path.join("Movie_Posters", poster_filename)):
-        return f"../Movie_Posters/{poster_filename}"
-        
-    no_article = re.sub(r"^(The|A|An)\s+", "", normalized, flags=re.IGNORECASE)
-    formatted_no_article = re.sub(r"[^\w\s]", "", no_article).strip().replace(" ", "_")
-    poster_filename_no_art = f"{formatted_no_article}_Poster.jpg"
-    if os.path.exists(os.path.join("Movie_Posters", poster_filename_no_art)):
-        return f"../Movie_Posters/{poster_filename_no_art}"
-        
-    raw_formatted = re.sub(r"[^\w\s]", "", str(raw_title)).strip().replace(" ", "_")
-    raw_poster_filename = f"{raw_formatted}_Poster.jpg"
-    if os.path.exists(os.path.join("Movie_Posters", raw_poster_filename)):
-        return f"../Movie_Posters/{raw_poster_filename}"
+    # Check variations for image filenames
+    candidates = [
+        re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_") + "_Poster.jpg",
+        re.sub(r"[^\w\s]", "", raw_title).strip().replace(" ", "_") + "_Poster.jpg",
+        re.sub(r"^(The|A|An)\s+", "", normalized, flags=re.IGNORECASE).strip().replace(" ", "_") + "_Poster.jpg",
+        normalized.replace(" ", "_") + "_Poster.jpg",
+        normalized.replace("&", "and").replace(" ", "_") + "_Poster.jpg",
+        normalized.replace("'", "").replace(" ", "_") + "_Poster.jpg"
+    ]
+    
+    for filename in candidates:
+        if os.path.exists(os.path.join("Movie_Posters", filename)):
+            return f"../Movie_Posters/{filename}"
+
+    # Fallback search inside Movie_Posters directory by matching cleaned titles
+    clean_target = re.sub(r"[^\w]", "", normalized).lower()
+    if os.path.exists("Movie_Posters"):
+        for f in os.listdir("Movie_Posters"):
+            clean_file = re.sub(r"[^\w]", "", f.replace("_Poster.jpg", "").replace(".jpg", "")).lower()
+            if clean_file == clean_target or clean_target in clean_file or clean_file in clean_target:
+                return f"../Movie_Posters/{f}"
 
     return "../logo.png"
 
@@ -587,7 +593,7 @@ if os.path.exists(MOVIES_EXCEL):
 
             cards.forEach(function(card) {{
                 var title = card.getAttribute('data-title') || '';
-                var rating = float(card.getAttribute('data-rating') || 0);
+                var rating = parseFloat(card.getAttribute('data-rating') || 0);
 
                 var matchesSearch = (query === '' || title.indexOf(query) !== -1);
                 var matchesRating = (currentRatingFilter === 'all') || 
@@ -927,4 +933,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Movie poster grid and subpage accordion layouts updated.")
+print("Build complete! All requested fixes applied cleanly.")

@@ -277,7 +277,7 @@
             </a></div></section><section id="group-L" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">L</h2><div class="movie-poster-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.25rem;">
             <a href="movies/love-basketball.html" class="movie-poster-card movie-card-styled" data-title="love & basketball" data-rating="4.0">
                 <div class="poster-thumb-wrapper">
-                    <img src="logo.png" alt="Love & Basketball Poster" class="poster-thumb-img" onerror="this.src='logo.png';">
+                    <img src="Movie_Posters/Love_and_Basketball_Poster.jpg" alt="Love & Basketball Poster" class="poster-thumb-img" onerror="this.src='logo.png';">
                     <div class="poster-overlay-badge">★ 4/5</div>
                 </div>
                 <div class="poster-card-info">
@@ -569,7 +569,7 @@
             </a>
             <a href="movies/love-basketball.html" class="movie-poster-card movie-card-styled" data-title="love & basketball" data-rating="4.0">
                 <div class="poster-thumb-wrapper">
-                    <img src="logo.png" alt="Love & Basketball Poster" class="poster-thumb-img" onerror="this.src='logo.png';">
+                    <img src="Movie_Posters/Love_and_Basketball_Poster.jpg" alt="Love & Basketball Poster" class="poster-thumb-img" onerror="this.src='logo.png';">
                     <div class="poster-overlay-badge">★ 4/5</div>
                 </div>
                 <div class="poster-card-info">
@@ -833,7 +833,7 @@
 
             cards.forEach(function(card) {
                 var title = card.getAttribute('data-title') || '';
-                var rating = float(card.getAttribute('data-rating') || 0);
+                var rating = parseFloat(card.getAttribute('data-rating') || 0);
 
                 var matchesSearch = (query === '' || title.indexOf(query) !== -1);
                 var matchesRating = (currentRatingFilter === 'all') || 
