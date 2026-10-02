@@ -12,7 +12,7 @@
 <body>
     <header class="site-header">
         <a href="/" class="brand">
-            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
@@ -101,7 +101,12 @@ Jordan argued that adversity is often romanticized and that many people claim to
 
         <section class="subpage-content-card">
             <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-            <div style="margin-top: 1rem;"><p style='color: #666;'>Transcript coming soon.</p></div>
+            <details class="transcript-accordion">
+                <summary>▼ Click to Expand Full Transcript</summary>
+                <div class="transcript-body">
+                    <p style='color: #666;'>Transcript coming soon.</p>
+                </div>
+            </details>
         </section>
 
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>

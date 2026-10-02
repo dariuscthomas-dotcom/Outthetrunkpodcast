@@ -159,12 +159,27 @@ def get_poster_path(raw_title):
 
     return "../logo.png"
 
+def get_poster_path_root(raw_title):
+    path = get_poster_path(raw_title)
+    return path.replace("../", "")
+
 def clean_show_notes(raw_html):
     if not raw_html or str(raw_html).strip().lower() in ["nan", ""]:
         return "<p>Show notes available in full podcast audio.</p>"
     
     html_str = str(raw_html).strip()
     html_str = re.sub(r'<h[23]>\s*Show Notes &amp; Highlights\s*</h[23]>', '', html_str, flags=re.IGNORECASE)
+    
+    html_str = re.sub(
+        r'<p><strong>Jordan Insight:</strong>\s*(.*?)</p>',
+        r'<div class="insight-box jordan-box"><span class="insight-author">Jordan Insight</span><p>\1</p></div>',
+        html_str, flags=re.IGNORECASE
+    )
+    html_str = re.sub(
+        r'<p><strong>Darius Insight:</strong>\s*(.*?)</p>',
+        r'<div class="insight-box darius-box"><span class="insight-author">Darius Insight</span><p>\1</p></div>',
+        html_str, flags=re.IGNORECASE
+    )
     return html_str
 
 # ---------------------------------------------------------
@@ -207,6 +222,7 @@ if os.path.exists(MOVIES_EXCEL):
         year_str = f"({int(float(year_val))})" if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""] else ""
 
         poster_src = get_poster_path(raw_title)
+        poster_src_root = get_poster_path_root(raw_title)
 
         j_stars = render_stars(row.get('jordan_rating'))
         d_stars = render_stars(row.get('darius_rating'))
@@ -294,7 +310,7 @@ if os.path.exists(MOVIES_EXCEL):
 <body>
     <header class="site-header">
         <a href="/" class="brand">
-            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
@@ -320,7 +336,6 @@ if os.path.exists(MOVIES_EXCEL):
         </header>
 
         <div class="movie-grid">
-            <!-- Left Sidebar: Local Poster & Host Ratings -->
             <aside class="sidebar-sticky">
                 <div class="poster-card">
                     <img src="{poster_src}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
@@ -341,7 +356,6 @@ if os.path.exists(MOVIES_EXCEL):
                 </div>
             </aside>
 
-            <!-- Right Main Column: Video & Content Cards -->
             <main class="main-content">
                 {embed_html}
                 
@@ -352,7 +366,12 @@ if os.path.exists(MOVIES_EXCEL):
 
                 <section class="subpage-content-card">
                     <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-                    <div>{formatted_transcript}</div>
+                    <details class="transcript-accordion">
+                        <summary>▼ Click to Expand Full Transcript</summary>
+                        <div class="transcript-body">
+                            {formatted_transcript}
+                        </div>
+                    </details>
                 </section>
             </main>
         </div>
@@ -364,7 +383,7 @@ if os.path.exists(MOVIES_EXCEL):
         with open(os.path.join(MOVIES_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(html_content)
 
-        movie_list.append({'clean_title': clean_title, 'avg_num': avg_num, 'avg_rating': avg_rating, 'slug': slug, 'sort_key': sort_key, 'letter_group': letter_group})
+        movie_list.append({'clean_title': clean_title, 'avg_num': avg_num, 'avg_rating': avg_rating, 'slug': slug, 'sort_key': sort_key, 'letter_group': letter_group, 'poster_src': poster_src_root})
 
     movie_list.sort(key=lambda x: x['sort_key'])
 
@@ -379,8 +398,18 @@ if os.path.exists(MOVIES_EXCEL):
 
     for g in all_groups:
         if g in grouped_movies:
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else '<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #888;">Not Rated</span>'}</div></a>''' for item in grouped_movies[g]])
-            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{g}</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
+            cards = "".join([f'''
+            <a href="movies/{item['slug']}.html" class="movie-poster-card movie-card-styled" data-title="{item['clean_title'].lower()}" data-rating="{item['avg_num'] if item['avg_num'] is not None else 0}">
+                <div class="poster-thumb-wrapper">
+                    <img src="{item['poster_src']}" alt="{item['clean_title']} Poster" class="poster-thumb-img" onerror="this.src='logo.png';">
+                    <div class="poster-overlay-badge">{f'★ {item["avg_rating"]}' if item['avg_rating'] else 'Not Rated'}</div>
+                </div>
+                <div class="poster-card-info">
+                    <h3 class="poster-card-title">{item['clean_title']}</h3>
+                </div>
+            </a>''' for item in grouped_movies[g]])
+            
+            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{g}</h2><div class="movie-poster-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
 
     rating_tiers = [
         (5.0, 5.0, "5 Stars (Masterpieces)"),
@@ -395,8 +424,17 @@ if os.path.exists(MOVIES_EXCEL):
         tier_movies = [m for m in movie_list if m['avg_num'] is not None and min_r <= m['avg_num'] <= max_r]
         if tier_movies:
             tier_movies.sort(key=lambda x: x['avg_num'], reverse=True)
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
-            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{tier_label}</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
+            cards = "".join([f'''
+            <a href="movies/{item['slug']}.html" class="movie-poster-card movie-card-styled" data-title="{item['clean_title'].lower()}" data-rating="{item['avg_num']}">
+                <div class="poster-thumb-wrapper">
+                    <img src="{item['poster_src']}" alt="{item['clean_title']} Poster" class="poster-thumb-img" onerror="this.src='logo.png';">
+                    <div class="poster-overlay-badge">★ {item["avg_rating"]}</div>
+                </div>
+                <div class="poster-card-info">
+                    <h3 class="poster-card-title">{item['clean_title']}</h3>
+                </div>
+            </a>''' for item in tier_movies])
+            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{tier_label}</h2><div class="movie-poster-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
 
     movie_archive_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -408,11 +446,64 @@ if os.path.exists(MOVIES_EXCEL):
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .movie-poster-card {{
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #E2E8F0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            text-decoration: none;
+            color: #111;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }}
+        .movie-poster-card:hover {{
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+        }}
+        .poster-thumb-wrapper {{
+            position: relative;
+            aspect-ratio: 2/3;
+            background: #1D1160;
+            overflow: hidden;
+        }}
+        .poster-thumb-img {{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }}
+        .poster-overlay-badge {{
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0, 120, 140, 0.9);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }}
+        .poster-card-info {{
+            padding: 0.85rem 0.75rem;
+            text-align: center;
+        }}
+        .poster-card-title {{
+            font-size: 0.92rem;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.3;
+            color: #111;
+        }}
+    </style>
 </head>
 <body>
     <header class="site-header">
         <a href="/" class="brand">
-            <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <img src="logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
@@ -433,8 +524,14 @@ if os.path.exists(MOVIES_EXCEL):
             <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
         </header>
 
-        <div class="search-container" style="width: 100%; max-width: 650px; margin: 0 auto 1.5rem auto;">
+        <div class="search-container" style="width: 100%; max-width: 650px; margin: 0 auto 1rem auto;">
             <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()" style="width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; outline: none;">
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center; margin-bottom: 1.5rem;">
+            <button class="topic-chip active" onclick="filterRatingTier('all', this)">All Movies ({len(movie_list)})</button>
+            <button class="topic-chip" onclick="filterRatingTier('5', this)">★ 5-Star Classics</button>
+            <button class="topic-chip" onclick="filterRatingTier('4', this)">★ 4-Star Tier</button>
         </div>
 
         <div class="toggle-container" style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem;">
@@ -455,6 +552,8 @@ if os.path.exists(MOVIES_EXCEL):
     </main>
 
     <script>
+        var currentRatingFilter = 'all';
+
         function showView(viewType) {{
             var viewTitle = document.getElementById('view-title');
             var viewRating = document.getElementById('view-rating');
@@ -474,13 +573,28 @@ if os.path.exists(MOVIES_EXCEL):
             }}
         }}
 
+        function filterRatingTier(tier, btnElement) {{
+            currentRatingFilter = tier;
+            var chips = btnElement.parentElement.querySelectorAll('.topic-chip');
+            chips.forEach(function(c) {{ c.classList.remove('active'); }});
+            btnElement.classList.add('active');
+            filterMovies();
+        }}
+
         function filterMovies() {{
             var query = document.getElementById('movie-search').value.toLowerCase().trim();
             var cards = document.querySelectorAll('.movie-card-styled');
 
             cards.forEach(function(card) {{
                 var title = card.getAttribute('data-title') || '';
-                if (query === '' || title.indexOf(query) !== -1) {{
+                var rating = float(card.getAttribute('data-rating') || 0);
+
+                var matchesSearch = (query === '' || title.indexOf(query) !== -1);
+                var matchesRating = (currentRatingFilter === 'all') || 
+                                    (currentRatingFilter === '5' && rating >= 5.0) ||
+                                    (currentRatingFilter === '4' && rating >= 4.0 && rating < 5.0);
+
+                if (matchesSearch && matchesRating) {{
                     card.style.display = 'flex';
                 }} else {{
                     card.style.display = 'none';
@@ -490,7 +604,7 @@ if os.path.exists(MOVIES_EXCEL):
             var sectionGroups = document.querySelectorAll('.movie-section-group');
             sectionGroups.forEach(function(sec) {{
                 var visibleCards = sec.querySelectorAll('.movie-card-styled[style*="display: flex"]');
-                if (query !== '' && visibleCards.length === 0) {{
+                if ((query !== '' || currentRatingFilter !== 'all') && visibleCards.length === 0) {{
                     sec.style.display = 'none';
                 }} else {{
                     sec.style.display = 'block';
@@ -605,7 +719,7 @@ if os.path.exists(WOOM_EXCEL):
 <body>
     <header class="site-header">
         <a href="/" class="brand">
-            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
@@ -639,7 +753,12 @@ if os.path.exists(WOOM_EXCEL):
 
         <section class="subpage-content-card">
             <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-            <div style="margin-top: 1rem;">{formatted_transcript}</div>
+            <details class="transcript-accordion">
+                <summary>▼ Click to Expand Full Transcript</summary>
+                <div class="transcript-body">
+                    {formatted_transcript}
+                </div>
+            </details>
         </section>
 
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
@@ -666,9 +785,9 @@ if os.path.exists(WOOM_EXCEL):
         search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
         
         cards_woom += f'''
-        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center;">
+        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 12px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
             <div class="card-content">
-                <h3 style="margin: 0; font-size: 1.28rem; font-weight: 800; color: #111827;">{item['clean_title']}</h3>
+                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 800; color: #111827; line-height: 1.35;">{item['clean_title']}</h3>
                 {date_meta}
                 {topics_line}
             </div>
@@ -688,7 +807,7 @@ if os.path.exists(WOOM_EXCEL):
 <body>
     <header class="site-header">
         <a href="/" class="brand">
-            <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <img src="logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
@@ -717,14 +836,14 @@ if os.path.exists(WOOM_EXCEL):
 
         <div id="results-banner" style="text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;">Showing {total_episodes} Episodes</div>
 
-        <div style="margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea;">
-            <h3 style="font-size: 0.85rem; text-transform: uppercase; color: #666; margin-bottom: 0.75rem; font-weight: 800;">Filter by Topic</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center;">
+        <div style="margin-bottom: 2rem; text-align: center; background: #fff; padding: 1.25rem; border-radius: 12px; border: 1px solid #eaeaea;">
+            <h3 style="font-size: 0.85rem; text-transform: uppercase; color: #666; margin-bottom: 0.85rem; font-weight: 800;">Filter by Topic</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center;">
                 {"".join(topic_chips)}
             </div>
         </div>
 
-        <div class="woom-grid" id="woom-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;">
+        <div class="woom-grid" id="woom-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
             {cards_woom}
             <div id="no-results" style="display: none; text-align: center; padding: 3rem 1rem; color: #666; grid-column: 1 / -1;">
                 No episodes matched that search. Try a broader search term or choose <strong>All Episodes</strong>.
@@ -808,4 +927,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Movie subpage poster layout restored.")
+print("Build complete! Movie poster grid and subpage accordion layouts updated.")

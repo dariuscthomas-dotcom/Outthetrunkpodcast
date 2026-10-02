@@ -71,7 +71,7 @@
 <body>
     <header class="site-header">
         <a href="/" class="brand">
-            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
@@ -97,7 +97,6 @@
         </header>
 
         <div class="movie-grid">
-            <!-- Left Sidebar: Local Poster & Host Ratings -->
             <aside class="sidebar-sticky">
                 <div class="poster-card">
                     <img src="../logo.png" alt="Juror No. 2 Poster" class="poster-img" onerror="this.src='../logo.png';">
@@ -118,7 +117,6 @@
                 </div>
             </aside>
 
-            <!-- Right Main Column: Video & Content Cards -->
             <main class="main-content">
                 <div class="video-container" style="margin-bottom: 2rem;"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
                 
@@ -139,8 +137,8 @@
   </ul>
   <h3>Episode Highlights</h3>
   <p><strong>Best Question:</strong> What does justice require when protecting yourself could condemn someone else?</p>
-  <p><strong>Jordan Insight:</strong> Needs transcript pass.</p>
-  <p><strong>Darius Insight:</strong> Needs transcript pass.</p>
+  <div class="insight-box jordan-box"><span class="insight-author">Jordan Insight</span><p>Needs transcript pass.</p></div>
+  <div class="insight-box darius-box"><span class="insight-author">Darius Insight</span><p>Needs transcript pass.</p></div>
   <div class="major-themes">
     <h3>Major Themes</h3>
     <ul>
@@ -154,7 +152,12 @@
 
                 <section class="subpage-content-card">
                     <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-                    <div><p style='color: #666;'>Transcript coming soon.</p></div>
+                    <details class="transcript-accordion">
+                        <summary>▼ Click to Expand Full Transcript</summary>
+                        <div class="transcript-body">
+                            <p style='color: #666;'>Transcript coming soon.</p>
+                        </div>
+                    </details>
                 </section>
             </main>
         </div>

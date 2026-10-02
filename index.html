@@ -10,15 +10,15 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body style="background-color: #F8FAFC; color: #1D1160; font-family: 'Inter', sans-serif;">
+<body>
   
-  <!-- HEADER -->
+  <!-- TOP NAVIGATION HEADER -->
   <header class="site-header" id="top">
     <a class="brand" href="/" aria-label="Out The Trunk home">
-      <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+      <img src="logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
       <span class="brand-text">Out The Trunk</span>
     </a>
     
@@ -48,19 +48,20 @@
           </div>
         </div>
         
-        <!-- RESTORED HERO CARD -->
-        <aside class="hero-card" aria-label="Podcast positioning">
-          <p class="card-kicker">2 friends started talking in a bar and never stopped.</p>
-          <p class="hero-card-main-text">The starting point is entertainment. Movies. Music. Pop Culture. The destination is the highs and lows of life with all the moments in between.</p>
-          <div class="stat-row">
-            <a href="#movies" class="pill-link">Movies</a>
-            <a href="#woom" class="pill-link">WOOM</a>
+        <!-- FEATURED EPISODE PREVIEW (GLASSMORPHISM WIDGET) -->
+        <aside class="hero-card hero-preview-widget" aria-label="Featured Episode Preview">
+          <p class="card-kicker">FEATURED EPISODE PREVIEW</p>
+          <h3 class="hero-card-title">Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
+          <p class="hero-card-main-text">The starting point is entertainment. The destination is the highs and lows of life with all the moments in between.</p>
+          <div class="widget-action-row">
+            <a href="woom/grab-the-baton-cookouts-childhood-chaos-creative-discipline.html" class="pill-link play-btn">▶ Watch & Read Notes</a>
+            <a href="woom-archive.html" class="pill-link secondary-pill">WOOM Archive</a>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- CLEAN STATS BANNER -->
+    <!-- STATS BANNER TRANSITION SEPARATOR -->
     <section class="stats-banner">
       <div class="stats-container">
         <div class="stat-item">
@@ -80,7 +81,7 @@
       </div>
     </section>
 
-    <!-- WOOM FEATURED SECTION -->
+    <!-- WOOM FEATURED SPLIT GRID -->
     <section id="woom" class="section-pad woom-section">
       <div class="section-heading">
         <p class="eyebrow">Our Worldview Lives Here</p>
@@ -119,7 +120,7 @@
       </div>
     </section>
 
-    <!-- MOVIE REVIEWS FEATURED SECTION -->
+    <!-- MOVIE REVIEWS FEATURED SPLIT GRID -->
     <section id="movies" class="section-pad dark-band">
       <div class="section-heading">
         <h2 style="color: #FFFFFF;">Movie Reviews</h2>
@@ -210,7 +211,7 @@
       </div>
     </section>
 
-    <!-- MEET THE HOSTS -->
+    <!-- MEET THE HOSTS CARDS -->
     <section id="hosts" class="section-pad">
       <div class="section-heading">
         <h2>Meet The Hosts</h2>
@@ -218,7 +219,7 @@
       <div class="hosts-grid-45">
         <article class="host-card">
           <div class="host-avatar-wrapper">
-            <img src="logo.png" alt="Darius Avatar" class="host-avatar" onerror="this.style.display='none'">
+            <img src="logo.png" alt="Darius Avatar" class="host-avatar" onerror="this.src='logo.png'">
           </div>
           <h3>Darius aka “dsallupinyaarea”</h3>
           <p class="host-subtitle">Your neighborhood grumpy old man. Raleigh, NC transplant via Minneapolis, MN.</p>
@@ -243,7 +244,7 @@
 
         <article class="host-card">
           <div class="host-avatar-wrapper">
-            <img src="logo.png" alt="Jordan Avatar" class="host-avatar" onerror="this.style.display='none'">
+            <img src="logo.png" alt="Jordan Avatar" class="host-avatar" onerror="this.src='logo.png'">
           </div>
           <h3>Jordan aka “jordybwriting”</h3>
           <p class="host-subtitle">They say no one is from North Carolina, but I actually am.</p>

@@ -12,7 +12,7 @@
 <body>
     <header class="site-header">
         <a href="/" class="brand">
-            <img src="../logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
+            <img src="../logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
             <span class="brand-text">Out The Trunk</span>
         </a>
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
@@ -94,7 +94,10 @@
 
         <section class="subpage-content-card">
             <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-            <div style="margin-top: 1rem;"><p style="margin-bottom: 1rem; line-height: 1.6;">Transcript</p><p style="margin-bottom: 1rem; line-height: 1.6;">00:00:00 Darius: 
+            <details class="transcript-accordion">
+                <summary>▼ Click to Expand Full Transcript</summary>
+                <div class="transcript-body">
+                    <p style="margin-bottom: 1rem; line-height: 1.6;">Transcript</p><p style="margin-bottom: 1rem; line-height: 1.6;">00:00:00 Darius: 
 While we're here, when you getting on stage again?</p><p style="margin-bottom: 1rem; line-height: 1.6;">00:00:03 Jordan: 
 I got some bullets in the chamber. I just got to find the right time to shoot them. Metaphorically.</p><p style="margin-bottom: 1rem; line-height: 1.6;">00:00:08 Darius: 
 One. Out the trunk with Jordan and Darius. My name is Darius. That's D's all up in the area on all socials.</p><p style="margin-bottom: 1rem; line-height: 1.6;">00:00:16 Jordan: 
@@ -393,7 +396,9 @@ They're not asking for this photo.</p><p style="margin-bottom: 1rem; line-height
 They've been at work all day and it's like.</p><p style="margin-bottom: 1rem; line-height: 1.6;">00:29:26 Jordan: 
 Right.</p><p style="margin-bottom: 1rem; line-height: 1.6;">00:29:26 Jordan: 
 They hate your guts.
-00:29:28</p></div>
+00:29:28</p>
+                </div>
+            </details>
         </section>
 
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
