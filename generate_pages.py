@@ -142,24 +142,18 @@ def get_poster_path(raw_title, is_subpage=False):
     normalized = normalize_title(raw_title)
     prefix = "../" if is_subpage else ""
     
-    candidates = [
-        re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_") + "_Poster.jpg",
-        re.sub(r"[^\w\s]", "", raw_title).strip().replace(" ", "_") + "_Poster.jpg",
-        re.sub(r"^(The|A|An)\s+", "", normalized, flags=re.IGNORECASE).strip().replace(" ", "_") + "_Poster.jpg",
-        normalized.replace(" ", "_") + "_Poster.jpg",
-        normalized.replace("&", "and").replace(" ", "_") + "_Poster.jpg",
-        normalized.replace("'", "").replace(" ", "_") + "_Poster.jpg"
-    ]
-    
-    for filename in candidates:
-        if os.path.exists(os.path.join("Movie_Posters", filename)):
-            return f"{prefix}Movie_Posters/{filename}"
+    # Generate clean alphanumeric key for robust matching (ignores spaces, dots, dashes, quotes)
+    clean_key = re.sub(r"[^\w]", "", normalized).lower()
+    raw_clean_key = re.sub(r"[^\w]", "", raw_title).lower()
 
-    clean_target = re.sub(r"[^\w]", "", normalized).lower()
     if os.path.exists("Movie_Posters"):
         for f in os.listdir("Movie_Posters"):
-            clean_file = re.sub(r"[^\w]", "", f.replace("_Poster.jpg", "").replace(".jpg", "")).lower()
-            if clean_file == clean_target or clean_target in clean_file or clean_file in clean_target:
+            if not f.lower().endswith(('.jpg', '.jpeg', '.png', '.webp')):
+                continue
+            clean_file = re.sub(r"[^\w]", "", f.replace("_Poster", "").replace("Poster", "")).lower()
+            clean_file_stem = clean_file.rsplit('.', 1)[0]
+            
+            if clean_file_stem == clean_key or clean_file_stem == raw_clean_key or clean_key in clean_file_stem or clean_file_stem in clean_key:
                 return f"{prefix}Movie_Posters/{f}"
 
     return f"{prefix}logo.png"
@@ -928,4 +922,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Absolute/Relative routing and image asset links verified.")
+print("Build complete! All subpages and image matching updated.")
