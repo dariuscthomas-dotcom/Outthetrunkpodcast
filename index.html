@@ -10,15 +10,15 @@
   <meta property="og:type" content="website" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body style="background-color: #F8FAFC; color: #1D1160; font-family: 'Inter', sans-serif;">
   
-  <!-- TOP NAVIGATION HEADER -->
+  <!-- HEADER -->
   <header class="site-header" id="top">
     <a class="brand" href="/" aria-label="Out The Trunk home">
-      <img src="logo.png" alt="Out The Trunk Logo" class="brand-logo" onerror="this.style.display='none'">
+      <img src="logo.png" alt="Out The Trunk Logo" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #00788C;" onerror="this.style.display='none'">
       <span class="brand-text">Out The Trunk</span>
     </a>
     
@@ -48,20 +48,19 @@
           </div>
         </div>
         
-        <!-- FEATURED EPISODE PREVIEW -->
-        <aside class="hero-card hero-preview-widget" aria-label="Featured Episode Preview">
-          <p class="card-kicker">FEATURED EPISODE PREVIEW</p>
-          <h3 class="hero-card-title">Grab the Baton: Cookouts, Childhood Chaos & Creative Discipline</h3>
-          <p class="hero-card-main-text">2 friends started talking in a bar and never stopped. The starting point is entertainment. The destination is the highs and lows of life with all the moments in between.</p>
-          <div class="widget-action-row">
-            <a href="woom/grab-the-baton-cookouts-childhood-chaos-and-creative-discipline.html" class="pill-link play-btn">▶ Watch & Read Notes</a>
-            <a href="woom-archive.html" class="pill-link secondary-pill">WOOM Archive</a>
+        <!-- RESTORED HERO CARD -->
+        <aside class="hero-card" aria-label="Podcast positioning">
+          <p class="card-kicker">2 friends started talking in a bar and never stopped.</p>
+          <p class="hero-card-main-text">The starting point is entertainment. Movies. Music. Pop Culture. The destination is the highs and lows of life with all the moments in between.</p>
+          <div class="stat-row">
+            <a href="#movies" class="pill-link">Movies</a>
+            <a href="#woom" class="pill-link">WOOM</a>
           </div>
         </aside>
       </div>
     </section>
 
-    <!-- STATS BANNER TRANSITION SEPARATOR -->
+    <!-- CLEAN STATS BANNER -->
     <section class="stats-banner">
       <div class="stats-container">
         <div class="stat-item">
@@ -81,7 +80,7 @@
       </div>
     </section>
 
-    <!-- WOOM FEATURED SPLIT GRID -->
+    <!-- WOOM FEATURED SECTION -->
     <section id="woom" class="section-pad woom-section">
       <div class="section-heading">
         <p class="eyebrow">Our Worldview Lives Here</p>
@@ -99,17 +98,17 @@
         <div class="recent-sidebar-col">
           <h3>Recent WOOM Discussions</h3>
           <div class="sidebar-cards-stack">
-            <a href="woom/building-success-with-friends.html" class="sidebar-item-card">
+            <a href="woom-archive.html" class="sidebar-item-card">
               <span class="card-tag">WOOM</span>
               <h4>Building Success with Friends</h4>
               <p>Navigating ambitions without compromising personal relationships.</p>
             </a>
-            <a href="woom/should-families-keep-grandmas-house.html" class="sidebar-item-card">
+            <a href="woom-archive.html" class="sidebar-item-card">
               <span class="card-tag">WOOM</span>
               <h4>Should Families Keep Grandma's House?</h4>
               <p>Wealth transfer, legacy, and emotional ties in modern families.</p>
             </a>
-            <a href="woom/everything-is-expensive.html" class="sidebar-item-card">
+            <a href="woom-archive.html" class="sidebar-item-card">
               <span class="card-tag">WOOM</span>
               <h4>Everything Is Expensive</h4>
               <p>Financial pressures, inflation, and modern lifestyle balance.</p>
@@ -120,7 +119,7 @@
       </div>
     </section>
 
-    <!-- MOVIE REVIEWS FEATURED SPLIT GRID -->
+    <!-- MOVIE REVIEWS FEATURED SECTION -->
     <section id="movies" class="section-pad dark-band">
       <div class="section-heading">
         <h2 style="color: #FFFFFF;">Movie Reviews</h2>
@@ -142,10 +141,10 @@
               <h4>Reservoir Dogs (1992)</h4>
               <p>Does Tarantino's debut heist masterpiece hold up on rewatch?</p>
             </a>
-            <a href="movies/juror-no-2.html" class="sidebar-item-card dark-card">
-              <span class="card-tag">REVIEW</span>
-              <h4>Juror No. 2 (2024)</h4>
-              <p>Clint Eastwood's courtroom thriller breakdown and host scores.</p>
+            <a href="movies-archive.html" class="sidebar-item-card dark-card">
+              <span class="card-tag">ARCHIVE</span>
+              <h4>Browse A–Z Movie Archive</h4>
+              <p>Explore all host ratings and deep dive show notes.</p>
             </a>
           </div>
           <a href="movies-archive.html" class="view-archive-btn">View Full Movie Archive (A–Z) &rarr;</a>
@@ -153,47 +152,39 @@
       </div>
     </section>
 
-    <!-- CLASSIC SEGMENTS - PROMINENT 2X2 GRID -->
+    <!-- CLASSIC SEGMENTS 4-COLUMN ROW -->
     <section id="classic-segments" class="section-pad">
       <div class="section-heading">
         <h2>Classic Segments</h2>
       </div>
-      <div class="hof-grid-2x2">
+      <div class="hof-grid-4col">
         <article class="classic-card">
-          <div class="card-header-row">
-            <span class="card-num">01</span>
-            <h3>Bass Player vs Lead Singer</h3>
-          </div>
+          <span class="card-num">01</span>
+          <h3>Bass Player vs Lead Singer</h3>
           <div class="video-container">
             <iframe src="https://www.youtube.com/embed/Tg3sbPq-APg" title="Classic Segments | Bass Player vs Lead Singer" allowfullscreen></iframe>
           </div>
         </article>
 
         <article class="classic-card">
-          <div class="card-header-row">
-            <span class="card-num">02</span>
-            <h3>Grandma's House</h3>
-          </div>
+          <span class="card-num">02</span>
+          <h3>Grandma's House</h3>
           <div class="video-container">
             <iframe src="https://www.youtube.com/embed/BIHkQkF39Pk" title="Classic Segments | Should Families Keep Grandma's House" allowfullscreen></iframe>
           </div>
         </article>
 
         <article class="classic-card">
-          <div class="card-header-row">
-            <span class="card-num">03</span>
-            <h3>Success with Friends</h3>
-          </div>
+          <span class="card-num">03</span>
+          <h3>Success with Friends</h3>
           <div class="video-container">
             <iframe src="https://www.youtube.com/embed/dhpc1LgNanw" title="Classic Segments | Building Success with Friends" allowfullscreen></iframe>
           </div>
         </article>
 
         <article class="classic-card">
-          <div class="card-header-row">
-            <span class="card-num">04</span>
-            <h3>Everything Is Expensive</h3>
-          </div>
+          <span class="card-num">04</span>
+          <h3>Everything Is Expensive</h3>
           <div class="video-container">
             <iframe src="https://www.youtube.com/embed/aSqmP-_EjGs" title="Classic Segments | Everything is Expensive" allowfullscreen></iframe>
           </div>
@@ -219,7 +210,7 @@
       </div>
     </section>
 
-    <!-- MEET THE HOSTS CARDS -->
+    <!-- MEET THE HOSTS -->
     <section id="hosts" class="section-pad">
       <div class="section-heading">
         <h2>Meet The Hosts</h2>
@@ -227,7 +218,7 @@
       <div class="hosts-grid-45">
         <article class="host-card">
           <div class="host-avatar-wrapper">
-            <img src="logo.png" alt="Darius Avatar" class="host-avatar" onerror="this.src='logo.png'">
+            <img src="logo.png" alt="Darius Avatar" class="host-avatar" onerror="this.style.display='none'">
           </div>
           <h3>Darius aka “dsallupinyaarea”</h3>
           <p class="host-subtitle">Your neighborhood grumpy old man. Raleigh, NC transplant via Minneapolis, MN.</p>
@@ -252,7 +243,7 @@
 
         <article class="host-card">
           <div class="host-avatar-wrapper">
-            <img src="logo.png" alt="Jordan Avatar" class="host-avatar" onerror="this.src='logo.png'">
+            <img src="logo.png" alt="Jordan Avatar" class="host-avatar" onerror="this.style.display='none'">
           </div>
           <h3>Jordan aka “jordybwriting”</h3>
           <p class="host-subtitle">They say no one is from North Carolina, but I actually am.</p>
