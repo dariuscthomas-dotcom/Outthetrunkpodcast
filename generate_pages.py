@@ -159,13 +159,10 @@ def get_poster_path(raw_title, is_subpage=True):
     norm = normalize_title(raw_clean)
     
     def to_snake(text):
-        # Swap hyphens for spaces so they are processed safely
         t = str(text).replace("-", " ")
         t = re.sub(r"[^\w\s]", "", t)
         return re.sub(r"\s+", "_", t.strip())
 
-    # Build a highly resilient list of possible filename bases
-    # This ensures "Best Man, The" maps cleanly to "Best_Man_Poster.jpg"
     bases = [
         norm,
         norm.replace('&', 'And'),
@@ -651,11 +648,13 @@ if os.path.exists(WOOM_EXCEL):
         if not raw_title or raw_title == "nan":
             continue
 
-        clean_title = normalize_title(raw_title)
-        slug = clean_slug(raw_title)
+        # CRITICAL FIX: Strip the (WOOM MM/DD/YY) string immediately so clean_title and slug 
+        # do not incorporate the date string into the html filename or internal ID.
+        raw_title_clean = re.sub(r"\s*\(WOOM\s*\d{1,2}/\d{1,2}/\d{2,4}\)", "", raw_title, flags=re.IGNORECASE).strip()
 
-        # Strip redundant trailing date parentheses from the display title
-        display_title = re.sub(r"\s*\(WOOM\s*\d{1,2}/\d{1,2}/\d{2,4}\)", "", clean_title, flags=re.IGNORECASE).strip()
+        clean_title = normalize_title(raw_title_clean)
+        slug = clean_slug(raw_title_clean)
+        display_title = clean_title
 
         if date_col and pd.notna(row.get('parsed_date')):
             date_str = row.get('parsed_date').strftime('%B %d, %Y')
