@@ -6,7 +6,7 @@
     <title>Movie Archive - Out The Trunk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,37 +18,941 @@
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
+            <a href="/#movies">Movies</a>
+            <a href="movies-archive.html" class="active-nav">Movie Archive</a>
             <a href="/#woom">WOOM</a>
             <a href="woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
-            <a href="movies-archive.html" style="border-bottom: 2px solid #00788C;">Movie Archive</a>
             <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
     <main class="container">
-        <a href="/" style="display: inline-flex; align-items: center; color: #00788C; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
-        <header style="text-align: center; margin-bottom: 1.5rem;">
-            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
+        <div style="margin-bottom: 1.5rem;">
+            <a href="/" class="nav-breadcrumb">← Home</a>
+        </div>
+        
+        <header class="archive-header-card">
+            <p class="subpage-eyebrow">CATALOG & RATINGS</p>
+            <h1 class="archive-main-title">Movie Review Archive</h1>
+            <p class="archive-subtitle">Explore 39+ films broken down by Jordan & Darius. Search titles or sort by average host score.</p>
         </header>
 
-        <div class="search-container" style="width: 100%; max-width: 650px; margin: 0 auto 1.5rem auto;">
-            <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()" style="width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; outline: none;">
+        <div class="search-container" style="max-width: 650px; margin: 0 auto 1.5rem auto;">
+            <input type="text" id="movie-search" class="search-input" placeholder="Search by title, director, or keyword..." oninput="filterMovies()">
         </div>
 
         <div class="toggle-container" style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem;">
-            <button id="btn-title" class="toggle-btn active" onclick="showView('title')" style="background: #00788C; color: #fff; border: 2px solid #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; cursor: pointer;">Browse by Title (A–Z)</button>
-            <button id="btn-rating" class="toggle-btn" onclick="showView('rating')" style="background: #fff; color: #00788C; border: 2px solid #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; cursor: pointer;">Browse by Rating (★)</button>
+            <button id="btn-title" class="toggle-btn active" onclick="showView('title')">Browse by Title (A–Z)</button>
+            <button id="btn-rating" class="toggle-btn" onclick="showView('rating')">Browse by Rating (★)</button>
         </div>
 
         <div id="view-title">
-            <nav style="text-align: center; margin-bottom: 2.5rem; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #eaeaea;"><a href="#group-#" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">#</a><a href="#group-A" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">A</a><a href="#group-B" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">B</a><a href="#group-C" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">C</a><a href="#group-D" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">D</a><span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">E</span><a href="#group-F" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">F</a><a href="#group-G" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">G</a><a href="#group-H" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">H</a><span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">I</span><a href="#group-J" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">J</a><a href="#group-K" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">K</a><a href="#group-L" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">L</a><a href="#group-M" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">M</a><a href="#group-N" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">N</a><a href="#group-O" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">O</a><a href="#group-P" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">P</a><span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">Q</span><a href="#group-R" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">R</a><a href="#group-S" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">S</a><a href="#group-T" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">T</a><span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">U</span><span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">V</span><a href="#group-W" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">W</a><span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">X</span><a href="#group-Y" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: #00788C; color: #fff; text-decoration: none;">Y</a><span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">Z</span></nav>
-            <section id="group-#" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">#</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/12-angry-men.html" class="movie-card-styled" data-title="12 angry men" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>12 Angry Men</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a></div></section><section id="group-A" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">A</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/american-beauty.html" class="movie-card-styled" data-title="american beauty" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>American Beauty</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a><a href="movies/american-psycho.html" class="movie-card-styled" data-title="american psycho" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>American Psycho</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.5/5</span></div></a><a href="movies/arrival.html" class="movie-card-styled" data-title="arrival" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Arrival</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4.5/5</span></div></a></div></section><section id="group-B" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">B</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/baps.html" class="movie-card-styled" data-title="b.a.p.s." style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>B.A.P.S.</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #888;">Not Rated</span></div></a><a href="movies/baby-driver.html" class="movie-card-styled" data-title="baby driver" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Baby Driver</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a><a href="movies/backrooms.html" class="movie-card-styled" data-title="backrooms" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Backrooms</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 0.5/5</span></div></a><a href="movies/the-best-man.html" class="movie-card-styled" data-title="the best man" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Best Man</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a><a href="movies/the-blackening.html" class="movie-card-styled" data-title="the blackening" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Blackening</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.8/5</span></div></a><a href="movies/boomerang.html" class="movie-card-styled" data-title="boomerang" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Boomerang</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.5/5</span></div></a><a href="movies/brown-sugar.html" class="movie-card-styled" data-title="brown sugar" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Brown Sugar</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4.2/5</span></div></a></div></section><section id="group-C" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">C</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/children-of-men.html" class="movie-card-styled" data-title="children of men" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Children of Men</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.8/5</span></div></a></div></section><section id="group-D" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">D</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/the-dark-knight.html" class="movie-card-styled" data-title="the dark knight" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Dark Knight</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/the-drama.html" class="movie-card-styled" data-title="the drama" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Drama</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a></div></section><section id="group-F" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">F</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/friday.html" class="movie-card-styled" data-title="friday" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Friday</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.5/5</span></div></a></div></section><section id="group-G" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">G</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/game-night.html" class="movie-card-styled" data-title="game night" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Game Night</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2/5</span></div></a><a href="movies/good-boys.html" class="movie-card-styled" data-title="good boys" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Good Boys</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a></div></section><section id="group-H" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">H</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/hustlers.html" class="movie-card-styled" data-title="hustlers" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Hustlers</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a></div></section><section id="group-J" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">J</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/the-judge.html" class="movie-card-styled" data-title="the judge" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Judge</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a><a href="movies/juror-no-2.html" class="movie-card-styled" data-title="juror no. 2" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Juror No. 2</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #888;">Not Rated</span></div></a></div></section><section id="group-K" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">K</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/knives-out.html" class="movie-card-styled" data-title="knives out" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Knives Out</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a></div></section><section id="group-L" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">L</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/love-basketball.html" class="movie-card-styled" data-title="love & basketball" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Love & Basketball</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a><a href="movies/love-jones.html" class="movie-card-styled" data-title="love jones" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Love Jones</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a></div></section><section id="group-M" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">M</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/mrs-doubtfire.html" class="movie-card-styled" data-title="mrs. doubtfire" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Mrs. Doubtfire</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a></div></section><section id="group-N" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">N</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/nick-norahs-infinite-playlist.html" class="movie-card-styled" data-title="nick & norah's infinite playlist" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Nick & Norah's Infinite Playlist</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.5/5</span></div></a></div></section><section id="group-O" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">O</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/obsession.html" class="movie-card-styled" data-title="obsession" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Obsession</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a><a href="movies/the-odyssey.html" class="movie-card-styled" data-title="the odyssey" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Odyssey</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a></div></section><section id="group-P" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">P</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/the-photograph.html" class="movie-card-styled" data-title="the photograph" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Photograph</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.2/5</span></div></a><a href="movies/the-prestige.html" class="movie-card-styled" data-title="the prestige" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Prestige</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a></div></section><section id="group-R" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">R</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/reservoir-dogs.html" class="movie-card-styled" data-title="reservoir dogs" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Reservoir Dogs</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.5/5</span></div></a></div></section><section id="group-S" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">S</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/the-sandlot.html" class="movie-card-styled" data-title="the sandlot" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Sandlot</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/sleepy-hollow.html" class="movie-card-styled" data-title="sleepy hollow" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Sleepy Hollow</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a><a href="movies/state-property.html" class="movie-card-styled" data-title="state property" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>State Property</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a><a href="movies/still-alice.html" class="movie-card-styled" data-title="still alice" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Still Alice</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4.8/5</span></div></a><a href="movies/stranger-than-fiction.html" class="movie-card-styled" data-title="stranger than fiction" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Stranger Than Fiction</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.5/5</span></div></a></div></section><section id="group-T" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">T</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/take-me-home-tonight.html" class="movie-card-styled" data-title="take me home tonight" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Take Me Home Tonight</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 1.8/5</span></div></a><a href="movies/this-christmas.html" class="movie-card-styled" data-title="this christmas" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>This Christmas</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a></div></section><section id="group-W" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">W</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/weapons.html" class="movie-card-styled" data-title="weapons" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Weapons</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a><a href="movies/whiplash.html" class="movie-card-styled" data-title="whiplash" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Whiplash</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/white-men-cant-jump.html" class="movie-card-styled" data-title="white men can't jump" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>White Men Can't Jump</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a></div></section><section id="group-Y" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">Y</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/youre-next.html" class="movie-card-styled" data-title="you're next" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>You're Next</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a></div></section>
+            <nav class="alpha-nav-bar"><a href="#group-#" class="nav-alpha-btn active">#</a><a href="#group-A" class="nav-alpha-btn active">A</a><a href="#group-B" class="nav-alpha-btn active">B</a><a href="#group-C" class="nav-alpha-btn active">C</a><a href="#group-D" class="nav-alpha-btn active">D</a><span class="nav-alpha-btn disabled">E</span><a href="#group-F" class="nav-alpha-btn active">F</a><a href="#group-G" class="nav-alpha-btn active">G</a><a href="#group-H" class="nav-alpha-btn active">H</a><span class="nav-alpha-btn disabled">I</span><a href="#group-J" class="nav-alpha-btn active">J</a><a href="#group-K" class="nav-alpha-btn active">K</a><a href="#group-L" class="nav-alpha-btn active">L</a><a href="#group-M" class="nav-alpha-btn active">M</a><a href="#group-N" class="nav-alpha-btn active">N</a><a href="#group-O" class="nav-alpha-btn active">O</a><a href="#group-P" class="nav-alpha-btn active">P</a><span class="nav-alpha-btn disabled">Q</span><a href="#group-R" class="nav-alpha-btn active">R</a><a href="#group-S" class="nav-alpha-btn active">S</a><a href="#group-T" class="nav-alpha-btn active">T</a><span class="nav-alpha-btn disabled">U</span><span class="nav-alpha-btn disabled">V</span><a href="#group-W" class="nav-alpha-btn active">W</a><span class="nav-alpha-btn disabled">X</span><a href="#group-Y" class="nav-alpha-btn active">Y</a><span class="nav-alpha-btn disabled">Z</span></nav>
+            
+            <section id="group-#" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">#</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/12-angry-men.html" class="movie-archive-card" data-title="12 angry men">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/12_Angry_Men_Poster.jpg" alt="12 Angry Men Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">12 Angry Men</h3>
+                <span class="archive-card-year">(1957)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-A" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">A</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/american-beauty.html" class="movie-archive-card" data-title="american beauty">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/American_Beauty_Poster.jpg" alt="American Beauty Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">American Beauty</h3>
+                <span class="archive-card-year">(1999)</span>
+            </div>
+        </a>
+        <a href="movies/american-psycho.html" class="movie-archive-card" data-title="american psycho">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/American_Psycho_Poster.jpg" alt="American Psycho Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">American Psycho</h3>
+                <span class="archive-card-year">(2000)</span>
+            </div>
+        </a>
+        <a href="movies/arrival.html" class="movie-archive-card" data-title="arrival">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Arrival_Poster.jpg" alt="Arrival Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Arrival</h3>
+                <span class="archive-card-year">(2016)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-B" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">B</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/baps.html" class="movie-archive-card" data-title="b.a.p.s.">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Baps_Poster.jpg" alt="B.A.P.S. Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge not-rated">Not Rated</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">B.A.P.S.</h3>
+                <span class="archive-card-year">(1997)</span>
+            </div>
+        </a>
+        <a href="movies/baby-driver.html" class="movie-archive-card" data-title="baby driver">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Baby_Driver_Poster.jpg" alt="Baby Driver Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Baby Driver</h3>
+                <span class="archive-card-year">(2017)</span>
+            </div>
+        </a>
+        <a href="movies/backrooms.html" class="movie-archive-card" data-title="backrooms">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Backrooms_Poster.jpg" alt="Backrooms Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 0.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Backrooms</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a>
+        <a href="movies/the-best-man.html" class="movie-archive-card" data-title="the best man">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Best_Man_Poster.jpg" alt="The Best Man Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Best Man</h3>
+                <span class="archive-card-year">(1999)</span>
+            </div>
+        </a>
+        <a href="movies/the-blackening.html" class="movie-archive-card" data-title="the blackening">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Blackening_Poster.jpg" alt="The Blackening Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Blackening</h3>
+                <span class="archive-card-year">(2023)</span>
+            </div>
+        </a>
+        <a href="movies/boomerang.html" class="movie-archive-card" data-title="boomerang">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Boomerang_Poster.jpg" alt="Boomerang Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Boomerang</h3>
+                <span class="archive-card-year">(1992)</span>
+            </div>
+        </a>
+        <a href="movies/brown-sugar.html" class="movie-archive-card" data-title="brown sugar">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Brown_Sugar_Poster.jpg" alt="Brown Sugar Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Brown Sugar</h3>
+                <span class="archive-card-year">(2002)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-C" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">C</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/children-of-men.html" class="movie-archive-card" data-title="children of men">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Children_Of_Men_Poster.jpg" alt="Children of Men Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Children of Men</h3>
+                <span class="archive-card-year">(2006)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-D" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">D</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/the-dark-knight.html" class="movie-archive-card" data-title="the dark knight">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Dark_Knight_Poster.jpg" alt="The Dark Knight Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Dark Knight</h3>
+                <span class="archive-card-year">(2008)</span>
+            </div>
+        </a>
+        <a href="movies/the-drama.html" class="movie-archive-card" data-title="the drama">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Drama_Poster.jpg" alt="The Drama Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Drama</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-F" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">F</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/friday.html" class="movie-archive-card" data-title="friday">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Friday_Poster.jpg" alt="Friday Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Friday</h3>
+                <span class="archive-card-year">(1995)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-G" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">G</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/game-night.html" class="movie-archive-card" data-title="game night">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Game_Night_Poster.jpg" alt="Game Night Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Game Night</h3>
+                <span class="archive-card-year">(2018)</span>
+            </div>
+        </a>
+        <a href="movies/good-boys.html" class="movie-archive-card" data-title="good boys">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Good_Boys_Poster.jpg" alt="Good Boys Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Good Boys</h3>
+                <span class="archive-card-year">(2019)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-H" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">H</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/hustlers.html" class="movie-archive-card" data-title="hustlers">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Hustlers_Poster.jpg" alt="Hustlers Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Hustlers</h3>
+                <span class="archive-card-year">(2019)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-J" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">J</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/the-judge.html" class="movie-archive-card" data-title="the judge">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Judge_Poster.jpg" alt="The Judge Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Judge</h3>
+                <span class="archive-card-year">(2014)</span>
+            </div>
+        </a>
+        <a href="movies/juror-no-2.html" class="movie-archive-card" data-title="juror no. 2">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Juror_No_2_Poster.jpg" alt="Juror No. 2 Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge not-rated">Not Rated</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Juror No. 2</h3>
+                <span class="archive-card-year">(2024)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-K" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">K</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/knives-out.html" class="movie-archive-card" data-title="knives out">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Knives_Out_Poster.jpg" alt="Knives Out Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Knives Out</h3>
+                <span class="archive-card-year">(2019)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-L" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">L</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/love-basketball.html" class="movie-archive-card" data-title="love & basketball">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Love_And_Basketball_Poster.jpg" alt="Love & Basketball Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Love & Basketball</h3>
+                <span class="archive-card-year">(2000)</span>
+            </div>
+        </a>
+        <a href="movies/love-jones.html" class="movie-archive-card" data-title="love jones">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Love_Jones_Poster.jpg" alt="Love Jones Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Love Jones</h3>
+                <span class="archive-card-year">(1997)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-M" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">M</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/mrs-doubtfire.html" class="movie-archive-card" data-title="mrs. doubtfire">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Mrs_Doubtfire_Poster.jpg" alt="Mrs. Doubtfire Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Mrs. Doubtfire</h3>
+                <span class="archive-card-year">(1993)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-N" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">N</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/nick-norahs-infinite-playlist.html" class="movie-archive-card" data-title="nick & norah's infinite playlist">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Nick_And_Norahs_Infinite_Playlist_Poster.jpg" alt="Nick & Norah's Infinite Playlist Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Nick & Norah's Infinite Playlist</h3>
+                <span class="archive-card-year">(2008)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-O" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">O</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/obsession.html" class="movie-archive-card" data-title="obsession">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Obsession_Poster.jpg" alt="Obsession Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Obsession</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a>
+        <a href="movies/the-odyssey.html" class="movie-archive-card" data-title="the odyssey">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Odyssey_Poster.jpg" alt="The Odyssey Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Odyssey</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-P" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">P</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/the-photograph.html" class="movie-archive-card" data-title="the photograph">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Photograph_Poster.jpg" alt="The Photograph Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Photograph</h3>
+                <span class="archive-card-year">(2020)</span>
+            </div>
+        </a>
+        <a href="movies/the-prestige.html" class="movie-archive-card" data-title="the prestige">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Prestige_Poster.jpg" alt="The Prestige Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Prestige</h3>
+                <span class="archive-card-year">(2006)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-R" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">R</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/reservoir-dogs.html" class="movie-archive-card" data-title="reservoir dogs">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Reservoir_Dogs_Poster.jpg" alt="Reservoir Dogs Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Reservoir Dogs</h3>
+                <span class="archive-card-year">(1992)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-S" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">S</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/the-sandlot.html" class="movie-archive-card" data-title="the sandlot">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Sandlot_Poster.jpg" alt="The Sandlot Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Sandlot</h3>
+                <span class="archive-card-year">(1993)</span>
+            </div>
+        </a>
+        <a href="movies/sleepy-hollow.html" class="movie-archive-card" data-title="sleepy hollow">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Sleepy_Hollow_Poster.jpg" alt="Sleepy Hollow Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Sleepy Hollow</h3>
+                <span class="archive-card-year">(1999)</span>
+            </div>
+        </a>
+        <a href="movies/state-property.html" class="movie-archive-card" data-title="state property">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/State_Property_Poster.jpg" alt="State Property Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">State Property</h3>
+                <span class="archive-card-year">(2002)</span>
+            </div>
+        </a>
+        <a href="movies/still-alice.html" class="movie-archive-card" data-title="still alice">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Still_Alice_Poster.jpg" alt="Still Alice Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Still Alice</h3>
+                <span class="archive-card-year">(2014)</span>
+            </div>
+        </a>
+        <a href="movies/stranger-than-fiction.html" class="movie-archive-card" data-title="stranger than fiction">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Stranger_Than_Fiction_Poster.jpg" alt="Stranger Than Fiction Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Stranger Than Fiction</h3>
+                <span class="archive-card-year">(2006)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-T" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">T</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/take-me-home-tonight.html" class="movie-archive-card" data-title="take me home tonight">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Take_Me_Home_Tonight_Poster.jpg" alt="Take Me Home Tonight Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 1.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Take Me Home Tonight</h3>
+                <span class="archive-card-year">(2011)</span>
+            </div>
+        </a>
+        <a href="movies/this-christmas.html" class="movie-archive-card" data-title="this christmas">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/This_Christmas_Poster.jpg" alt="This Christmas Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">This Christmas</h3>
+                <span class="archive-card-year">(2007)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-W" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">W</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/weapons.html" class="movie-archive-card" data-title="weapons">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Weapons_Poster.jpg" alt="Weapons Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Weapons</h3>
+                <span class="archive-card-year">(2025)</span>
+            </div>
+        </a>
+        <a href="movies/whiplash.html" class="movie-archive-card" data-title="whiplash">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Whiplash_Poster.jpg" alt="Whiplash Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Whiplash</h3>
+                <span class="archive-card-year">(2014)</span>
+            </div>
+        </a>
+        <a href="movies/white-men-cant-jump.html" class="movie-archive-card" data-title="white men can't jump">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/White_Men_Cant_Jump_Poster.jpg" alt="White Men Can't Jump Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">White Men Can't Jump</h3>
+                <span class="archive-card-year">(1992)</span>
+            </div>
+        </a></div>
+            </section>
+            <section id="group-Y" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">Y</span></h2>
+                <div class="movie-archive-grid">
+        <a href="movies/youre-next.html" class="movie-archive-card" data-title="you're next">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Youre_Next_Poster.jpg" alt="You're Next Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">You're Next</h3>
+                <span class="archive-card-year">(2011)</span>
+            </div>
+        </a></div>
+            </section>
         </div>
 
         <div id="view-rating" style="display: none;">
-            <section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">5 Stars (Masterpieces)</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/12-angry-men.html" class="movie-card-styled" data-title="12 angry men" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>12 Angry Men</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/the-dark-knight.html" class="movie-card-styled" data-title="the dark knight" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Dark Knight</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/mrs-doubtfire.html" class="movie-card-styled" data-title="mrs. doubtfire" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Mrs. Doubtfire</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/the-odyssey.html" class="movie-card-styled" data-title="the odyssey" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Odyssey</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/the-prestige.html" class="movie-card-styled" data-title="the prestige" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Prestige</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/the-sandlot.html" class="movie-card-styled" data-title="the sandlot" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Sandlot</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a><a href="movies/whiplash.html" class="movie-card-styled" data-title="whiplash" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Whiplash</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 5/5</span></div></a></div></section><section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">4 Stars (Highly Recommended)</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/still-alice.html" class="movie-card-styled" data-title="still alice" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Still Alice</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4.8/5</span></div></a><a href="movies/arrival.html" class="movie-card-styled" data-title="arrival" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Arrival</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4.5/5</span></div></a><a href="movies/brown-sugar.html" class="movie-card-styled" data-title="brown sugar" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Brown Sugar</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4.2/5</span></div></a><a href="movies/the-best-man.html" class="movie-card-styled" data-title="the best man" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Best Man</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a><a href="movies/the-drama.html" class="movie-card-styled" data-title="the drama" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Drama</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a><a href="movies/love-basketball.html" class="movie-card-styled" data-title="love & basketball" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Love & Basketball</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a><a href="movies/obsession.html" class="movie-card-styled" data-title="obsession" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Obsession</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 4/5</span></div></a></div></section><section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">3 Stars (Solid / Worth A Watch)</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/hustlers.html" class="movie-card-styled" data-title="hustlers" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Hustlers</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a><a href="movies/love-jones.html" class="movie-card-styled" data-title="love jones" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Love Jones</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a><a href="movies/state-property.html" class="movie-card-styled" data-title="state property" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>State Property</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a><a href="movies/white-men-cant-jump.html" class="movie-card-styled" data-title="white men can't jump" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>White Men Can't Jump</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.8/5</span></div></a><a href="movies/american-psycho.html" class="movie-card-styled" data-title="american psycho" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>American Psycho</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.5/5</span></div></a><a href="movies/friday.html" class="movie-card-styled" data-title="friday" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Friday</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.5/5</span></div></a><a href="movies/nick-norahs-infinite-playlist.html" class="movie-card-styled" data-title="nick & norah's infinite playlist" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Nick & Norah's Infinite Playlist</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.5/5</span></div></a><a href="movies/baby-driver.html" class="movie-card-styled" data-title="baby driver" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Baby Driver</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a><a href="movies/the-judge.html" class="movie-card-styled" data-title="the judge" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Judge</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a><a href="movies/knives-out.html" class="movie-card-styled" data-title="knives out" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Knives Out</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a><a href="movies/this-christmas.html" class="movie-card-styled" data-title="this christmas" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>This Christmas</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a><a href="movies/youre-next.html" class="movie-card-styled" data-title="you're next" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>You're Next</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3.2/5</span></div></a><a href="movies/american-beauty.html" class="movie-card-styled" data-title="american beauty" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>American Beauty</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a><a href="movies/good-boys.html" class="movie-card-styled" data-title="good boys" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Good Boys</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a><a href="movies/sleepy-hollow.html" class="movie-card-styled" data-title="sleepy hollow" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Sleepy Hollow</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a><a href="movies/weapons.html" class="movie-card-styled" data-title="weapons" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Weapons</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 3/5</span></div></a></div></section><section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">2 Stars (Mixed / Flawed)</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/the-blackening.html" class="movie-card-styled" data-title="the blackening" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Blackening</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.8/5</span></div></a><a href="movies/children-of-men.html" class="movie-card-styled" data-title="children of men" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Children of Men</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.8/5</span></div></a><a href="movies/boomerang.html" class="movie-card-styled" data-title="boomerang" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Boomerang</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.5/5</span></div></a><a href="movies/reservoir-dogs.html" class="movie-card-styled" data-title="reservoir dogs" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Reservoir Dogs</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.5/5</span></div></a><a href="movies/stranger-than-fiction.html" class="movie-card-styled" data-title="stranger than fiction" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Stranger Than Fiction</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.5/5</span></div></a><a href="movies/the-photograph.html" class="movie-card-styled" data-title="the photograph" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>The Photograph</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2.2/5</span></div></a><a href="movies/game-night.html" class="movie-card-styled" data-title="game night" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Game Night</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 2/5</span></div></a></div></section><section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid #00788C; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">1 Star (Avoid / Rough)</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;"><a href="movies/take-me-home-tonight.html" class="movie-card-styled" data-title="take me home tonight" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Take Me Home Tonight</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 1.8/5</span></div></a><a href="movies/backrooms.html" class="movie-card-styled" data-title="backrooms" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid #00788C; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>Backrooms</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #00788C;"> ★ 0.5/5</span></div></a></div></section>
+            
+            <section class="rating-tier-section">
+                <h2 class="group-header">5 Stars — Masterpieces</h2>
+                <div class="movie-archive-grid">
+        <a href="movies/12-angry-men.html" class="movie-archive-card" data-title="12 angry men">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/12_Angry_Men_Poster.jpg" alt="12 Angry Men Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">12 Angry Men</h3>
+                <span class="archive-card-year">(1957)</span>
+            </div>
+        </a>
+        <a href="movies/the-dark-knight.html" class="movie-archive-card" data-title="the dark knight">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Dark_Knight_Poster.jpg" alt="The Dark Knight Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Dark Knight</h3>
+                <span class="archive-card-year">(2008)</span>
+            </div>
+        </a>
+        <a href="movies/mrs-doubtfire.html" class="movie-archive-card" data-title="mrs. doubtfire">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Mrs_Doubtfire_Poster.jpg" alt="Mrs. Doubtfire Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Mrs. Doubtfire</h3>
+                <span class="archive-card-year">(1993)</span>
+            </div>
+        </a>
+        <a href="movies/the-odyssey.html" class="movie-archive-card" data-title="the odyssey">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Odyssey_Poster.jpg" alt="The Odyssey Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Odyssey</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a>
+        <a href="movies/the-prestige.html" class="movie-archive-card" data-title="the prestige">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Prestige_Poster.jpg" alt="The Prestige Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Prestige</h3>
+                <span class="archive-card-year">(2006)</span>
+            </div>
+        </a>
+        <a href="movies/the-sandlot.html" class="movie-archive-card" data-title="the sandlot">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Sandlot_Poster.jpg" alt="The Sandlot Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Sandlot</h3>
+                <span class="archive-card-year">(1993)</span>
+            </div>
+        </a>
+        <a href="movies/whiplash.html" class="movie-archive-card" data-title="whiplash">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Whiplash_Poster.jpg" alt="Whiplash Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Whiplash</h3>
+                <span class="archive-card-year">(2014)</span>
+            </div>
+        </a></div>
+            </section>
+            <section class="rating-tier-section">
+                <h2 class="group-header">4 Stars — Highly Recommended</h2>
+                <div class="movie-archive-grid">
+        <a href="movies/still-alice.html" class="movie-archive-card" data-title="still alice">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Still_Alice_Poster.jpg" alt="Still Alice Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Still Alice</h3>
+                <span class="archive-card-year">(2014)</span>
+            </div>
+        </a>
+        <a href="movies/arrival.html" class="movie-archive-card" data-title="arrival">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Arrival_Poster.jpg" alt="Arrival Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Arrival</h3>
+                <span class="archive-card-year">(2016)</span>
+            </div>
+        </a>
+        <a href="movies/brown-sugar.html" class="movie-archive-card" data-title="brown sugar">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Brown_Sugar_Poster.jpg" alt="Brown Sugar Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Brown Sugar</h3>
+                <span class="archive-card-year">(2002)</span>
+            </div>
+        </a>
+        <a href="movies/the-best-man.html" class="movie-archive-card" data-title="the best man">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Best_Man_Poster.jpg" alt="The Best Man Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Best Man</h3>
+                <span class="archive-card-year">(1999)</span>
+            </div>
+        </a>
+        <a href="movies/the-drama.html" class="movie-archive-card" data-title="the drama">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Drama_Poster.jpg" alt="The Drama Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Drama</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a>
+        <a href="movies/love-basketball.html" class="movie-archive-card" data-title="love & basketball">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Love_And_Basketball_Poster.jpg" alt="Love & Basketball Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Love & Basketball</h3>
+                <span class="archive-card-year">(2000)</span>
+            </div>
+        </a>
+        <a href="movies/obsession.html" class="movie-archive-card" data-title="obsession">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Obsession_Poster.jpg" alt="Obsession Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 4/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Obsession</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a></div>
+            </section>
+            <section class="rating-tier-section">
+                <h2 class="group-header">3 Stars — Solid / Worth A Watch</h2>
+                <div class="movie-archive-grid">
+        <a href="movies/hustlers.html" class="movie-archive-card" data-title="hustlers">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Hustlers_Poster.jpg" alt="Hustlers Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Hustlers</h3>
+                <span class="archive-card-year">(2019)</span>
+            </div>
+        </a>
+        <a href="movies/love-jones.html" class="movie-archive-card" data-title="love jones">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Love_Jones_Poster.jpg" alt="Love Jones Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Love Jones</h3>
+                <span class="archive-card-year">(1997)</span>
+            </div>
+        </a>
+        <a href="movies/state-property.html" class="movie-archive-card" data-title="state property">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/State_Property_Poster.jpg" alt="State Property Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">State Property</h3>
+                <span class="archive-card-year">(2002)</span>
+            </div>
+        </a>
+        <a href="movies/white-men-cant-jump.html" class="movie-archive-card" data-title="white men can't jump">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/White_Men_Cant_Jump_Poster.jpg" alt="White Men Can't Jump Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">White Men Can't Jump</h3>
+                <span class="archive-card-year">(1992)</span>
+            </div>
+        </a>
+        <a href="movies/american-psycho.html" class="movie-archive-card" data-title="american psycho">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/American_Psycho_Poster.jpg" alt="American Psycho Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">American Psycho</h3>
+                <span class="archive-card-year">(2000)</span>
+            </div>
+        </a>
+        <a href="movies/friday.html" class="movie-archive-card" data-title="friday">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Friday_Poster.jpg" alt="Friday Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Friday</h3>
+                <span class="archive-card-year">(1995)</span>
+            </div>
+        </a>
+        <a href="movies/nick-norahs-infinite-playlist.html" class="movie-archive-card" data-title="nick & norah's infinite playlist">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Nick_And_Norahs_Infinite_Playlist_Poster.jpg" alt="Nick & Norah's Infinite Playlist Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Nick & Norah's Infinite Playlist</h3>
+                <span class="archive-card-year">(2008)</span>
+            </div>
+        </a>
+        <a href="movies/baby-driver.html" class="movie-archive-card" data-title="baby driver">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Baby_Driver_Poster.jpg" alt="Baby Driver Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Baby Driver</h3>
+                <span class="archive-card-year">(2017)</span>
+            </div>
+        </a>
+        <a href="movies/the-judge.html" class="movie-archive-card" data-title="the judge">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Judge_Poster.jpg" alt="The Judge Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Judge</h3>
+                <span class="archive-card-year">(2014)</span>
+            </div>
+        </a>
+        <a href="movies/knives-out.html" class="movie-archive-card" data-title="knives out">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Knives_Out_Poster.jpg" alt="Knives Out Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Knives Out</h3>
+                <span class="archive-card-year">(2019)</span>
+            </div>
+        </a>
+        <a href="movies/this-christmas.html" class="movie-archive-card" data-title="this christmas">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/This_Christmas_Poster.jpg" alt="This Christmas Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">This Christmas</h3>
+                <span class="archive-card-year">(2007)</span>
+            </div>
+        </a>
+        <a href="movies/youre-next.html" class="movie-archive-card" data-title="you're next">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Youre_Next_Poster.jpg" alt="You're Next Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">You're Next</h3>
+                <span class="archive-card-year">(2011)</span>
+            </div>
+        </a>
+        <a href="movies/american-beauty.html" class="movie-archive-card" data-title="american beauty">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/American_Beauty_Poster.jpg" alt="American Beauty Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">American Beauty</h3>
+                <span class="archive-card-year">(1999)</span>
+            </div>
+        </a>
+        <a href="movies/good-boys.html" class="movie-archive-card" data-title="good boys">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Good_Boys_Poster.jpg" alt="Good Boys Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Good Boys</h3>
+                <span class="archive-card-year">(2019)</span>
+            </div>
+        </a>
+        <a href="movies/sleepy-hollow.html" class="movie-archive-card" data-title="sleepy hollow">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Sleepy_Hollow_Poster.jpg" alt="Sleepy Hollow Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Sleepy Hollow</h3>
+                <span class="archive-card-year">(1999)</span>
+            </div>
+        </a>
+        <a href="movies/weapons.html" class="movie-archive-card" data-title="weapons">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Weapons_Poster.jpg" alt="Weapons Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 3/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Weapons</h3>
+                <span class="archive-card-year">(2025)</span>
+            </div>
+        </a></div>
+            </section>
+            <section class="rating-tier-section">
+                <h2 class="group-header">2 Stars — Mixed / Flawed</h2>
+                <div class="movie-archive-grid">
+        <a href="movies/the-blackening.html" class="movie-archive-card" data-title="the blackening">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Blackening_Poster.jpg" alt="The Blackening Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Blackening</h3>
+                <span class="archive-card-year">(2023)</span>
+            </div>
+        </a>
+        <a href="movies/children-of-men.html" class="movie-archive-card" data-title="children of men">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Children_Of_Men_Poster.jpg" alt="Children of Men Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Children of Men</h3>
+                <span class="archive-card-year">(2006)</span>
+            </div>
+        </a>
+        <a href="movies/boomerang.html" class="movie-archive-card" data-title="boomerang">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Boomerang_Poster.jpg" alt="Boomerang Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Boomerang</h3>
+                <span class="archive-card-year">(1992)</span>
+            </div>
+        </a>
+        <a href="movies/reservoir-dogs.html" class="movie-archive-card" data-title="reservoir dogs">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Reservoir_Dogs_Poster.jpg" alt="Reservoir Dogs Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Reservoir Dogs</h3>
+                <span class="archive-card-year">(1992)</span>
+            </div>
+        </a>
+        <a href="movies/stranger-than-fiction.html" class="movie-archive-card" data-title="stranger than fiction">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Stranger_Than_Fiction_Poster.jpg" alt="Stranger Than Fiction Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Stranger Than Fiction</h3>
+                <span class="archive-card-year">(2006)</span>
+            </div>
+        </a>
+        <a href="movies/the-photograph.html" class="movie-archive-card" data-title="the photograph">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/The_Photograph_Poster.jpg" alt="The Photograph Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2.2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">The Photograph</h3>
+                <span class="archive-card-year">(2020)</span>
+            </div>
+        </a>
+        <a href="movies/game-night.html" class="movie-archive-card" data-title="game night">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Game_Night_Poster.jpg" alt="Game Night Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 2/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Game Night</h3>
+                <span class="archive-card-year">(2018)</span>
+            </div>
+        </a></div>
+            </section>
+            <section class="rating-tier-section">
+                <h2 class="group-header">1 Star — Rough / Pass</h2>
+                <div class="movie-archive-grid">
+        <a href="movies/take-me-home-tonight.html" class="movie-archive-card" data-title="take me home tonight">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Take_Me_Home_Tonight_Poster.jpg" alt="Take Me Home Tonight Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 1.8/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Take Me Home Tonight</h3>
+                <span class="archive-card-year">(2011)</span>
+            </div>
+        </a>
+        <a href="movies/backrooms.html" class="movie-archive-card" data-title="backrooms">
+            <div class="archive-poster-wrap">
+                <img src="Movie_Posters/Backrooms_Poster.jpg" alt="Backrooms Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                <span class="movie-rating-badge">★ 0.5/5</span>
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">Backrooms</h3>
+                <span class="archive-card-year">(2026)</span>
+            </div>
+        </a></div>
+            </section>
         </div>
 
         <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">↑ Back to Top</button>
@@ -64,19 +968,19 @@
             if (viewType === 'rating') {
                 viewTitle.style.display = 'none';
                 viewRating.style.display = 'block';
-                btnTitle.style.background = '#fff'; btnTitle.style.color = '#00788C';
-                btnRating.style.background = '#00788C'; btnRating.style.color = '#fff';
+                btnTitle.classList.remove('active');
+                btnRating.classList.add('active');
             } else {
                 viewTitle.style.display = 'block';
                 viewRating.style.display = 'none';
-                btnTitle.style.background = '#00788C'; btnTitle.style.color = '#fff';
-                btnRating.style.background = '#fff'; btnRating.style.color = '#00788C';
+                btnTitle.classList.add('active');
+                btnRating.classList.remove('active');
             }
         }
 
         function filterMovies() {
             var query = document.getElementById('movie-search').value.toLowerCase().trim();
-            var cards = document.querySelectorAll('.movie-card-styled');
+            var cards = document.querySelectorAll('.movie-archive-card');
 
             cards.forEach(function(card) {
                 var title = card.getAttribute('data-title') || '';
@@ -87,9 +991,9 @@
                 }
             });
 
-            var sectionGroups = document.querySelectorAll('.movie-section-group');
+            var sectionGroups = document.querySelectorAll('.movie-section-group, .rating-tier-section');
             sectionGroups.forEach(function(sec) {
-                var visibleCards = sec.querySelectorAll('.movie-card-styled[style*="display: flex"]');
+                var visibleCards = sec.querySelectorAll('.movie-archive-card[style*="display: flex"]');
                 if (query !== '' && visibleCards.length === 0) {
                     sec.style.display = 'none';
                 } else {

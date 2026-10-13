@@ -12,59 +12,73 @@
         .movie-grid {
             display: grid;
             grid-template-columns: 320px 1fr;
-            gap: 2rem;
+            gap: 2.25rem;
             align-items: start;
         }
         .sidebar-sticky {
             position: sticky;
-            top: 20px;
+            top: 24px;
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1.5rem;
         }
         .poster-card {
             background: #fff;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
             border: 1px solid #E2E8F0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
         }
         .poster-img {
             width: 100%;
             height: auto;
+            aspect-ratio: 2/3;
             display: block;
             object-fit: cover;
+            background: #0f0a28;
         }
-        .ratings-card {
+        .ratings-box {
             background: #fff;
-            border-radius: 12px;
-            padding: 1.25rem;
+            border-radius: 16px;
+            padding: 1.5rem;
             border: 1px solid #E2E8F0;
-            border-top: 4px solid #00788C;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border-top: 5px solid #00788C;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
         }
-        .ratings-card h3 {
-            font-size: 1.1rem;
+        .ratings-box h3 {
+            font-size: 1.15rem;
             font-weight: 800;
-            color: #111;
-            margin-bottom: 0.85rem;
-            border-bottom: 1px solid #E2E8F0;
-            padding-bottom: 0.4rem;
+            color: #1D1160;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
-        .rating-row {
+        .host-verdict {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 0.65rem;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid #F8FAFC;
         }
-        .rating-row:last-child { margin-bottom: 0; }
-        .host-name { font-weight: 700; color: #111; font-size: 0.95rem; }
-        .stars { color: #00788C; font-size: 1.1rem; letter-spacing: 1px; }
-        .rating-score { font-weight: 800; color: #111; font-size: 0.95rem; }
+        .host-verdict:last-child { border-bottom: none; }
+        .host-name { font-weight: 800; color: #1D1160; font-size: 1rem; }
+        .host-score {
+            background: #E6F3F5;
+            color: #00788C;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+        .stars { color: #00788C; font-size: 1.05rem; letter-spacing: 1px; }
         
         @media screen and (max-width: 850px) {
             .movie-grid { grid-template-columns: 1fr; }
             .sidebar-sticky { position: static; }
+            .poster-card { max-width: 320px; margin: 0 auto; }
         }
     </style>
 </head>
@@ -77,54 +91,57 @@
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
-            <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
             <a href="../movies-archive.html">Movie Archive</a>
+            <a href="/#woom">WOOM</a>
+            <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
     <main class="container" style="max-width: 1200px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="/" style="color: #00788C; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
-            <a href="../movies-archive.html" style="color: #00788C; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
+            <a href="/" class="nav-breadcrumb">← Home</a>
+            <a href="../movies-archive.html" class="nav-breadcrumb">Movie Archive</a>
         </div>
 
-        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-            <p style="color: #00788C; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
-            <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">Juror No. 2 <span style="color: #64748B;">(2024)</span></h1>
+        <header class="subpage-header-card">
+            <p class="subpage-eyebrow">MOVIE REVIEW & SHOW NOTES</p>
+            <h1 class="subpage-title">Juror No. 2 <span style="color: #64748B; font-weight: 500;">(2024)</span></h1>
+            
         </header>
 
         <div class="movie-grid">
-            <!-- Left Sidebar: Local Poster & Host Ratings -->
             <aside class="sidebar-sticky">
                 <div class="poster-card">
-                    <img src="../logo.png" alt="Juror No. 2 Poster" class="poster-img" onerror="this.src='../logo.png';">
+                    <img src="../Movie_Posters/Juror_No_2_Poster.jpg" alt="Juror No. 2 Poster" class="poster-img" onerror="this.src='../logo.png';">
                 </div>
                 
-                <div class="ratings-card">
+                <div class="ratings-box">
                     <h3>Host Ratings</h3>
-                    <div class="rating-row">
+                    <div class="host-verdict">
                         <span class="host-name">Jordan</span>
-                        <span class="stars">☆☆☆☆☆</span>
-                        <strong class="rating-score">N/A</strong>
+                        <div>
+                            <span class="stars">☆☆☆☆☆</span>
+                            <span class="host-score">Not Rated</span>
+                        </div>
                     </div>
-                    <div class="rating-row">
+                    <div class="host-verdict">
                         <span class="host-name">Darius</span>
-                        <span class="stars">☆☆☆☆☆</span>
-                        <strong class="rating-score">N/A</strong>
+                        <div>
+                            <span class="stars">☆☆☆☆☆</span>
+                            <span class="host-score">Not Rated</span>
+                        </div>
                     </div>
                 </div>
             </aside>
 
-            <!-- Right Main Column: Video & Content Cards -->
             <main class="main-content">
                 <div class="video-container" style="margin-bottom: 2rem;"><iframe src="https://www.youtube-nocookie.com/embed/dqIMR0Qfdr4" title="Juror No. 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
                 
                 <section class="subpage-content-card">
-                    <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Show Notes & Highlights</h2>
-                    <div><section class="show-notes-highlights">
+                    <h2 class="subpage-section-heading">Show Notes & Highlights</h2>
+                    <div class="show-notes-body"><section class="show-notes-highlights">
   
   <h3>Episode Rundown</h3>
   <h3>Front Half / Episode Segments</h3>
@@ -153,8 +170,8 @@
                 </section>
 
                 <section class="subpage-content-card">
-                    <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-                    <div><p style='color: #666;'>Transcript coming soon.</p></div>
+                    <h2 class="subpage-section-heading">Full Episode Transcript</h2>
+                    <div class="transcript-container"><p style='color: #64748B; font-style: italic;'>Transcript coming soon.</p></div>
                 </section>
             </main>
         </div>

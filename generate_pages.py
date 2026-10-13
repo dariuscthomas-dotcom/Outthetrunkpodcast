@@ -12,6 +12,7 @@ MOVIES_ARCHIVE_PATH = "movies-archive.html"
 WOOM_ARCHIVE_PATH = "woom-archive.html"
 
 ACCENT_COLOR = "#00788C"
+PRIMARY_COLOR = "#1D1160"
 
 os.makedirs(MOVIES_DIR, exist_ok=True)
 os.makedirs(WOOM_DIR, exist_ok=True)
@@ -77,12 +78,12 @@ def render_stars(rating_val):
 
 def format_rating_badge(val):
     if pd.isna(val) or str(val).strip().lower() in ["nan", "n/a", ""]:
-        return "N/A"
+        return "Not Rated"
     try:
         num = float(val)
         return f"{int(num)}/5" if num.is_integer() else f"{num:.1f}/5"
     except ValueError:
-        return "N/A"
+        return "Not Rated"
 
 def calculate_avg_num(jordan_val, darius_val):
     try:
@@ -102,7 +103,7 @@ def calculate_avg_rating(jordan_val, darius_val):
 
 def format_transcript(raw_text):
     if not raw_text or str(raw_text).strip().lower() in ["nan", ""]:
-        return "<p style='color: #666;'>Transcript coming soon.</p>"
+        return "<p style='color: #64748B; font-style: italic;'>Transcript coming soon.</p>"
     
     text_str = str(raw_text).strip()
     
@@ -116,48 +117,68 @@ def format_transcript(raw_text):
             m = re.match(r'(\d{2}:\d{2}:\d{2})\s+(Jordan|Darius)\s+(.*)', part_str, re.DOTALL)
             if m:
                 ts, name, text = m.groups()
-                text_cleaned = text.strip()
-                line = f'<p style="margin-bottom: 1rem; line-height: 1.6;"><span style="color: #888; font-size: 0.85rem; margin-right: 0.5rem; font-family: monospace;">[{ts}]</span><u style="color: {ACCENT_COLOR}; font-weight: bold;">{name}:</u> {text_cleaned}</p>'
+                speaker_class = "speaker-jordan" if name.lower() == "jordan" else "speaker-darius"
+                line = (
+                    f'<div class="transcript-entry">'
+                    f'<span class="transcript-ts">[{ts}]</span>'
+                    f'<span class="transcript-badge {speaker_class}">{name}</span>'
+                    f'<span class="transcript-text">{text.strip()}</span>'
+                    f'</div>'
+                )
                 formatted_p.append(line)
             else:
-                formatted_p.append(f'<p style="margin-bottom: 1rem; line-height: 1.6;">{part_str}</p>')
+                formatted_p.append(f'<div class="transcript-entry"><span class="transcript-text">{part_str}</span></div>')
         return "".join(formatted_p)
     
     paragraphs = [p.strip() for p in text_str.split("\n") if p.strip()]
     formatted_p = []
     for p in paragraphs:
-        p_highlighted = re.sub(
-            r'^(Jordan|Darius):', 
-            f'<u style="color: {ACCENT_COLOR}; font-weight: bold;">\\1:</u>', 
+        p_sub = re.sub(
+            r'^(Jordan|Darius):\s*(.*)', 
+            lambda m: f'<div class="transcript-entry"><span class="transcript-badge speaker-{m.group(1).lower()}">{m.group(1)}</span><span class="transcript-text">{m.group(2)}</span></div>', 
             p
         )
-        formatted_p.append(f"<p style='margin-bottom: 1rem; line-height: 1.6;'>{p_highlighted}</p>")
+        if '<div class="transcript-entry">' in p_sub:
+            formatted_p.append(p_sub)
+        else:
+            formatted_p.append(f'<div class="transcript-entry"><span class="transcript-text">{p}</span></div>')
         
     return "".join(formatted_p)
 
 def strip_html_tags(text):
     return re.sub(r'<[^>]+>', ' ', str(text))
 
-def get_poster_path(raw_title):
-    normalized = normalize_title(raw_title)
+def get_poster_path(raw_title, is_subpage=True):
+    base_prefix = "../Movie_Posters/" if is_subpage else "Movie_Posters/"
+    fallback = "../logo.png" if is_subpage else "logo.png"
     
-    formatted_name = re.sub(r"[^\w\s]", "", normalized).strip().replace(" ", "_")
-    poster_filename = f"{formatted_name}_Poster.jpg"
-    if os.path.exists(os.path.join("Movie_Posters", poster_filename)):
-        return f"../Movie_Posters/{poster_filename}"
-        
-    no_article = re.sub(r"^(The|A|An)\s+", "", normalized, flags=re.IGNORECASE)
-    formatted_no_article = re.sub(r"[^\w\s]", "", no_article).strip().replace(" ", "_")
-    poster_filename_no_art = f"{formatted_no_article}_Poster.jpg"
-    if os.path.exists(os.path.join("Movie_Posters", poster_filename_no_art)):
-        return f"../Movie_Posters/{poster_filename_no_art}"
-        
-    raw_formatted = re.sub(r"[^\w\s]", "", str(raw_title)).strip().replace(" ", "_")
-    raw_poster_filename = f"{raw_formatted}_Poster.jpg"
-    if os.path.exists(os.path.join("Movie_Posters", raw_poster_filename)):
-        return f"../Movie_Posters/{raw_poster_filename}"
+    if not raw_title or str(raw_title).strip().lower() in ["nan", ""]:
+        return fallback
 
-    return "../logo.png"
+    norm = normalize_title(str(raw_title).strip())
+    
+    def to_snake(text):
+        t = re.sub(r"[^\w\s]", "", text)
+        return re.sub(r"\s+", "_", t.strip())
+
+    candidates = [
+        f"{to_snake(norm)}_Poster.jpg",
+        f"{to_snake(norm.replace('&', 'And'))}_Poster.jpg",
+        f"{to_snake(re.sub(r'\\bNo\\.?\\b', 'Number', norm.replace('&', 'And'), flags=re.IGNORECASE).replace('2', 'Two'))}_Poster.jpg",
+        f"{to_snake(re.sub(r'^(The|A|An)\\s+', '', norm, flags=re.IGNORECASE))}_Poster.jpg",
+        f"{to_snake(re.sub(r'^(The|A|An)\\s+', '', norm.replace('&', 'And'), flags=re.IGNORECASE))}_Poster.jpg",
+        f"{to_snake(re.sub(r'^(The|A|An)\\s+', '', re.sub(r'\\bNo\\.?\\b', 'Number', norm.replace('&', 'And'), flags=re.IGNORECASE).replace('2', 'Two')))}_Poster.jpg",
+        f"{to_snake(str(raw_title).strip())}_Poster.jpg"
+    ]
+
+    posters_dir = "Movie_Posters"
+    if os.path.exists(posters_dir):
+        available_files = {f.lower(): f for f in os.listdir(posters_dir)}
+        for c in candidates:
+            if c.lower() in available_files:
+                return f"{base_prefix}{available_files[c.lower()]}"
+    
+    return f"{base_prefix}{candidates[0]}"
 
 def clean_show_notes(raw_html):
     if not raw_html or str(raw_html).strip().lower() in ["nan", ""]:
@@ -170,7 +191,7 @@ def clean_show_notes(raw_html):
 # ---------------------------------------------------------
 # 1. BUILD MOVIE PAGES & MOVIE ARCHIVE
 # ---------------------------------------------------------
-print("Processing Movie Archive...")
+print("Processing Movie Archive & Subpages...")
 if os.path.exists(MOVIES_EXCEL):
     xls_m = pd.ExcelFile(MOVIES_EXCEL)
     sheet_m = "Movie Ratings" if "Movie Ratings" in xls_m.sheet_names else xls_m.sheet_names[0]
@@ -206,7 +227,8 @@ if os.path.exists(MOVIES_EXCEL):
         year_val = row.get("movie_year")
         year_str = f"({int(float(year_val))})" if pd.notna(year_val) and str(year_val).strip() not in ["nan", ""] else ""
 
-        poster_src = get_poster_path(raw_title)
+        poster_subpage = get_poster_path(raw_title, is_subpage=True)
+        poster_archive = get_poster_path(raw_title, is_subpage=False)
 
         j_stars = render_stars(row.get('jordan_rating'))
         d_stars = render_stars(row.get('darius_rating'))
@@ -235,59 +257,73 @@ if os.path.exists(MOVIES_EXCEL):
         .movie-grid {{
             display: grid;
             grid-template-columns: 320px 1fr;
-            gap: 2rem;
+            gap: 2.25rem;
             align-items: start;
         }}
         .sidebar-sticky {{
             position: sticky;
-            top: 20px;
+            top: 24px;
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
+            gap: 1.5rem;
         }}
         .poster-card {{
             background: #fff;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
             border: 1px solid #E2E8F0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
         }}
         .poster-img {{
             width: 100%;
             height: auto;
+            aspect-ratio: 2/3;
             display: block;
             object-fit: cover;
+            background: #0f0a28;
         }}
-        .ratings-card {{
+        .ratings-box {{
             background: #fff;
-            border-radius: 12px;
-            padding: 1.25rem;
+            border-radius: 16px;
+            padding: 1.5rem;
             border: 1px solid #E2E8F0;
-            border-top: 4px solid #00788C;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            border-top: 5px solid #00788C;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
         }}
-        .ratings-card h3 {{
-            font-size: 1.1rem;
+        .ratings-box h3 {{
+            font-size: 1.15rem;
             font-weight: 800;
-            color: #111;
-            margin-bottom: 0.85rem;
-            border-bottom: 1px solid #E2E8F0;
-            padding-bottom: 0.4rem;
+            color: #1D1160;
+            margin-bottom: 1.25rem;
+            border-bottom: 2px solid #F1F5F9;
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }}
-        .rating-row {{
+        .host-verdict {{
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 0.65rem;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid #F8FAFC;
         }}
-        .rating-row:last-child {{ margin-bottom: 0; }}
-        .host-name {{ font-weight: 700; color: #111; font-size: 0.95rem; }}
-        .stars {{ color: #00788C; font-size: 1.1rem; letter-spacing: 1px; }}
-        .rating-score {{ font-weight: 800; color: #111; font-size: 0.95rem; }}
+        .host-verdict:last-child {{ border-bottom: none; }}
+        .host-name {{ font-weight: 800; color: #1D1160; font-size: 1rem; }}
+        .host-score {{
+            background: #E6F3F5;
+            color: #00788C;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }}
+        .stars {{ color: #00788C; font-size: 1.05rem; letter-spacing: 1px; }}
         
         @media screen and (max-width: 850px) {{
             .movie-grid {{ grid-template-columns: 1fr; }}
             .sidebar-sticky {{ position: static; }}
+            .poster-card {{ max-width: 320px; margin: 0 auto; }}
         }}
     </style>
 </head>
@@ -300,59 +336,62 @@ if os.path.exists(MOVIES_EXCEL):
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
-            <a href="/#woom">WOOM</a>
-            <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#movies">Movies</a>
             <a href="../movies-archive.html">Movie Archive</a>
+            <a href="/#woom">WOOM</a>
+            <a href="../woom-archive.html">WOOM Archive</a>
             <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
     <main class="container" style="max-width: 1200px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
-            <a href="../movies-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">Movie Archive</a>
+            <a href="/" class="nav-breadcrumb">← Home</a>
+            <a href="../movies-archive.html" class="nav-breadcrumb">Movie Archive</a>
         </div>
 
-        <header style="text-align: center; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
-            <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">MOVIE REVIEW & SHOW NOTES</p>
-            <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title} <span style="color: #64748B;">{year_str}</span></h1>
+        <header class="subpage-header-card">
+            <p class="subpage-eyebrow">MOVIE REVIEW & SHOW NOTES</p>
+            <h1 class="subpage-title">{clean_title} <span style="color: #64748B; font-weight: 500;">{year_str}</span></h1>
+            {f'<div style="margin-top: 0.5rem;"><span class="badge-avg">Average Host Rating: ★ {avg_rating}</span></div>' if avg_rating else ''}
         </header>
 
         <div class="movie-grid">
-            <!-- Left Sidebar: Local Poster & Host Ratings -->
             <aside class="sidebar-sticky">
                 <div class="poster-card">
-                    <img src="{poster_src}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
+                    <img src="{poster_subpage}" alt="{clean_title} Poster" class="poster-img" onerror="this.src='../logo.png';">
                 </div>
                 
-                <div class="ratings-card">
+                <div class="ratings-box">
                     <h3>Host Ratings</h3>
-                    <div class="rating-row">
+                    <div class="host-verdict">
                         <span class="host-name">Jordan</span>
-                        <span class="stars">{j_stars}</span>
-                        <strong class="rating-score">{j_badge}</strong>
+                        <div>
+                            <span class="stars">{j_stars}</span>
+                            <span class="host-score">{j_badge}</span>
+                        </div>
                     </div>
-                    <div class="rating-row">
+                    <div class="host-verdict">
                         <span class="host-name">Darius</span>
-                        <span class="stars">{d_stars}</span>
-                        <strong class="rating-score">{d_badge}</strong>
+                        <div>
+                            <span class="stars">{d_stars}</span>
+                            <span class="host-score">{d_badge}</span>
+                        </div>
                     </div>
                 </div>
             </aside>
 
-            <!-- Right Main Column: Video & Content Cards -->
             <main class="main-content">
                 {embed_html}
                 
                 <section class="subpage-content-card">
-                    <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Show Notes & Highlights</h2>
-                    <div>{show_notes_clean}</div>
+                    <h2 class="subpage-section-heading">Show Notes & Highlights</h2>
+                    <div class="show-notes-body">{show_notes_clean}</div>
                 </section>
 
                 <section class="subpage-content-card">
-                    <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-                    <div>{formatted_transcript}</div>
+                    <h2 class="subpage-section-heading">Full Episode Transcript</h2>
+                    <div class="transcript-container">{formatted_transcript}</div>
                 </section>
             </main>
         </div>
@@ -364,13 +403,39 @@ if os.path.exists(MOVIES_EXCEL):
         with open(os.path.join(MOVIES_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(html_content)
 
-        movie_list.append({'clean_title': clean_title, 'avg_num': avg_num, 'avg_rating': avg_rating, 'slug': slug, 'sort_key': sort_key, 'letter_group': letter_group})
+        movie_list.append({
+            'clean_title': clean_title,
+            'year_str': year_str,
+            'avg_num': avg_num,
+            'avg_rating': avg_rating,
+            'slug': slug,
+            'sort_key': sort_key,
+            'letter_group': letter_group,
+            'poster_src': poster_archive
+        })
 
     movie_list.sort(key=lambda x: x['sort_key'])
 
     all_groups = ["#"] + [chr(i) for i in range(ord('A'), ord('Z')+1)]
     active_groups = set(m['letter_group'] for m in movie_list)
-    nav_buttons = [f'<a href="#group-{g}" class="nav-btn active-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; background: {ACCENT_COLOR}; color: #fff; text-decoration: none;">{g}</a>' if g in active_groups else f'<span class="nav-btn disabled-btn" style="display: inline-block; padding: 6px 12px; margin: 3px; border-radius: 6px; font-weight: 700; font-size: 0.9rem; border: 1px solid #eaeaea; color: #d1d1d1; background: #fafafa;">{g}</span>' for g in all_groups]
+    nav_buttons = [
+        f'<a href="#group-{g}" class="nav-alpha-btn active">{g}</a>' if g in active_groups else f'<span class="nav-alpha-btn disabled">{g}</span>' 
+        for g in all_groups
+    ]
+
+    def render_movie_card(item):
+        rating_markup = f'<span class="movie-rating-badge">★ {item["avg_rating"]}</span>' if item['avg_rating'] else '<span class="movie-rating-badge not-rated">Not Rated</span>'
+        return f'''
+        <a href="movies/{item['slug']}.html" class="movie-archive-card" data-title="{item['clean_title'].lower()}">
+            <div class="archive-poster-wrap">
+                <img src="{item['poster_src']}" alt="{item['clean_title']} Poster" class="archive-poster-img" loading="lazy" onerror="this.src='logo.png';">
+                {rating_markup}
+            </div>
+            <div class="archive-card-details">
+                <h3 class="archive-card-title">{item['clean_title']}</h3>
+                <span class="archive-card-year">{item['year_str']}</span>
+            </div>
+        </a>'''
 
     sections_html = ""
     grouped_movies = {}
@@ -379,15 +444,19 @@ if os.path.exists(MOVIES_EXCEL):
 
     for g in all_groups:
         if g in grouped_movies:
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3>{f'<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span>' if item['avg_rating'] else '<span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: #888;">Not Rated</span>'}</div></a>''' for item in grouped_movies[g]])
-            sections_html += f'''<section id="group-{g}" class="movie-section-group" style="margin-bottom: 3rem; scroll-margin-top: 2rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{g}</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
+            cards = "".join([render_movie_card(item) for item in grouped_movies[g]])
+            sections_html += f'''
+            <section id="group-{g}" class="movie-section-group">
+                <h2 class="group-header"><span class="letter-badge">{g}</span></h2>
+                <div class="movie-archive-grid">{cards}</div>
+            </section>'''
 
     rating_tiers = [
-        (5.0, 5.0, "5 Stars (Masterpieces)"),
-        (4.0, 4.9, "4 Stars (Highly Recommended)"),
-        (3.0, 3.9, "3 Stars (Solid / Worth A Watch)"),
-        (2.0, 2.9, "2 Stars (Mixed / Flawed)"),
-        (0.0, 1.9, "1 Star (Avoid / Rough)"),
+        (5.0, 5.0, "5 Stars — Masterpieces"),
+        (4.0, 4.9, "4 Stars — Highly Recommended"),
+        (3.0, 3.9, "3 Stars — Solid / Worth A Watch"),
+        (2.0, 2.9, "2 Stars — Mixed / Flawed"),
+        (0.0, 1.9, "1 Star — Rough / Pass"),
     ]
 
     rating_sections_html = ""
@@ -395,8 +464,12 @@ if os.path.exists(MOVIES_EXCEL):
         tier_movies = [m for m in movie_list if m['avg_num'] is not None and min_r <= m['avg_num'] <= max_r]
         if tier_movies:
             tier_movies.sort(key=lambda x: x['avg_num'], reverse=True)
-            cards = "".join([f'''<a href="movies/{item['slug']}.html" class="movie-card-styled" data-title="{item['clean_title'].lower()}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.25rem 1rem; display: flex; align-items: center; justify-content: center; text-align: center;"><div class="card-content"><h3>{item['clean_title']}</h3><span class="card-meta" style="display: block; margin-top: 0.35rem; font-size: 0.8rem; font-weight: 700; color: {ACCENT_COLOR};"> ★ {item["avg_rating"]}</span></div></a>''' for item in tier_movies])
-            rating_sections_html += f'''<section style="margin-bottom: 3rem;"><h2 class="group-header" style="font-size: 1.8rem; font-weight: 800; border-bottom: 2px solid {ACCENT_COLOR}; padding-bottom: 0.4rem; margin-bottom: 1.5rem;">{tier_label}</h2><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem;">{cards}</div></section>'''
+            cards = "".join([render_movie_card(item) for item in tier_movies])
+            rating_sections_html += f'''
+            <section class="rating-tier-section">
+                <h2 class="group-header">{tier_label}</h2>
+                <div class="movie-archive-grid">{cards}</div>
+            </section>'''
 
     movie_archive_html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -406,7 +479,7 @@ if os.path.exists(MOVIES_EXCEL):
     <title>Movie Archive - Out The Trunk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -418,32 +491,36 @@ if os.path.exists(MOVIES_EXCEL):
         <input type="checkbox" id="menu-toggle" class="menu-toggle-checkbox" aria-label="Toggle Navigation Menu">
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
+            <a href="/#movies">Movies</a>
+            <a href="movies-archive.html" class="active-nav">Movie Archive</a>
             <a href="/#woom">WOOM</a>
             <a href="woom-archive.html">WOOM Archive</a>
-            <a href="/#movies">Movies</a>
-            <a href="movies-archive.html" style="border-bottom: 2px solid #00788C;">Movie Archive</a>
             <a href="/#listen" class="listen-link">Listen</a>
         </nav>
     </header>
 
     <main class="container">
-        <a href="/" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
-        <header style="text-align: center; margin-bottom: 1.5rem;">
-            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">Movie Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Search movie reviews or browse by title and rating</p>
+        <div style="margin-bottom: 1.5rem;">
+            <a href="/" class="nav-breadcrumb">← Home</a>
+        </div>
+        
+        <header class="archive-header-card">
+            <p class="subpage-eyebrow">CATALOG & RATINGS</p>
+            <h1 class="archive-main-title">Movie Review Archive</h1>
+            <p class="archive-subtitle">Explore 39+ films broken down by Jordan & Darius. Search titles or sort by average host score.</p>
         </header>
 
-        <div class="search-container" style="width: 100%; max-width: 650px; margin: 0 auto 1.5rem auto;">
-            <input type="text" id="movie-search" class="search-input" placeholder="Search Movie Reviews..." oninput="filterMovies()" style="width: 100%; padding: 0.9rem 1.25rem; font-size: 1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 30px; outline: none;">
+        <div class="search-container" style="max-width: 650px; margin: 0 auto 1.5rem auto;">
+            <input type="text" id="movie-search" class="search-input" placeholder="Search by title, director, or keyword..." oninput="filterMovies()">
         </div>
 
         <div class="toggle-container" style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 2rem;">
-            <button id="btn-title" class="toggle-btn active" onclick="showView('title')" style="background: #00788C; color: #fff; border: 2px solid #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; cursor: pointer;">Browse by Title (A–Z)</button>
-            <button id="btn-rating" class="toggle-btn" onclick="showView('rating')" style="background: #fff; color: #00788C; border: 2px solid #00788C; padding: 0.65rem 1.25rem; border-radius: 30px; font-weight: 800; cursor: pointer;">Browse by Rating (★)</button>
+            <button id="btn-title" class="toggle-btn active" onclick="showView('title')">Browse by Title (A–Z)</button>
+            <button id="btn-rating" class="toggle-btn" onclick="showView('rating')">Browse by Rating (★)</button>
         </div>
 
         <div id="view-title">
-            <nav style="text-align: center; margin-bottom: 2.5rem; background: #fff; padding: 1rem; border-radius: 12px; border: 1px solid #eaeaea;">{"".join(nav_buttons)}</nav>
+            <nav class="alpha-nav-bar">{"".join(nav_buttons)}</nav>
             {sections_html}
         </div>
 
@@ -464,19 +541,19 @@ if os.path.exists(MOVIES_EXCEL):
             if (viewType === 'rating') {{
                 viewTitle.style.display = 'none';
                 viewRating.style.display = 'block';
-                btnTitle.style.background = '#fff'; btnTitle.style.color = '#00788C';
-                btnRating.style.background = '#00788C'; btnRating.style.color = '#fff';
+                btnTitle.classList.remove('active');
+                btnRating.classList.add('active');
             }} else {{
                 viewTitle.style.display = 'block';
                 viewRating.style.display = 'none';
-                btnTitle.style.background = '#00788C'; btnTitle.style.color = '#fff';
-                btnRating.style.background = '#fff'; btnRating.style.color = '#00788C';
+                btnTitle.classList.add('active');
+                btnRating.classList.remove('active');
             }}
         }}
 
         function filterMovies() {{
             var query = document.getElementById('movie-search').value.toLowerCase().trim();
-            var cards = document.querySelectorAll('.movie-card-styled');
+            var cards = document.querySelectorAll('.movie-archive-card');
 
             cards.forEach(function(card) {{
                 var title = card.getAttribute('data-title') || '';
@@ -487,9 +564,9 @@ if os.path.exists(MOVIES_EXCEL):
                 }}
             }});
 
-            var sectionGroups = document.querySelectorAll('.movie-section-group');
+            var sectionGroups = document.querySelectorAll('.movie-section-group, .rating-tier-section');
             sectionGroups.forEach(function(sec) {{
-                var visibleCards = sec.querySelectorAll('.movie-card-styled[style*="display: flex"]');
+                var visibleCards = sec.querySelectorAll('.movie-archive-card[style*="display: flex"]');
                 if (query !== '' && visibleCards.length === 0) {{
                     sec.style.display = 'none';
                 }} else {{
@@ -506,7 +583,7 @@ if os.path.exists(MOVIES_EXCEL):
 # ---------------------------------------------------------
 # 2. BUILD WOOM EPISODE PAGES & WOOM ARCHIVE
 # ---------------------------------------------------------
-print("Processing WOOM Archive & Transcripts...")
+print("Processing WOOM Archive & Subpages...")
 if os.path.exists(WOOM_EXCEL):
     xls_w = pd.ExcelFile(WOOM_EXCEL)
     sheet_w_main = xls_w.sheet_names[0]
@@ -566,6 +643,9 @@ if os.path.exists(WOOM_EXCEL):
         clean_title = normalize_title(raw_title)
         slug = clean_slug(raw_title)
 
+        # Strip redundant trailing date parentheses from the display title
+        display_title = re.sub(r"\s*\(WOOM\s*\d{1,2}/\d{1,2}/\d{2,4}\)", "", clean_title, flags=re.IGNORECASE).strip()
+
         if date_col and pd.notna(row.get('parsed_date')):
             date_str = row.get('parsed_date').strftime('%B %d, %Y')
         elif date_col and pd.notna(row.get(date_col)):
@@ -587,16 +667,16 @@ if os.path.exists(WOOM_EXCEL):
         formatted_transcript = format_transcript(row.get("transcript"))
 
         yt_id = get_youtube_id(row.get(yt_col)) if yt_col else None
-        embed_html = f'''<div class="subpage-embed-wrapper"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{clean_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>''' if yt_id else ""
+        embed_html = f'''<div class="subpage-embed-wrapper"><div class="video-container"><iframe src="https://www.youtube-nocookie.com/embed/{yt_id}" title="{display_title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></div>''' if yt_id else ""
 
-        date_badge_html = f'<p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">RECORDED: {date_str.upper()}</p>' if date_str else '<p style="color: {ACCENT_COLOR}; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 0.25rem;">WOOM EPISODE</p>'
+        date_badge_html = f'<p class="subpage-eyebrow">RECORDED: {date_str.upper()}</p>' if date_str else '<p class="subpage-eyebrow">WOOM EPISODE</p>'
 
         html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{clean_title} - WOOM - Out The Trunk</title>
+    <title>{display_title} - WOOM - Out The Trunk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -621,25 +701,25 @@ if os.path.exists(WOOM_EXCEL):
 
     <main class="container" style="max-width: 900px;">
         <div style="display: flex; gap: 0.75rem; margin-bottom: 1.5rem;">
-            <a href="/" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">← Home</a>
-            <a href="../woom-archive.html" style="color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; background: #fff; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #E2E8F0;">WOOM Archive</a>
+            <a href="/" class="nav-breadcrumb">← Home</a>
+            <a href="../woom-archive.html" class="nav-breadcrumb">WOOM Archive</a>
         </div>
 
-        <header style="text-align: center; margin-bottom: 2rem; padding: 1.75rem; background: #fff; border-radius: 16px; border: 1px solid #E2E8F0; box-shadow: 0 4px 12px rgba(0,0,0,0.04);">
+        <header class="subpage-header-card">
             {date_badge_html}
-            <h1 style="font-size: 2.2rem; font-weight: 800; margin: 0; color: #111;">{clean_title}</h1>
+            <h1 class="subpage-title">{display_title}</h1>
         </header>
 
         {embed_html}
 
         <section class="subpage-content-card">
-            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Show Notes & Highlights</h2>
-            <div>{show_notes_html}</div>
+            <h2 class="subpage-section-heading">Show Notes & Highlights</h2>
+            <div class="show-notes-body">{show_notes_html}</div>
         </section>
 
         <section class="subpage-content-card">
-            <h2 style="font-size: 1.35rem; font-weight: 800; color: #1D1160; border-bottom: 2px solid #F1F5F9; padding-bottom: 0.5rem; margin-bottom: 1rem;">Full Episode Transcript</h2>
-            <div style="margin-top: 1rem;">{formatted_transcript}</div>
+            <h2 class="subpage-section-heading">Full Episode Transcript</h2>
+            <div class="transcript-container">{formatted_transcript}</div>
         </section>
 
         <button class="back-to-top" onclick="window.scrollTo({{top: 0, behavior: 'smooth'}});">↑ Back to Top</button>
@@ -649,7 +729,14 @@ if os.path.exists(WOOM_EXCEL):
         with open(os.path.join(WOOM_DIR, f"{slug}.html"), "w", encoding="utf-8") as f:
             f.write(html_content)
 
-        woom_list.append({'clean_title': clean_title, 'date_str': date_str, 'slug': slug, 'topics': episode_topics, 'clean_notes': clean_notes})
+        woom_list.append({
+            'display_title': display_title,
+            'clean_title': clean_title,
+            'date_str': date_str,
+            'slug': slug,
+            'topics': episode_topics,
+            'clean_notes': clean_notes
+        })
 
     total_episodes = len(woom_list)
     topic_chips = [f'<button class="topic-chip active" onclick="filterTopic(\'all\', this)">All Episodes ({total_episodes})</button>']
@@ -659,19 +746,27 @@ if os.path.exists(WOOM_EXCEL):
 
     cards_woom = ""
     for item in woom_list:
-        date_meta = f'<span class="card-meta" style="display: block; margin-top: 0.45rem; font-size: 0.85rem; font-weight: 700; color: {ACCENT_COLOR};">{item["date_str"]}</span>' if item['date_str'] else ""
+        date_meta = f'<span class="woom-card-date">{item["date_str"]}</span>' if item['date_str'] else ""
         data_topics = "|".join(item['topics'])
         
-        topics_line = f'<span class="card-topics" style="display: block; margin-top: 0.6rem; font-size: 0.72rem; color: #8A94A6; font-weight: 500;">{" • ".join(item["topics"])}</span>' if item['topics'] else ""
-        search_text = f"{item['clean_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
+        # Display max 2 tags cleanly with overflow badge to avoid vertical stretch
+        topics_badges = []
+        if item['topics']:
+            for t in item['topics'][:2]:
+                topics_badges.append(f'<span class="woom-tag-pill">{t}</span>')
+            if len(item['topics']) > 2:
+                topics_badges.append(f'<span class="woom-tag-pill overflow">+{len(item["topics"]) - 2} more</span>')
+        topics_line = f'<div class="woom-tags-wrapper">{"".join(topics_badges)}</div>' if topics_badges else ""
+        
+        search_text = f"{item['display_title']} {' '.join(item['topics'])} {item['clean_notes']}".lower().replace('"', '&quot;')
         
         cards_woom += f'''
-        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}" style="text-decoration: none; color: #111; background: #fff; border: 1px solid #eaeaea; border-left: 4px solid {ACCENT_COLOR}; border-radius: 10px; padding: 1.35rem 1.1rem; display: flex; flex-direction: column; justify-content: space-between; text-align: center;">
-            <div class="card-content">
-                <h3 style="margin: 0; font-size: 1.28rem; font-weight: 800; color: #111827;">{item['clean_title']}</h3>
+        <a href="woom/{item['slug']}.html" class="woom-card-styled" data-topics="{data_topics}" data-search="{search_text}">
+            <div class="woom-card-header">
                 {date_meta}
-                {topics_line}
+                <h3 class="woom-card-title">{item['display_title']}</h3>
             </div>
+            {topics_line}
         </a>'''
 
     woom_archive_html = f"""<!DOCTYPE html>
@@ -695,7 +790,7 @@ if os.path.exists(WOOM_EXCEL):
         <label for="menu-toggle" class="nav-toggle-btn">MENU</label>
         <nav id="site-nav" class="site-nav">
             <a href="/#woom">WOOM</a>
-            <a href="woom-archive.html" style="border-bottom: 2px solid #00788C;">WOOM Archive</a>
+            <a href="woom-archive.html" class="active-nav">WOOM Archive</a>
             <a href="/#movies">Movies</a>
             <a href="movies-archive.html">Movie Archive</a>
             <a href="/#listen" class="listen-link">Listen</a>
@@ -703,30 +798,35 @@ if os.path.exists(WOOM_EXCEL):
     </header>
 
     <main class="container">
-        <a href="/" style="display: inline-flex; align-items: center; color: {ACCENT_COLOR}; text-decoration: none; font-weight: 700; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #eaeaea; margin-bottom: 1.5rem;">← Home</a>
-        <header style="text-align: center; margin-bottom: 1.5rem;">
-            <p style="color: {ACCENT_COLOR}; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.25rem;">WHAT'S ON OUR MIND</p>
-            <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; color: #111;">WOOM Archive</h1>
-            <p style="color: #666; font-size: 1.05rem;">Search topics, questions, and episodes or browse by theme</p>
-        </header>
-
-        <div class="search-container" style="width: 100%; max-width: 750px; margin: 0 auto 1rem auto; text-align: center;">
-            <input type="text" id="archive-search" class="search-input" placeholder="Search Topics, Questions, and Episodes..." oninput="filterArchive()" style="width: 100%; padding: 1.1rem 1.5rem; font-size: 1.1rem; font-weight: 600; border: 2px solid #00788C; border-radius: 35px; outline: none;">
-            <button id="clear-btn" style="display: none; margin-top: 0.75rem; background: #eef6fc; color: #00788C; border: 1px solid #00788C; padding: 0.4rem 1rem; border-radius: 20px; font-weight: 700; cursor: pointer;" onclick="clearFilters()">Clear Search & Filters</button>
+        <div style="margin-bottom: 1.5rem;">
+            <a href="/" class="nav-breadcrumb">← Home</a>
         </div>
 
-        <div id="results-banner" style="text-align: center; font-weight: 700; color: #00788C; font-size: 0.9rem; margin-bottom: 1rem; text-transform: uppercase;">Showing {total_episodes} Episodes</div>
+        <header class="archive-header-card">
+            <p class="subpage-eyebrow">WHAT'S ON OUR MIND</p>
+            <h1 class="archive-main-title">WOOM Archive</h1>
+            <p class="archive-subtitle">Cultural analysis, personal finance, friendships, sports debates, and lifestyle questions unfiltered.</p>
+        </header>
 
-        <div style="margin-bottom: 2rem; text-align: center; background: #fff; padding: 1rem 1.25rem; border-radius: 12px; border: 1px solid #eaeaea;">
-            <h3 style="font-size: 0.85rem; text-transform: uppercase; color: #666; margin-bottom: 0.75rem; font-weight: 800;">Filter by Topic</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 0.45rem; justify-content: center;">
+        <div class="search-container" style="max-width: 750px; margin: 0 auto 1.5rem auto;">
+            <input type="text" id="archive-search" class="search-input" placeholder="Search topics, questions, debates, or keywords..." oninput="filterArchive()">
+            <div style="text-align: center; margin-top: 0.5rem;">
+                <button id="clear-btn" class="clear-filters-btn" style="display: none;" onclick="clearFilters()">Clear Filters & Search</button>
+            </div>
+        </div>
+
+        <div id="results-banner" class="results-counter-banner">Showing {total_episodes} Episodes</div>
+
+        <div class="filter-pills-container">
+            <h3 class="filter-label">Filter by Topic</h3>
+            <div class="filter-scroll-row">
                 {"".join(topic_chips)}
             </div>
         </div>
 
-        <div class="woom-grid" id="woom-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;">
+        <div class="woom-grid" id="woom-grid">
             {cards_woom}
-            <div id="no-results" style="display: none; text-align: center; padding: 3rem 1rem; color: #666; grid-column: 1 / -1;">
+            <div id="no-results" class="no-results-box" style="display: none;">
                 No episodes matched that search. Try a broader search term or choose <strong>All Episodes</strong>.
             </div>
         </div>
@@ -808,4 +908,4 @@ if os.path.exists(WOOM_EXCEL):
     with open(WOOM_ARCHIVE_PATH, "w", encoding="utf-8") as f:
         f.write(woom_archive_html)
 
-print("Build complete! Movie subpage poster layout restored.")
+print("Build complete! All archives and subpages generated with updated UI hierarchy.")
