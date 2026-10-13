@@ -155,22 +155,33 @@ def get_poster_path(raw_title, is_subpage=True):
     if not raw_title or str(raw_title).strip().lower() in ["nan", ""]:
         return fallback
 
-    norm = normalize_title(str(raw_title).strip())
+    raw_clean = str(raw_title).strip()
+    norm = normalize_title(raw_clean)
     
     def to_snake(text):
-        t = re.sub(r"[^\w\s]", "", text)
+        # Swap hyphens for spaces so they are processed safely
+        t = str(text).replace("-", " ")
+        t = re.sub(r"[^\w\s]", "", t)
         return re.sub(r"\s+", "_", t.strip())
 
-    candidates = [
-        f"{to_snake(norm)}_Poster.jpg",
-        f"{to_snake(norm.replace('&', 'And'))}_Poster.jpg",
-        f"{to_snake(re.sub(r'\\bNo\\.?\\b', 'Number', norm.replace('&', 'And'), flags=re.IGNORECASE).replace('2', 'Two'))}_Poster.jpg",
-        f"{to_snake(re.sub(r'^(The|A|An)\\s+', '', norm, flags=re.IGNORECASE))}_Poster.jpg",
-        f"{to_snake(re.sub(r'^(The|A|An)\\s+', '', norm.replace('&', 'And'), flags=re.IGNORECASE))}_Poster.jpg",
-        f"{to_snake(re.sub(r'^(The|A|An)\\s+', '', re.sub(r'\\bNo\\.?\\b', 'Number', norm.replace('&', 'And'), flags=re.IGNORECASE).replace('2', 'Two')))}_Poster.jpg",
-        f"{to_snake(str(raw_title).strip())}_Poster.jpg"
+    # Build a highly resilient list of possible filename bases
+    # This ensures "Best Man, The" maps cleanly to "Best_Man_Poster.jpg"
+    bases = [
+        norm,
+        norm.replace('&', 'And'),
+        re.sub(r'\bNo\.?\b', 'Number', norm.replace('&', 'And'), flags=re.IGNORECASE).replace('2', 'Two'),
+        re.sub(r'^(The|A|An)\s+', '', norm, flags=re.IGNORECASE),
+        re.sub(r'^(The|A|An)\s+', '', norm.replace('&', 'And'), flags=re.IGNORECASE),
+        raw_clean,
+        re.sub(r',\s*(The|A|An)$', '', raw_clean, flags=re.IGNORECASE) 
     ]
-
+    
+    candidates = []
+    for b in bases:
+        snaked = to_snake(b)
+        candidates.append(f"{snaked}_Poster.jpg")
+        candidates.append(f"{snaked.replace('_', '')}_Poster.jpg")
+    
     posters_dir = "Movie_Posters"
     if os.path.exists(posters_dir):
         available_files = {f.lower(): f for f in os.listdir(posters_dir)}
@@ -178,7 +189,7 @@ def get_poster_path(raw_title, is_subpage=True):
             if c.lower() in available_files:
                 return f"{base_prefix}{available_files[c.lower()]}"
     
-    return f"{base_prefix}{candidates[0]}"
+    return fallback
 
 def clean_show_notes(raw_html):
     if not raw_html or str(raw_html).strip().lower() in ["nan", ""]:
